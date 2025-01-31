@@ -1,0 +1,32 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: franken.dockerfile
+    container_name: help_franken
+    env_file:
+      - ../.env.local
+    ports:
+      - "8013:80"
+    volumes:
+      - ../../sources:/app:rw
+    networks:
+      - help_network
+  db:
+    image: mysql:8.0
+    container_name: help_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ../../database:/var/lib/mysql
+    networks:
+      - help_network
+    ports:
+      - "8016:3306"
+
+networks:
+  help_network:
+    driver: bridge
