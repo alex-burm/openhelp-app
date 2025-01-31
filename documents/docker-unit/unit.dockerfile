@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     software-properties-common \
     curl \
+    zip \
+    unzip \
     libssl-dev \
     zlib1g-dev \
     libxml2-dev \
@@ -58,6 +60,8 @@ RUN curl -O https://unit.nginx.org/download/unit-1.34.1.tar.gz && \
     ./configure php --module=php83 --config=/usr/bin/php-config && \
     make && \
     make install
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
