@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     software-properties-common \
     curl \
+    zip \
+    unzip \
     libssl-dev \
     zlib1g-dev \
     libxml2-dev \
@@ -60,6 +62,8 @@ RUN curl -O https://unit.nginx.org/download/unit-1.34.1.tar.gz && \
     make install
 
 WORKDIR /app
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY ./unit.json /docker-entrypoint.d/config.json
 COPY ./unit.json /etc/unit/unit.json
