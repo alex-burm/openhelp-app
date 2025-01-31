@@ -61,8 +61,6 @@ RUN curl -O https://unit.nginx.org/download/unit-1.34.1.tar.gz && \
     make && \
     make install
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 WORKDIR /app
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
