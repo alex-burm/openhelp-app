@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Api\Controller\Monitoring;
+namespace App\Infrastructure\Presentation\Api\Controller\Monitoring;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
