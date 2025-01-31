@@ -1,6 +1,10 @@
 #!/bin/sh
 
-/docker-entrypoint.d/env.sh
+cp /app/.env /app/.env.dev.local
+
+envsubst < /app/.env > /app/.env.dev.local
+
+cat /app/.env.dev.local
 
 unitd --no-daemon --control unix:/var/run/control.unit.sock &
 sleep 1

@@ -64,9 +64,6 @@ WORKDIR /app
 COPY ./unit.json /docker-entrypoint.d/config.json
 COPY ./unit.json /etc/unit/unit.json
 
-COPY ./env.sh /docker-entrypoint.d/env.sh
-RUN chmod +x /docker-entrypoint.d/env.sh
-
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

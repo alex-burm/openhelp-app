@@ -19,8 +19,9 @@ services:
       - ../.env.local
     volumes:
       - ../../sources:/app:rw
-      - ./env.sh:/usr/local/bin/env.sh:ro
-    entrypoint: ["/usr/local/bin/env.sh"]
+      - ./entrypoint.sh:/entrypoint.sh:ro
+    working_dir: /app
+    entrypoint: ["/entrypoint.sh"]
     command: ["php-fpm"]
     networks:
       - help_network
