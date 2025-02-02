@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && apt-get clean
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+COPY frankenphp.ini /etc/frankenphp.ini
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
