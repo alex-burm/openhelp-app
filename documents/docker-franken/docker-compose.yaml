@@ -15,6 +15,8 @@ services:
   db:
     image: mysql:8.0
     container_name: help_mysql
+    env_file:
+      - ../.env.local
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}

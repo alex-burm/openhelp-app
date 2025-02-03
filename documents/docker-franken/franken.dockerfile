@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && apt-get clean
 
+RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-enable pdo_mysql
+
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 COPY frankenphp.ini /etc/frankenphp.ini
 
