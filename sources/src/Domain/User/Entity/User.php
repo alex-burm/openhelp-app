@@ -2,6 +2,8 @@
 
 namespace App\Domain\User\Entity;
 
+use App\Domain\User\ValueObject\RoleCollection;
+
 class User
 {
     protected \DateTimeImmutable $createdAt;
@@ -12,7 +14,7 @@ class User
         protected string $password = '',
         protected string $name = '',
         protected ?string $email = null,
-        protected array $roles = [],
+        protected ?RoleCollection $roles = null,
     )
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -68,12 +70,12 @@ class User
         $this->email = $email;
     }
 
-    public function getRoles(): array
+    public function getRoles(): RoleCollection
     {
         return $this->roles;
     }
 
-    public function setRoles(array $roles): void
+    public function setRoles(RoleCollection $roles): void
     {
         $this->roles = $roles;
     }

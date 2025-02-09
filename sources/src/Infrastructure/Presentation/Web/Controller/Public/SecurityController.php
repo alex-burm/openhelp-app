@@ -12,7 +12,7 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'login')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('public/login.html.twig', [
+        return $this->render('public/security/login.html.twig', [
             'lastUsername' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
