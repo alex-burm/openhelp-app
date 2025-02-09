@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Presentation\Web\Controller\NonAuth;
+namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
 use App\Application\User\Service\UserRegisterService;
 use App\Application\User\Dto\UserRegisterDto;

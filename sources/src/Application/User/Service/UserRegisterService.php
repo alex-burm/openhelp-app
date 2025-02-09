@@ -28,7 +28,7 @@ class UserRegisterService
 
         $user = new User(
             login: $data->login,
-            password: $passwordHash,
+            hashedPassword: $passwordHash,
             name: $data->name,
             email: $data->email,
         );

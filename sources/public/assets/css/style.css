@@ -1,0 +1,491 @@
+/* Modern Admin Theme */
+:root {
+    --primary: #2563eb;
+    --secondary: #64748b;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --background: #f8fafc;
+    --sidebar: #ffffff;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+    padding-top: 81px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Main content adjustment for fixed sidebar */
+main {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+}
+
+.sidebar-logo {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-logo img {
+    height: 32px;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding: 12px 24px;
+    margin: 4px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    background: var(--background);
+    color: var(--text);
+}
+
+.nav-link.active {
+    background: var(--background);
+    color: var(--primary);
+}
+
+.nav-link svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Main Header */
+.main-header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+}
+
+.avatar-button {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.avatar-button:focus {
+    box-shadow: none;
+}
+
+/* Unread Tickets Alert */
+.unread-tickets-alert {
+    background: rgba(255, 242, 204, 0.5);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 242, 204, 0.8);
+    width: 100%;
+}
+
+/* Stats Cards */
+.stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 4px 0 0;
+}
+
+.stat-trend {
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
+}
+
+.trend-up {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.trend-down {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+/* Channel Stats */
+.channel-stat {
+    padding: 16px;
+    background: var(--background);
+    border-radius: 8px;
+}
+
+/* Tickets List */
+.tickets-list {
+    width: 400px;
+    background: white;
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 73px);
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.tickets-header {
+    padding: 24px;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--background);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.filter-tag:hover {
+    background: #e2e8f0;
+}
+
+.ticket-item {
+    display: flex;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ticket-item:hover {
+    background: var(--background);
+}
+
+.ticket-item.active {
+    background: var(--background);
+}
+
+.ticket-priority {
+    width: 4px;
+    margin-right: 16px;
+    border-radius: 2px;
+}
+
+.ticket-priority.high {
+    background: var(--danger);
+}
+
+.ticket-priority.medium {
+    background: var(--warning);
+}
+
+.ticket-priority.low {
+    background: var(--success);
+}
+
+.ticket-content {
+    flex: 1;
+}
+
+.ticket-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.ticket-preview {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 4px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ticket-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+}
+
+/* Ticket Details */
+.ticket-details {
+    flex: 1;
+    height: calc(100vh - 73px);
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.ticket-details-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.property-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.property-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Conversation */
+.conversation {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.message-author {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.message-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.message-body {
+    background: var(--background);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.message.agent .message-body {
+    background: #eff6ff;
+}
+
+/* Reply Box */
+.reply-box {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.reply-toolbar {
+    display: flex;
+    gap: 8px;
+}
+
+.priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Chart Card */
+.chart-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+/* Task List */
+.task-list {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.task-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.task-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-in-progress {
+    background: var(--primary);
+}
+
+.status-on-hold {
+    background: var(--warning);
+}
+
+.status-done {
+    background: var(--success);
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+}
+
+.task-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* User Profile */
+.user-profile {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+}
+
+.profile-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.profile-handle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 4px 0 16px;
+}
+
+/* Progress Bars */
+.progress {
+    background-color: #e2e8f0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+.header-with-sidebar {
+    margin-left: 280px; /* Adjust this value to match the width of your sidebar */
+}
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 320px;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal.left .modal-content,
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+    right: 0;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+    transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+.modal.right.fade.in .modal-dialog {
+    right: 0;
+}

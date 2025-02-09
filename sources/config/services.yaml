@@ -25,6 +25,8 @@ services:
 
     App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
+    App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
+    App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
 
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
         tags:

@@ -1,21 +1,21 @@
 # config/routes.yaml
 
-app_api:
+api:
     resource: ../src/Infrastructure/Presentation/Api/Controller
     type: attribute
     prefix: /api/
 
-app_manager:
+manager:
     resource: ../src/Infrastructure/Presentation/Web/Controller/Manager
     type: attribute
     prefix: /manager
 
-app_customer:
+customer:
     resource: ../src/Infrastructure/Presentation/Web/Controller/Customer
     type: attribute
     prefix: /customer
 
-app_public:
-    resource: ../src/Infrastructure/Presentation/Web/Controller/NonAuth
+public:
+    resource: ../src/Infrastructure/Presentation/Web/Controller/Public
     type: attribute
     prefix: /

@@ -22,7 +22,7 @@ class DoctrineWorkspace
     #[ORM\Column(type: 'string', nullable: false)]
     protected string $code = '';
 
-    #[ORM\Column(type: 'date_immutable', nullable: false)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
     public function __construct()

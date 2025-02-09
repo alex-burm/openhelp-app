@@ -6,7 +6,7 @@ trait DoctrineRepositoryTrait
 {
     private function _findOneById(int $id): ?object
     {
-        $doctrineObject = $this->entityManager->getRepository(static::DOCTRINE_CLASS_NAME)->find($id);
+        $doctrineObject = $this->find($id);
         return $this->getOneOrNothing($doctrineObject);
     }
 

@@ -2,9 +2,10 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
+use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
 #[ORM\Table(name: 'user')]
 class DoctrineUser implements WorkspaceAwareEntity
 {
@@ -30,13 +31,13 @@ class DoctrineUser implements WorkspaceAwareEntity
     #[ORM\Column(type: 'json', nullable: false)]
     protected array $roles = [];
 
-    #[ORM\Column(type: 'date_immutable', nullable: false)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'date_immutable', nullable: false)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $updatedAt;
 
-    #[ORM\Column(type: 'date_immutable', nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $deletedAt;
 
     public function __construct()

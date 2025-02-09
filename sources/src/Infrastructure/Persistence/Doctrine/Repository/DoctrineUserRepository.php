@@ -4,12 +4,13 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\User\Entity\User;
 use App\Domain\User\Repository\UserRepository;
-use App\Domain\Workspace\Entity\Workspace;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
-readonly class DoctrineUserRepository implements UserRepository
+class DoctrineUserRepository extends EntityRepository implements UserRepository
 {
     use DoctrineRepositoryTrait;
 
@@ -19,6 +20,7 @@ readonly class DoctrineUserRepository implements UserRepository
         protected EntityManagerInterface $entityManager,
         protected DoctrineUserMapper     $mapper,
     ) {
+        parent::__construct($entityManager, new ClassMetadata(DoctrineUser::class));
     }
 
     public function delete(User $user): void
@@ -34,5 +36,13 @@ readonly class DoctrineUserRepository implements UserRepository
     public function findOneById(int $id): ?User
     {
         return $this->_findOneById($id);
+    }
+
+    public function findOneByLogin(string $login): ?User
+    {
+        $doctrineObject = $this->findOneBy([
+            'login' => $login,
+        ]);
+        return $this->getOneOrNothing($doctrineObject);
     }
 }

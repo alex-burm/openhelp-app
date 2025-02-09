@@ -2,9 +2,7 @@
 
 namespace App\Domain\User\Entity;
 
-use App\Infrastructure\Persistence\Doctrine\Entity\WorkspaceAwareEntity;
-
-class User implements WorkspaceAwareEntity
+class User
 {
     protected \DateTimeImmutable $createdAt;
 
