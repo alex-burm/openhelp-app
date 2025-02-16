@@ -35,11 +35,23 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ../../database:/var/lib/mysql
+      - ../../data/mysql:/var/lib/mysql
     networks:
       - help_network
     ports:
       - "8016:3306"
+
+  redis:
+    image: redis:latest
+    container_name: help_redis
+    restart: always
+    networks:
+      - help_network
+    ports:
+      - "8017:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - ../../data/redis:/data
 
 networks:
   help_network:

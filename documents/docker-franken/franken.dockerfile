@@ -15,6 +15,8 @@ RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-enable pdo_mysql
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install redis && docker-php-ext-enable redis
+
 COPY frankenphp.ini /etc/frankenphp.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

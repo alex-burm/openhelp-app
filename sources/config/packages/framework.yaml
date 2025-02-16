@@ -5,6 +5,13 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    rate_limiter:
+        login_attempts:
+            policy: 'fixed_window' #sliding_window
+            limit: 5
+            interval: '5 minutes'
+            cache_pool: cache.rate_limiter
+
     #esi: true
     #fragments: true
 

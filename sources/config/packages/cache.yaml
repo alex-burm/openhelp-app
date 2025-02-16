@@ -1,5 +1,11 @@
 framework:
     cache:
+        pools:
+            cache.rate_limiter:
+                adapter: cache.adapter.redis
+                default_lifetime: 300
+                provider: '%env(REDIS_URL)%'
+                tags: false
         # Unique name of your app: used to compute stable namespaces for cache keys.
         #prefix_seed: your_vendor_name/app_name
 
