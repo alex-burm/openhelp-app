@@ -10,6 +10,8 @@ interface UserRepository
 
     public function findOneByLogin(string $login): ?User;
 
+    public function findOneByEmail(string $email): ?User;
+
     public function save(User $user): void;
 
     public function delete(User $user): void;

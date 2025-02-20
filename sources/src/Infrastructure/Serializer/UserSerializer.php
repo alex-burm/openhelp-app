@@ -20,6 +20,8 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
         return [
             'id' => $data->getId(),
             'email' => $data->getEmail(),
+            'password' => $data->getPassword(),
+            'name' => $data->getName(),
             'roles' => RoleMapper::fromCollection($data->getRoles()),
         ];
     }

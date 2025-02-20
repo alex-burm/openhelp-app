@@ -1,14 +1,13 @@
 <?php
 
+
 namespace App\Application\User\Dto;
 
-readonly class UserRegisterDto
+readonly class PasswordChangeRequestDto
 {
     public function __construct(
-        public string $login,
-        public string $password,
-        public string $name,
         public string $email,
+        public string $password
     ) {
     }
 }

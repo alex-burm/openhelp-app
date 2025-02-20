@@ -24,6 +24,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
+    App\Domain\User\Repository\PasswordResetTokenRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisPasswordResetTokenRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
