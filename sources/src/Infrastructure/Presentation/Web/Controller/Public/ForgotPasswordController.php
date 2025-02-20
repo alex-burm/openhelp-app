@@ -93,11 +93,9 @@ class ForgotPasswordController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->get('password')->getData();
-            $event = $resetService->changePassword(new PasswordChangeRequestDto($email, $password));
+            $resetService->changePassword(new PasswordChangeRequestDto($email, $password));
 
-            dd($event);
-            die;
-//            $request->getSession()->remove('reset_password_email');
+            $request->getSession()->remove('reset_password_email');
             $this->addFlash('success', 'Password successfully changed.');
             return $this->redirectToRoute('login');
         }
