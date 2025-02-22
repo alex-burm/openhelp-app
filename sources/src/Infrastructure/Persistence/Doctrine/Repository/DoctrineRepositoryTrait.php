@@ -25,17 +25,14 @@ trait DoctrineRepositoryTrait
 
     private function _save(object $domainObject): void
     {
-        $doctrineObject = $this->mapper->toDoctrine($domainObject);
-
-        if (false === \is_null($doctrineObject->getId())) {
-            $doctrineReference = $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $doctrineObject->getId());
-            if (false === $this->entityManager->contains($doctrineReference)) {
-                $this->entityManager->persist($doctrineObject);
-            }
+        if (\is_null($domainObject->getId())) {
+            $doctrineObject = $this->mapper->toDoctrine($domainObject);
         } else {
-            $this->entityManager->persist($doctrineObject);
+            $reference = $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
+            $doctrineObject = $this->mapper->toDoctrine($domainObject, $reference);
         }
 
+        $this->entityManager->persist($doctrineObject);
         $this->entityManager->flush();
         $domainObject->setId($doctrineObject->getId());
     }
