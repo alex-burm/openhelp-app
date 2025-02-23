@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ForgotPasswordTokenForm extends AbstractType
+class ForgotPasswordResendForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,11 +25,6 @@ class ForgotPasswordTokenForm extends AbstractType
             'constraints' => [
                 new Assert\NotBlank(),
 
-            ],
-        ]);
-        $builder->add('token', TextType::class, [
-            'constraints' => [
-                new Assert\NotBlank(),
             ],
         ]);
     }
@@ -45,7 +40,7 @@ class ForgotPasswordTokenForm extends AbstractType
 
                     if ($signature !== $payload['signature']) {
                         $context->buildViolation('Invalid token.')
-                            ->atPath('token')
+                            ->atPath('signature')
                             ->addViolation();
                     }
                 }),

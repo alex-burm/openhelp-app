@@ -28,11 +28,7 @@ class RegisterController extends AbstractController
             'email' => 'test',
         ];
 
-        $event = $registerUserService(
-            new UserRegisterDto(...$data)
-        );
-
-        $eventDispatcher->dispatch($event);
+        $registerUserService(new UserRegisterDto(...$data));
 
         return new Response('User registered. Please check your email.', Response::HTTP_CREATED);
     }

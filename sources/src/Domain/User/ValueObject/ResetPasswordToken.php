@@ -15,7 +15,7 @@ class ResetPasswordToken
 
     public static function generate(): self
     {
-        return new self(uniqid(), new \DateTimeImmutable('+1 hour'));
+        return new self(\uniqid(), new \DateTimeImmutable('+15 minutes'));
     }
 
     public function isExpired(): bool

@@ -23,6 +23,10 @@
                     <div class="card-body p-4">
                         <div id="emailSection">
                             {{ form_start(form) }}
+                                {% for message in app.flashes('error') %}
+                                    <div class="alert alert-danger">{{ message }}</div>
+                                {% endfor %}
+
                                 <div class="mb-4">
                                     <label for="email" class="form-label small fw-medium">Email Address</label>
                                     <div class="input-group">

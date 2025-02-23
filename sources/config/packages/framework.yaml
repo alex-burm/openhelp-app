@@ -11,6 +11,11 @@ framework:
             limit: 5
             interval: '5 minutes'
             cache_pool: cache.rate_limiter
+        forgot_password:
+            policy: 'fixed_window'
+            limit: 3
+            interval: '1 minute'
+            cache_pool: cache.rate_limiter
 
     #esi: true
     #fragments: true

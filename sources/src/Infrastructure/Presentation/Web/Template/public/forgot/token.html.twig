@@ -33,6 +33,9 @@
                         </div>
                         {% endif %}
                         {{ form_start(form) }}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger">{{ message }}</div>
+                            {% endfor %}
                             <div class="mb-4">
                                 <label for="token" class="form-label small fw-medium">Reset Token</label>
                                 <div class="input-group">
@@ -57,9 +60,9 @@
                                 <p class="text-secondary small mb-2">
                                     Didn't receive the email? Check your spam folder or
                                 </p>
-                                <button type="button" class="btn btn-link text-decoration-none p-0" id="resendButton">
+                                <a href="{{ path('forgot-password-resend', {key: app.request.query.get('key'), signature: app.request.query.get('signature')}) }}" class="btn btn-link text-decoration-none p-0" id="resendButton">
                                     Click here to resend
-                                </button>
+                                </a>
                             </div>
                         {{ form_end(form) }}
                     </div>

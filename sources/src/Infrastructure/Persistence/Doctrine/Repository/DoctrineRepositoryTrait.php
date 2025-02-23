@@ -6,7 +6,17 @@ trait DoctrineRepositoryTrait
 {
     private function _findOneById(int $id): ?object
     {
-        $doctrineObject = $this->find($id);
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('r')
+            ->from(static::DOCTRINE_CLASS_NAME, 'r')
+            ->where('r.id = :id')
+            ->setParameter(':id', $id);
+
+        $doctrineObject = $qb
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
         return $this->getOneOrNothing($doctrineObject);
     }
 

@@ -3,6 +3,8 @@
 namespace App\Application\User\Service;
 
 use App\Application\User\Dto\UserRegisterDto;
+use App\Domain\Mail\Type\RegisterUserMailType;
+use App\Domain\Service\MailHandlerInterface;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Event\UserRegisteredEvent;
 use App\Domain\User\Repository\UserRepository;
@@ -19,6 +21,7 @@ class UserRegisterService
         protected UserRepository $userRepository,
         protected WorkspaceRepository $workspaceRepository,
         protected PasswordHasher $passwordHasher,
+        protected MailHandlerInterface $mailHandler,
     ) {
     }
 
@@ -45,6 +48,8 @@ class UserRegisterService
         // Set workspace owner
         $workspace->setOwnerId($user->getId());
         $this->workspaceRepository->save($workspace);
+
+        $this->mailHandler->handle(RegisterUserMailType::create($user));
 
         return new UserRegisteredEvent($user);
     }

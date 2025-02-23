@@ -3,11 +3,10 @@
 
 namespace App\Application\User\Dto;
 
-readonly class PasswordResetRequestDto
+readonly class PasswordResendTokenDto
 {
     public function __construct(
         public string $email,
-        public string $signature,
     ) {
     }
 }

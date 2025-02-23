@@ -3,17 +3,21 @@
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
 use App\Application\User\Dto\PasswordChangeRequestDto;
+use App\Application\User\Dto\PasswordResendTokenDto;
 use App\Application\User\Dto\PasswordResetRequestDto;
 use App\Application\User\Dto\PasswordResetTokenDto;
 use App\Application\User\Service\PasswordResetService;
+use App\Infrastructure\Persistence\Redis\ForgotPasswordLimiterStorage;
 use App\Infrastructure\Presentation\Web\Form\ChangePasswordForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordForm;
+use App\Infrastructure\Presentation\Web\Form\ForgotPasswordResendForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordTokenForm;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
 
@@ -22,22 +26,22 @@ class ForgotPasswordController extends AbstractController
     #[Route('/forgot-password', name: 'forgot-password')]
     public function index(
         Request $request,
-        EventDispatcherInterface $eventDispatcher,
         PasswordResetService $resetService,
+        ForgotPasswordLimiterStorage $rateLimiter,
     ): Response {
         $form = $this->createForm(ForgotPasswordForm::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->getData()['email'];
-            $event = $resetService->forgotPassword(
-                new PasswordResetRequestDto($email)
-            );
 
-            if (false === \is_null($event)) {
-                $eventDispatcher->dispatch($event);
+            if (false === $rateLimiter->consume($email)->isAccepted()) {
+                $this->addFlash('error', 'Too many reset attempts. Try again later.');
+                return $this->redirectToRoute('forgot-password');
             }
 
-            $signature = \hash_hmac('sha256', $email, $_ENV['APP_SECRET']);
+            $signature = self::getSignature($email);
+            $resetService->forgotPassword(new PasswordResetRequestDto($email, $signature));
+
             return $this->redirectToRoute('forgot-password-token', [
                 'key' => \base64_encode($email),
                 'signature' => $signature,
@@ -79,6 +83,34 @@ class ForgotPasswordController extends AbstractController
         ]);
     }
 
+    #[Route('/forgot-password/resend', name: 'forgot-password-resend')]
+    public function resend(
+        Request $request,
+        PasswordResetService $resetService,
+        ForgotPasswordLimiterStorage $rateLimiter,
+    ): Response {
+        $form = $this->createForm(ForgotPasswordResendForm::class, $request->query->all(), [
+            'method' => Request::METHOD_GET,
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $email = \base64_decode($data['key']);
+
+            if (false === $rateLimiter->consume($email)->isAccepted()) {
+                $this->addFlash('error', 'Too many reset attempts. Try again later.');
+            } else {
+                $signature = self::getSignature($email);
+                $resetService->forgotPassword(new PasswordResetRequestDto($email, $signature));
+            }
+        }
+
+        return $this->redirectToRoute('forgot-password-token', [
+            'key' => $request->query->get('key'),
+            'signature' => $request->query->get('signature'),
+        ]);
+    }
+
     #[Route('/forgot-password/change', name: 'forgot-password-change')]
     public function change(
         Request $request,
@@ -117,5 +149,10 @@ class ForgotPasswordController extends AbstractController
                 $request->getPayload()->get('password', '')
             )
         ]);
+    }
+
+    protected static function getSignature(string $email): string
+    {
+        return \hash_hmac('sha256', $email, $_ENV['APP_SECRET']);
     }
 }

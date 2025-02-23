@@ -5,8 +5,11 @@ namespace App\Application\User\Service;
 
 
 use App\Application\User\Dto\PasswordChangeRequestDto;
+use App\Application\User\Dto\PasswordResendTokenDto;
 use App\Application\User\Dto\PasswordResetRequestDto;
 use App\Application\User\Dto\PasswordResetTokenDto;
+use App\Domain\Mail\Type\ForgotPasswordTokenMailType;
+use App\Domain\Service\MailHandlerInterface;
 use App\Domain\User\Event\PasswordChangeRequestedEvent;
 use App\Domain\User\Event\PasswordResetRequestedEvent;
 use App\Domain\User\Repository\PasswordResetTokenRepository;
@@ -20,6 +23,7 @@ class PasswordResetService
         protected UserRepository $userRepository,
         protected PasswordResetTokenRepository $tokenRepository,
         protected PasswordHasher $passwordHasher,
+        protected MailHandlerInterface $mailHandler,
     ) {
     }
 
@@ -32,6 +36,12 @@ class PasswordResetService
 
         $token = ResetPasswordToken::generate();
         $this->tokenRepository->save($data->email, $token);
+
+        $this->mailHandler->handle(
+            ForgotPasswordTokenMailType::create($user)
+                ->setToken($token)
+                ->setSignature($data->signature)
+        );
 
         return new PasswordResetRequestedEvent($data->email, $token);
     }

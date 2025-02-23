@@ -8,6 +8,8 @@ interface UserRepository
 {
     public function findOneById(int $id): ?User;
 
+    public function findOneByUsername(string $username): ?User;
+
     public function findOneByLogin(string $login): ?User;
 
     public function findOneByEmail(string $email): ?User;

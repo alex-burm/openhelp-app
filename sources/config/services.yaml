@@ -28,6 +28,7 @@ services:
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
+    App\Domain\Service\MailHandlerInterface: '@App\Infrastructure\Service\MailHandler'
 
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
         tags:
@@ -36,3 +37,7 @@ services:
     App\Infrastructure\Persistence\Redis\LoginRateLimiterStorage:
         arguments:
             $rateLimiterFactory: '@limiter.login_attempts'
+
+    App\Infrastructure\Persistence\Redis\ForgotPasswordLimiterStorage:
+        arguments:
+            $rateLimiterFactory: '@limiter.forgot_password'

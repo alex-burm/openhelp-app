@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Workspace\Entity\Workspace;
 use App\Domain\Workspace\Repository\WorkspaceRepository;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineWorkspace;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineWorkspaceMapper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,11 +28,18 @@ readonly class DoctrineWorkspaceRepository implements WorkspaceRepository
 
     public function findOneByCode(string $code): ?Workspace
     {
-        $doctrineWorkspace = $this->entityManager
-            ->getRepository(DoctrineWorkspace::class)
-            ->findOneByCode($code);
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('u')
+            ->from(static::DOCTRINE_CLASS_NAME, 'u')
+            ->where('u.code = :code')
+            ->setParameter(':code', $code);
 
-        return $this->getOneOrNothing($doctrineWorkspace);
+        $doctrineObject = $qb
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        return $this->getOneOrNothing($doctrineObject);
     }
 
     public function delete(Workspace $workspace): void
