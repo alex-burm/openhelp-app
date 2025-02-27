@@ -2,8 +2,12 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    router:
+        strict_requirements: null
+        default_uri: "http://localhost:8012"
+
+    session:
+        name: session_id
 
     rate_limiter:
         login_attempts:

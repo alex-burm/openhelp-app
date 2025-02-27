@@ -1,4 +1,18 @@
 services:
+  nginx:
+    image: nginx:latest
+    container_name: help_nginx
+    ports:
+      - "8012:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../data/nginx:/var/log/nginx
+      - ../../sources/public:/var/www/html:ro
+    depends_on:
+      - php
+    networks:
+      - help_network
+
   php:
     build:
       context: .

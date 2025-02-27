@@ -41,3 +41,19 @@ services:
     App\Infrastructure\Persistence\Redis\ForgotPasswordLimiterStorage:
         arguments:
             $rateLimiterFactory: '@limiter.forgot_password'
+
+    monolog.processor.memory_usage:
+        class: Monolog\Processor\MemoryUsageProcessor
+        tags:
+            - { name: monolog.processor }
+
+    monolog.processor.request_id:
+        class: App\Infrastructure\Service\Logger\RequestIdProcessor
+        tags:
+            - { name: monolog.processor }
+
+    monolog.processor.user_id:
+        class: App\Infrastructure\Service\Logger\UserIdProcessor
+        tags:
+            - { name: monolog.processor }
+#
