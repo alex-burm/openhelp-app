@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
-use App\Application\User\Service\UserRegisterService;
 use App\Application\User\Dto\UserRegisterDto;
+use App\Application\User\Service\UserRegisterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

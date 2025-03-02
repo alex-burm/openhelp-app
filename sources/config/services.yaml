@@ -29,6 +29,7 @@ services:
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
     App\Domain\Service\MailHandlerInterface: '@App\Infrastructure\Service\MailHandler'
+    App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
 
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
         tags:

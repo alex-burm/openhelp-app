@@ -17,7 +17,7 @@ use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\Service\PasswordHasher;
 use App\Domain\User\ValueObject\ResetPasswordToken;
 
-class PasswordResetService
+class PasswordResetService implements PasswordResetServiceInterface
 {
     public function __construct(
         protected UserRepository $userRepository,

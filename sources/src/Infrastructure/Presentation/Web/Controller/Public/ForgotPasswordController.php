@@ -3,21 +3,19 @@
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
 use App\Application\User\Dto\PasswordChangeRequestDto;
-use App\Application\User\Dto\PasswordResendTokenDto;
 use App\Application\User\Dto\PasswordResetRequestDto;
 use App\Application\User\Dto\PasswordResetTokenDto;
-use App\Application\User\Service\PasswordResetService;
+use App\Application\User\Service\PasswordResetServiceInterface;
 use App\Infrastructure\Persistence\Redis\ForgotPasswordLimiterStorage;
 use App\Infrastructure\Presentation\Web\Form\ChangePasswordForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordResendForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordTokenForm;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
 
@@ -26,7 +24,7 @@ class ForgotPasswordController extends AbstractController
     #[Route('/forgot-password', name: 'forgot-password')]
     public function index(
         Request $request,
-        PasswordResetService $resetService,
+        PasswordResetServiceInterface $resetService,
         ForgotPasswordLimiterStorage $rateLimiter,
     ): Response {
         $form = $this->createForm(ForgotPasswordForm::class);
@@ -56,7 +54,7 @@ class ForgotPasswordController extends AbstractController
     #[Route('/forgot-password/token', name: 'forgot-password-token')]
     public function token(
         Request $request,
-        PasswordResetService $resetService,
+        PasswordResetServiceInterface $resetService,
     ): Response {
         $form = $this->createForm(ForgotPasswordTokenForm::class, $request->query->all(), [
             'method' => Request::METHOD_GET,
@@ -86,7 +84,7 @@ class ForgotPasswordController extends AbstractController
     #[Route('/forgot-password/resend', name: 'forgot-password-resend')]
     public function resend(
         Request $request,
-        PasswordResetService $resetService,
+        PasswordResetServiceInterface $resetService,
         ForgotPasswordLimiterStorage $rateLimiter,
     ): Response {
         $form = $this->createForm(ForgotPasswordResendForm::class, $request->query->all(), [
@@ -114,7 +112,7 @@ class ForgotPasswordController extends AbstractController
     #[Route('/forgot-password/change', name: 'forgot-password-change')]
     public function change(
         Request $request,
-        PasswordResetService $resetService,
+        PasswordResetServiceInterface $resetService,
     ): Response {
         $email = $request->getSession()->get('reset_password_email');
         if (null === $email) {
