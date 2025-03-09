@@ -1,0 +1,198 @@
+@font-face {
+    font-family: "icomoon";
+    src: url("../assets/fonts/icomoon/icomoon.eot?ueqfpl");
+    src:
+        url("../assets/fonts/icomoon/icomoon.eot?ueqfpl#iefix") format("embedded-opentype"),
+        url("../assets/fonts/icomoon/icomoon.ttf?ueqfpl") format("truetype"),
+        url("../assets/fonts/icomoon/icomoon.woff?ueqfpl") format("woff"),
+        url("../assets/fonts/icomoon/icomoon.svg?ueqfpl#icomoon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "icomoon" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-agent:before {
+    content: "\e900";
+}
+
+.icon-assign-agent:before {
+    content: "\e901";
+}
+
+.icon-attach:before {
+    content: "\e902";
+}
+
+.icon-attribute:before {
+    content: "\e903";
+}
+
+.icon-chat:before {
+    content: "\e904";
+}
+
+.icon-checkmark:before {
+    content: "\e905";
+}
+
+.icon-cross:before {
+    content: "\e906";
+}
+
+.icon-customer-details:before {
+    content: "\e907";
+}
+
+.icon-customer:before {
+    content: "\e908";
+}
+
+.icon-dashboard:before {
+    content: "\e909";
+}
+
+.icon-dots:before {
+    content: "\e90a";
+}
+
+.icon-dropdown:before {
+    content: "\e90b";
+}
+
+.icon-edit:before {
+    content: "\e90c";
+}
+
+.icon-exit:before {
+    content: "\e90d";
+}
+
+.icon-filter:before {
+    content: "\e90e";
+}
+
+.icon-form:before {
+    content: "\e90f";
+}
+
+.icon-job:before {
+    content: "\e910";
+}
+
+.icon-knowledge-base:before {
+    content: "\e911";
+}
+
+.icon-mail:before {
+    content: "\e912";
+}
+
+.icon-high-priority:before {
+    content: "\e913";
+    color: var(--red);
+}
+
+.icon-medium-priority:before {
+    content: "\e914";
+    color: var(--orange);
+}
+
+.icon-low-priority:before {
+    content: "\e915";
+    color: var(--green);
+}
+
+.icon-mobile:before {
+    content: "\e916";
+}
+
+.icon-open:before {
+    content: "\e917";
+}
+
+.icon-plus:before {
+    content: "\e918";
+}
+
+.icon-profile-agent {
+    background-image: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='16' fill='%230B68E8'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M24 6.5C33.665 6.5 41.5 14.335 41.5 24V28.751C41.5 29.4408 42.0592 30 42.749 30C43.4388 30 43.998 29.4408 43.998 28.751V27.9153C44.5817 27.71 45 27.1538 45 26.5V21.5C45 20.8462 44.5817 20.29 43.998 20.0847V19.249C43.998 18.5592 43.4388 18 42.749 18C42.5087 18 42.2843 18.0679 42.0938 18.1855C39.6376 10.5362 32.4653 5 24 5C15.535 5 8.36297 10.5357 5.9065 18.1845C5.71605 18.0675 5.49188 18 5.25195 18C4.56052 18 4 18.5605 4 19.252V20.0854C3.4174 20.2913 3 20.8469 3 21.5V26.5C3 27.1531 3.4174 27.7087 4 27.9146V28.748C4 29.4395 4.56052 30 5.25195 30C5.94339 30 6.50391 29.4395 6.50391 28.748V23.6265C6.70265 14.134 14.4598 6.5 24 6.5Z' fill='%2370757D'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+}
+
+.icon-profile-customer:before {
+    content: "\e91b";
+}
+
+.icon-question:before {
+    content: "\e91c";
+}
+
+.icon-requests:before {
+    content: "\e91d";
+}
+
+.icon-reset:before {
+    content: "\e91e";
+}
+
+.icon-search:before {
+    content: "\e91f";
+}
+
+.icon-send:before {
+    content: "\e920";
+}
+
+.icon-set-priority:before {
+    content: "\e921";
+}
+
+.icon-settings:before {
+    content: "\e922";
+}
+
+.icon-short-arrow-down:before {
+    content: "\e923";
+}
+
+.icon-short-arrow-up:before {
+    content: "\e924";
+}
+
+.icon-sort:before {
+    content: "\e925";
+}
+
+.icon-square-plus:before {
+    content: "\e926";
+}
+
+.icon-status-circle-sm:before {
+    content: "\e927";
+}
+
+.icon-status-circle-xl:before {
+    content: "\e928";
+}
+
+.icon-trash:before {
+    content: "\e929";
+}

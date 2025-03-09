@@ -1,0 +1,17 @@
+h1 {
+    font-size: var(--text-size-xxl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-sm);
+}
+
+h2 {
+    font-size: var(--text-size-xl);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: var(--line-height-m);
+}
+
+p {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-base);
+    line-height: var(--line-height-base);
+}
