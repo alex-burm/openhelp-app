@@ -22,6 +22,9 @@ docker-franken-up: generate-env
 docker-franken-down:
 	@docker-compose --env-file documents/.env.local -f documents/docker-franken/docker-compose.yaml down
 
+docker-franken-bash:
+	@docker exec -it help_franken bash
+
 generate-env:
 	@if [ ! -f ./documents/.env.local ]; then \
 		cp ./documents/.env.dist ./documents/.env.local && \
