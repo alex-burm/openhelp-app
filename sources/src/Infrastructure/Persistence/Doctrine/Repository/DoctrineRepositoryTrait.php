@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 trait DoctrineRepositoryTrait
 {
-    private function _findOneById(int $id): ?object
+    private function _findOneById(mixed $id): ?object
     {
         $qb = $this->entityManager->createQueryBuilder()
             ->select('r')

@@ -19,43 +19,13 @@
                 <!-- Overall Stats -->
                 <div class="row g-4 mb-4">
                     <div class="col-md-3">
-                        <div class="stat-card">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="stat-number">127
-                                        <span class="stat-trend trend-up">+12 today</span>
-                                    </p>
-                                    <p class="stat-label">Total Tickets</p>
-                                </div>
-                                <i data-lucide="ticket" class="text-primary" style="width: 32px; height: 32px;"></i>
-                            </div>
-                        </div>
+                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW') }) }}
                     </div>
                     <div class="col-md-3">
-                        <div class="stat-card">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="stat-number">45
-                                        <span class="stat-trend trend-down">8 overdue</span>
-                                    </p>
-                                    <p class="stat-label">Open Tickets</p>
-                                </div>
-                                <i data-lucide="alert-circle" class="text-warning" style="width: 32px; height: 32px;"></i>
-                            </div>
-                        </div>
+                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS') }) }}
                     </div>
                     <div class="col-md-3">
-                        <div class="stat-card">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="stat-number">82
-                                        <span class="stat-trend trend-up">+24%</span>
-                                    </p>
-                                    <p class="stat-label">Resolved Today</p>
-                                </div>
-                                <i data-lucide="check-circle" class="text-success" style="width: 32px; height: 32px;"></i>
-                            </div>
-                        </div>
+                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED') }) }}
                     </div>
                     <div class="col-md-3">
                         <div class="stat-card">
@@ -81,46 +51,13 @@
                             </div>
                             <div class="row g-4">
                                 <div class="col-md-4">
-                                    <div class="channel-stat">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <i data-lucide="mail" class="text-primary"></i>
-                                                <span class="fw-medium">Email</span>
-                                            </div>
-                                            <span class="badge bg-primary-subtle text-primary">50</span>
-                                        </div>
-                                        <div class="progress" style="height: 6px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 62%"></div>
-                                        </div>
-                                    </div>
+                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::EMAIL') }) }}
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="channel-stat">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <i data-lucide="message-circle" class="text-success"></i>
-                                                <span class="fw-medium">Chat</span>
-                                            </div>
-                                            <span class="badge bg-success-subtle text-success">20</span>
-                                        </div>
-                                        <div class="progress" style="height: 6px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"></div>
-                                        </div>
-                                    </div>
+                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::CHAT') }) }}
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="channel-stat">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <i data-lucide="form-input" class="text-warning"></i>
-                                                <span class="fw-medium">Form</span>
-                                            </div>
-                                            <span class="badge bg-warning-subtle text-warning">10</span>
-                                        </div>
-                                        <div class="progress" style="height: 6px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 13%"></div>
-                                        </div>
-                                    </div>
+                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::FORM') }) }}
                                 </div>
                             </div>
                         </div>
@@ -131,42 +68,9 @@
                                 <h5 class="chart-title">Priority Distribution</h5>
                             </div>
                             <div class="priority-list">
-                                <div class="priority-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="priority-dot bg-danger"></span>
-                                            <span>High Priority</span>
-                                        </div>
-                                        <span class="fw-medium">5</span>
-                                    </div>
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%"></div>
-                                    </div>
-                                </div>
-                                <div class="priority-item mt-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="priority-dot bg-warning"></span>
-                                            <span>Medium Priority</span>
-                                        </div>
-                                        <span class="fw-medium">12</span>
-                                    </div>
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 35%"></div>
-                                    </div>
-                                </div>
-                                <div class="priority-item mt-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="priority-dot bg-success"></span>
-                                            <span>Low Priority</span>
-                                        </div>
-                                        <span class="fw-medium">28</span>
-                                    </div>
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%"></div>
-                                    </div>
-                                </div>
+                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::HIGH') }) }}
+                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::MEDIUM') }) }}
+                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::LOW') }) }}
                             </div>
                         </div>
                     </div>
