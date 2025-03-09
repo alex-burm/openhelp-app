@@ -253,6 +253,11 @@
     &__title {
         margin-bottom: 8px;
     }
+
+    .empty {
+        border-top: 1px solid var(--soft-grey);
+        padding-top: 96px;
+    }
 }
 
 //Item compontent
@@ -316,10 +321,8 @@
 
 //Empty
 .empty {
-    border-top: 1px solid var(--soft-grey);
     display: flex;
     justify-content: center;
-    padding-top: 96px;
 
     &__inner {
         align-items: center;
