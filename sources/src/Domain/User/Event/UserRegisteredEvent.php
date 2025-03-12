@@ -6,12 +6,8 @@ use App\Domain\User\Entity\User;
 
 readonly class UserRegisteredEvent
 {
-    public function __construct(protected User $user)
-    {
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
+    public function __construct(
+        public User $user,
+    ) {
     }
 }

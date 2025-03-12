@@ -1,0 +1,35 @@
+html {
+    --font-family-base: "Inter", sans-serif;
+    --text-size-xxl: 32px;
+    --text-size-xl: 18px;
+    --text-size-base: 16px;
+    --text-size-m: 14px;
+    --text-size-sm: 12px;
+    --font-weight-bold: 700;
+    --font-weight-semi-bold: 600;
+    --font-weight-medium: 500;
+    --font-weight-base: 400;
+    --line-height-m: 1.55;
+    --line-height-base: 1.5;
+    --line-height-sm: 1;
+
+    //Colors
+    --hard-grey: #70757D;
+    --soft-grey: #E6E7E9;
+    --light-grey: #F5F5F5;
+    --grey: #BABFC6;
+    --white: #FFFFFF; 
+    --black: #101010;
+    --red: #FF5246;
+    --blue: #0B68E8;
+    --orange: #F9A949;
+    --green: #32AE60;
+    --washed-red: #FFE7E6;
+    --washed-orange: #FFF1E1;
+    --washed-green: #E1FFEC;
+    --hard-red: #FFCDCB;
+    --hard-orange: #FFE7CB;
+    --hard-green: #CBFFDE;
+    --blue-hover: #0A5DCF;
+    --blue-active: #0F54B4;
+}

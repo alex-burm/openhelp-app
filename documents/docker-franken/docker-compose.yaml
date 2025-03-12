@@ -1,4 +1,18 @@
 services:
+  nginx:
+    image: nginx:latest
+    container_name: help_nginx
+    ports:
+      - "8012:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../data/nginx:/var/log/nginx
+      - ../../sources/public:/var/www/html:ro
+    depends_on:
+      - php
+    networks:
+      - help_network
+
   php:
     build:
       context: .
@@ -23,11 +37,23 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ../../database:/var/lib/mysql
+      - ../../data/mysql:/var/lib/mysql
     networks:
       - help_network
     ports:
       - "8016:3306"
+
+  redis:
+    image: redis:latest
+    container_name: help_redis
+    restart: always
+    networks:
+      - help_network
+    ports:
+      - "8017:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - ../../data/redis:/data
 
 networks:
   help_network:

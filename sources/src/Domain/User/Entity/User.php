@@ -70,12 +70,12 @@ class User
         $this->email = $email;
     }
 
-    public function getRoles(): RoleCollection
+    public function getRoles(): ?RoleCollection
     {
         return $this->roles;
     }
 
-    public function setRoles(RoleCollection $roles): void
+    public function setRoles(?RoleCollection $roles): void
     {
         $this->roles = $roles;
     }

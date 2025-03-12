@@ -17,10 +17,13 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
             return [];
         }
 
+        $roles = $data->getRoles();
         return [
             'id' => $data->getId(),
             'email' => $data->getEmail(),
-            'roles' => RoleMapper::fromCollection($data->getRoles()),
+            'password' => $data->getPassword(),
+            'name' => $data->getName(),
+            'roles' => \is_null($roles) ? null : RoleMapper::fromCollection($roles),
         ];
     }
 

@@ -23,20 +23,32 @@
                     <div class="card-body p-4">
                         <!-- Login Form -->
                         <form method="post" action="{{ path('login') }}">
+                            {% if error %}
+                                <div class="alert alert-danger">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </div>
+                            {% endif %}
+
+                            {% for type,messages in app.session.flashBag.all() %}
+                                <div class="alert alert-{{ type }}">
+                                    {{ messages.0 }}
+                                </div>
+                            {% endfor %}
+
                             <div class="mb-3">
                                 <label for="email" class="form-label small fw-medium">Login</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">
                                       <i data-lucide="user" style="width: 18px; height: 18px;"></i>
                                     </span>
-                                    <input type="text" name="_username" class="form-control border-start-0 ps-0" placeholder="Enter your login" required>
+                                    <input type="text" name="_username" value="{{ lastUsername }}" class="form-control border-start-0 ps-0" placeholder="Enter your login" required>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <label for="password" class="form-label small fw-medium mb-0">Password</label>
-                                    <a href="#" class="small text-decoration-none">Forgot password?</a>
+                                    <a href="{{ path('forgot-password') }}" class="small text-decoration-none">Forgot password?</a>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">

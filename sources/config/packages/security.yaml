@@ -16,6 +16,9 @@ security:
             lazy: true
             provider: app_user_provider
 
+            login_throttling:
+                limiter: App\Infrastructure\Persistence\Redis\LoginRateLimiterStorage
+
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800

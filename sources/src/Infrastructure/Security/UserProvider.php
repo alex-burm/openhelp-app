@@ -17,7 +17,7 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->userRepository->findOneByLogin($identifier);
+        $user = $this->userRepository->findOneByUsername($identifier);
 
         if (\is_null($user)) {
             throw new UserNotFoundException('User not found');
