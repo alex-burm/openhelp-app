@@ -3,14 +3,14 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\User\Entity\User;
-use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class DoctrineUserRepository implements UserRepository
+class DoctrineUserRepository implements UserRepositoryInterface
 {
     use DoctrineRepositoryTrait;
 

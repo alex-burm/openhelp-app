@@ -3,13 +3,12 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Workspace\Entity\Workspace;
-use App\Domain\Workspace\Repository\WorkspaceRepository;
-use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
+use App\Domain\Workspace\Repository\WorkspaceRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineWorkspace;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineWorkspaceMapper;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class DoctrineWorkspaceRepository implements WorkspaceRepository
+class DoctrineWorkspaceRepository implements WorkspaceRepositoryInterface
 {
     use DoctrineRepositoryTrait;
 
@@ -19,6 +18,20 @@ readonly class DoctrineWorkspaceRepository implements WorkspaceRepository
         protected EntityManagerInterface $entityManager,
         protected DoctrineWorkspaceMapper $mapper,
     ) {
+    }
+
+    public function getList(int $offset = 0, int $limit = 10): array
+    {
+        $list = $this->entityManager->createQueryBuilder()
+            ->select('t')
+            ->from(DoctrineWorkspace::class, 't')
+            ->orderBy('t.id', 'ASC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+        return \array_map(fn ($item) => $this->mapper->fromDoctrine($item), $list);
     }
 
     public function findOneById(int $id): ?Workspace

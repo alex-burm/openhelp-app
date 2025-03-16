@@ -5,25 +5,24 @@ namespace App\Application\User\Service;
 
 
 use App\Application\User\Dto\PasswordChangeRequestDto;
-use App\Application\User\Dto\PasswordResendTokenDto;
 use App\Application\User\Dto\PasswordResetRequestDto;
 use App\Application\User\Dto\PasswordResetTokenDto;
-use App\Domain\Mail\Type\ForgotPasswordTokenMailType;
-use App\Domain\Service\MailHandlerInterface;
+use App\Domain\Mail\Outgoing\Service\MailHandlerInterface;
+use App\Domain\Mail\Outgoing\Type\ForgotPasswordTokenMailType;
 use App\Domain\User\Event\PasswordChangeRequestedEvent;
 use App\Domain\User\Event\PasswordResetRequestedEvent;
 use App\Domain\User\Repository\PasswordResetTokenRepository;
-use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Domain\User\Service\PasswordHasher;
 use App\Domain\User\ValueObject\ResetPasswordToken;
 
 class PasswordResetService implements PasswordResetServiceInterface
 {
     public function __construct(
-        protected UserRepository $userRepository,
+        protected UserRepositoryInterface      $userRepository,
         protected PasswordResetTokenRepository $tokenRepository,
-        protected PasswordHasher $passwordHasher,
-        protected MailHandlerInterface $mailHandler,
+        protected PasswordHasher               $passwordHasher,
+        protected MailHandlerInterface         $mailHandler,
     ) {
     }
 

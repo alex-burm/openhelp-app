@@ -13,7 +13,7 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
 {
     public function normalize(mixed $data, string $format = null, array $context = []): array
     {
-        if (!$data instanceof User) {
+        if (false === ($data instanceof User)) {
             return [];
         }
 
@@ -35,11 +35,11 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
 
         return new User(
             id: $data['id'],
-            login: $data['login'],
-            password: $data['password'],
+            login: $data['login'] ?? 'user' . \hrtime(true),
+            password: $data['password'] ?? '',
             name: $data['name'],
-            email: $data['email'],
-            roles: RoleMapper::toCollection($data['roles']),
+            email: $data['email'] ?? null,
+            roles: RoleMapper::toCollection($data['roles'] ?? []),
         );
     }
 

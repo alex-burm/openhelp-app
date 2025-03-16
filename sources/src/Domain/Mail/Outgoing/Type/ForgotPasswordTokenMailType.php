@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Mail\Type;
+namespace App\Domain\Mail\Outgoing\Type;
 
-use App\Domain\Mail\MailMessageInterface;
+use App\Domain\Mail\Outgoing\OutgoingMessageInterface;
 use App\Domain\User\ValueObject\ResetPasswordToken;
 
-class ForgotPasswordTokenMailType extends AbstractMailType implements MailMessageInterface
+class ForgotPasswordTokenMailType extends AbstractMailType implements OutgoingMessageInterface
 {
     protected ?string $template = 'forgotPassword';
 
@@ -28,7 +28,7 @@ class ForgotPasswordTokenMailType extends AbstractMailType implements MailMessag
 
     public function getTemplateData(): array
     {
-        $this->data['key'] = base64_encode($this->data['user']->getEmail());
+        $this->data['key'] = \base64_encode($this->data['user']->getEmail());
         return $this->data;
     }
 }

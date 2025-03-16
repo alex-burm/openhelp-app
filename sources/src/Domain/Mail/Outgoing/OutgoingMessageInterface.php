@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Mail;
+namespace App\Domain\Mail\Outgoing;
 
-interface MailMessageInterface
+interface OutgoingMessageInterface
 {
     public function getTo(): string;
 

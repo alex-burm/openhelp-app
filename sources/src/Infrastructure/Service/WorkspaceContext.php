@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Service;
 
 use App\Domain\Workspace\Entity\Workspace;
-use App\Domain\Workspace\Repository\WorkspaceRepository;
+use App\Domain\Workspace\Repository\WorkspaceRepositoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class WorkspaceContext
@@ -11,13 +11,14 @@ class WorkspaceContext
     protected ?Workspace $workspace = null;
 
     public function __construct(
-        protected WorkspaceRepository $workspaceRepository,
-        protected RequestStack $requestStack
+        protected WorkspaceRepositoryInterface $workspaceRepository,
+        protected RequestStack                 $requestStack
     ) {
     }
 
     public function setCurrentWorkspace(Workspace $workspace): static
     {
+        echo ' WORKSPACE SET ';
         $this->workspace = $workspace;
         return $this;
     }
@@ -34,15 +35,15 @@ class WorkspaceContext
     private function resolveWorkspaceFromDomain(): void
     {
         $request = $this->requestStack->getCurrentRequest();
-        if (!$request) {
-            throw new \RuntimeException("No active request found.");
+        if (\is_null($request)) {
+            throw new \RuntimeException('No active request found.');
         }
 
         $code = \explode('.', $request->getHost())[0];
         $workspace = $this->workspaceRepository->findOneByCode($code);
 
         if (\is_null($workspace)) {
-            throw new \RuntimeException(sprintf('Workspace not found for domain: %s', $code));
+            throw new \RuntimeException(\sprintf('Workspace not found for domain: %s', $code));
         }
 
         $this->workspace = $workspace;

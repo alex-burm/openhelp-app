@@ -4,7 +4,7 @@ namespace App\Domain\User\Repository;
 
 use App\Domain\User\Entity\User;
 
-interface UserRepository
+interface UserRepositoryInterface
 {
     public function findOneById(int $id): ?User;
 
