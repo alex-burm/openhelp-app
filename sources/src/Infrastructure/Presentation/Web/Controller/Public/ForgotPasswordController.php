@@ -11,7 +11,6 @@ use App\Infrastructure\Presentation\Web\Form\ChangePasswordForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordResendForm;
 use App\Infrastructure\Presentation\Web\Form\ForgotPasswordTokenForm;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

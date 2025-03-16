@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Mail\Type;
+namespace App\Domain\Mail\Outgoing\Type;
 
-use App\Domain\Mail\MailMessageInterface;
+use App\Domain\Mail\Outgoing\OutgoingMessageInterface;
 use App\Domain\User\Entity\User;
 
-abstract class AbstractMailType implements MailMessageInterface
+abstract class AbstractMailType implements OutgoingMessageInterface
 {
     protected array $data = [];
 

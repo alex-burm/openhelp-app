@@ -8,7 +8,7 @@ use App\Domain\Ticket\ValueObject\Counter\TicketPrioritiesCount;
 use App\Domain\Ticket\ValueObject\Counter\TicketStatusesCount;
 use Symfony\Component\Uid\Uuid;
 
-interface TicketRepository
+interface TicketRepositoryInterface
 {
     public function countPerStatus(): TicketStatusesCount;
 

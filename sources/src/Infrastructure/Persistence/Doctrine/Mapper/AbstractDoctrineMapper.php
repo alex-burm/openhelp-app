@@ -19,7 +19,7 @@ readonly abstract class AbstractDoctrineMapper
 
     public function toDoctrine(object $domainObject, ?object $entity = null): object
     {
-        $normalizedData = \array_filter($this->serializer->normalize($domainObject));
+        $normalizedData = \array_filter($this->serializer->normalize($domainObject), fn ($x) => null !== $x);
 
         return $this->serializer->denormalize(
             $normalizedData,
@@ -31,7 +31,7 @@ readonly abstract class AbstractDoctrineMapper
 
     public function fromDoctrine(object $doctrineObject): object
     {
-        $normalizedData = \array_filter($this->serializer->normalize($doctrineObject));
+        $normalizedData = \array_filter($this->serializer->normalize($doctrineObject), fn ($x) => null !== $x);
         return $this->serializer->denormalize(
             $normalizedData,
             static::DOMAIN_CLASS_NAME

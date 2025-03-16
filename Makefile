@@ -25,6 +25,9 @@ docker-franken-down:
 docker-franken-bash:
 	@docker exec -it help_franken bash
 
+docker-franken-check:
+	@docker exec -it help_franken ./bin/console app:check-mail-ticket -vv
+
 generate-env:
 	@if [ ! -f ./documents/.env.local ]; then \
 		cp ./documents/.env.dist ./documents/.env.local && \

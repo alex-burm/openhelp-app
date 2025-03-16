@@ -62,4 +62,16 @@ class Workspace
     {
         $this->ownerId = $ownerId;
     }
+
+    public function getMailSettings(): array|false
+    {
+        return [
+            'host' => 'help_mailer',
+//            'port' => 993,
+            'port' => 143,
+            'login' => 'test@local',
+            'password' => 'password123'
+        ];
+        return false;
+    }
 }

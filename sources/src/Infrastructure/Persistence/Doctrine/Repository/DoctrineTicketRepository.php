@@ -3,25 +3,19 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Domain\Ticket\Entity\Ticket;
-use App\Domain\Ticket\Repository\TicketRepository;
+use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\Counter\TicketChannelsCount;
 use App\Domain\Ticket\ValueObject\Counter\TicketPrioritiesCount;
 use App\Domain\Ticket\ValueObject\Counter\TicketStatusesCount;
 use App\Domain\Ticket\ValueObject\TicketChannel;
 use App\Domain\Ticket\ValueObject\TicketPriority;
 use App\Domain\Ticket\ValueObject\TicketStatus;
-use App\Domain\User\Entity\User;
-use App\Domain\User\Repository\UserRepository;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket;
-use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineTicketMapper;
-use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Symfony\Component\Uid\Uuid;
 
-class DoctrineTicketRepository implements TicketRepository
+class DoctrineTicketRepository implements TicketRepositoryInterface
 {
     use DoctrineRepositoryTrait;
 
@@ -101,6 +95,4 @@ class DoctrineTicketRepository implements TicketRepository
     {
         $this->_delete($ticket);
     }
-
-
 }
