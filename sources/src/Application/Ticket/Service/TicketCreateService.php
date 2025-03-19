@@ -16,8 +16,8 @@ class TicketCreateService
 {
     public function __construct(
         protected TicketRepositoryInterface $ticketRepository,
-        protected UserRepositoryInterface $userRepository,
-        protected EventDispatcherInterface $eventDispatcher
+        protected UserRepositoryInterface   $userRepository,
+        protected EventDispatcherInterface  $eventDispatcher
     ) {
     }
 

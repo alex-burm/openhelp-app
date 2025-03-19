@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Entity;
 use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
@@ -34,12 +35,15 @@ class DoctrineTicket implements WorkspaceAwareEntity
     #[ORM\Column(type: 'integer', nullable: false)]
     protected ?int $channel;
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $updatedAt;
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $deletedAt;
 

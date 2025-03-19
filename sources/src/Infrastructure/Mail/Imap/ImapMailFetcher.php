@@ -107,7 +107,7 @@ class ImapMailFetcher implements MailFetcherInterface
                 case 1: // multipart
                     break;
                 case 2: // forwarded message
-                    $nestedStructure = imap_fetchstructure($this->connection, $emailId, $partIndex + 1);
+                    $nestedStructure = \imap_fetchstructure($this->connection, $emailId);
                     $body .= $this->getBody($emailId, $nestedStructure);
                     break;
                 case 3: // binary (pdf,zip, ..)

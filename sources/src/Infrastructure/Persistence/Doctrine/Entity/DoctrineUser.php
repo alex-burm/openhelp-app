@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
 use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
 #[ORM\Table(name: 'user')]
@@ -31,12 +32,15 @@ class DoctrineUser implements WorkspaceAwareEntity
     #[ORM\Column(type: 'json', nullable: false)]
     protected array $roles = [];
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $updatedAt;
 
+    #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $deletedAt;
 

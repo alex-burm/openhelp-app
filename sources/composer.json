@@ -9,6 +9,8 @@
         "ext-iconv": "*",
         "ext-redis": "*",
         "ext-imap": "*",
+        "ext-openssl": "*",
+        "ext-sodium": "*",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.4",

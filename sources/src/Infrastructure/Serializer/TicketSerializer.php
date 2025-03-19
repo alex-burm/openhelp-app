@@ -3,9 +3,13 @@
 namespace App\Infrastructure\Serializer;
 
 use App\Domain\Ticket\Entity\Ticket;
+use App\Domain\Ticket\ValueObject\TicketChannel;
+use App\Domain\Ticket\ValueObject\TicketPriority;
+use App\Domain\Ticket\ValueObject\TicketStatus;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+use Symfony\Component\Uid\Uuid;
 
 #[AsTaggedItem('serializer.normalizer')]
 class TicketSerializer implements NormalizerInterface, DenormalizerInterface
@@ -28,9 +32,14 @@ class TicketSerializer implements NormalizerInterface, DenormalizerInterface
 
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): Ticket
     {
-        if (!is_array($data)) {
+        if (false === \is_array($data)) {
             throw new \InvalidArgumentException('Invalid data for Ticket deserialization');
         }
+
+        $data['id'] = Uuid::fromRfc4122($data['id']);
+        $data['status'] = TicketStatus::from($data['status']);
+        $data['channel'] = TicketChannel::from($data['channel']);
+        $data['priority'] = TicketPriority::from($data['priority']);
 
         return new Ticket(...$data);
     }
