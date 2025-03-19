@@ -5,6 +5,8 @@ namespace App\Infrastructure\Presentation\CLI\Command;
 use App\Application\Ticket\Service\EmailTicketSource;
 use App\Application\Ticket\Service\TicketCreateService;
 use App\Domain\Mail\Incoming\Service\MailFetcherInterface;
+use App\Domain\Settings\Service\SettingsService;
+use App\Domain\Settings\ValueObject\SettingName;
 use App\Domain\Workspace\Repository\WorkspaceRepositoryInterface;
 use App\Infrastructure\Mail\Imap\ImapMailFetcher;
 use App\Infrastructure\Service\WorkspaceContext;
@@ -18,11 +20,12 @@ use Psr\Log\LoggerInterface;
 class CheckMailTicketsCommand extends Command
 {
     public function __construct(
-        protected WorkspaceContext $workspaceContext,
-        protected TicketCreateService $ticketCreateService,
-        protected MailFetcherInterface $mailFetcher,
+        protected WorkspaceContext             $workspaceContext,
+        protected TicketCreateService          $ticketCreateService,
+        protected MailFetcherInterface         $mailFetcher,
         protected WorkspaceRepositoryInterface $workspaceRepository,
-        protected LoggerInterface $logger,
+        protected SettingsService              $settingService,
+        protected LoggerInterface              $logger,
     ) {
         parent::__construct();
     }
@@ -58,14 +61,11 @@ class CheckMailTicketsCommand extends Command
                 continue;
             }
 
-            /**
-             * hardcoded to test connection, will be stored in database next time
-             */
             $fetcher = new ImapMailFetcher(
-                host: 'imap.gmail.com',
-                port: 993,
-                username: '',
-                password: '',
+                host: $this->settingService->getSetting(SettingName::IMAP_HOSTNAME),
+                port: $this->settingService->getSetting(SettingName::IMAP_PORT),
+                username: $this->settingService->getSetting(SettingName::IMAP_USERNAME),
+                password: $this->settingService->getSetting(SettingName::IMAP_PASSWORD),
             );
             $source = new EmailTicketSource($fetcher);
             while ($event = $this->ticketCreateService->createTicket($source)) {

@@ -29,7 +29,7 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
 
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): User
     {
-        if (!is_array($data)) {
+        if (false === \is_array($data)) {
             throw new \InvalidArgumentException('Invalid data for User deserialization');
         }
 

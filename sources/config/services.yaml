@@ -29,6 +29,7 @@ services:
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
     App\Domain\Ticket\Repository\TicketRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineTicketRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
+    App\Domain\Settings\Repository\SettingsRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository'
     App\Domain\Service\MailHandlerInterface: '@App\Infrastructure\Service\MailHandler'
     App\Domain\Common\Event\EventDispatcherInterface: '@App\Infrastructure\Common\Adapter\EventDispatcherAdapter'
     App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'

@@ -12,6 +12,7 @@ use App\Domain\Ticket\ValueObject\TicketPriority;
 use App\Domain\Ticket\ValueObject\TicketStatus;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineTicketMapper;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -25,6 +26,22 @@ class DoctrineTicketRepository implements TicketRepositoryInterface
         protected EntityManagerInterface $entityManager,
         protected DoctrineTicketMapper   $mapper,
     ) {
+    }
+
+    private function _findOneById(Uuid $id): ?object
+    {
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('r')
+            ->from(static::DOCTRINE_CLASS_NAME, 'r')
+            ->where('r.id = :id')
+            ->setParameter(':id', $id->toBinary(), ParameterType::BINARY);
+
+        $doctrineObject = $qb
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        return $this->getOneOrNothing($doctrineObject);
     }
 
     public function countPerStatus(): TicketStatusesCount

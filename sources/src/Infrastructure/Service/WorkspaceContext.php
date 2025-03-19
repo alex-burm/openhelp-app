@@ -18,7 +18,6 @@ class WorkspaceContext
 
     public function setCurrentWorkspace(Workspace $workspace): static
     {
-        echo ' WORKSPACE SET ';
         $this->workspace = $workspace;
         return $this;
     }
