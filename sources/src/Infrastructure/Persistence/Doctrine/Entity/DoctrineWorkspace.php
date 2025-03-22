@@ -22,6 +22,9 @@ class DoctrineWorkspace
     #[ORM\Column(type: 'string', nullable: false)]
     protected string $code = '';
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $token = null;
+
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
@@ -58,6 +61,16 @@ class DoctrineWorkspace
     public function setCode(string $code): void
     {
         $this->code = $code;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

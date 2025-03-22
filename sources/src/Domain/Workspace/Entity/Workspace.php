@@ -13,13 +13,18 @@ class Workspace
         protected ?int $id = null,
         protected string $name = '',
         protected string $code = '',
+        protected string $token = '',
     ) {
-        if (0 === \strlen($name)) {
+        if (0 === \strlen($this->name)) {
             $this->name = self::DEFAULT_NAME;
         }
 
         if (0 === \strlen($code)) {
             $this->code = \bin2hex(\random_bytes(8));
+        }
+
+        if (0 === \strlen($this->token)) {
+            $this->token = \bin2hex(\random_bytes(16));
         }
     }
 
@@ -61,6 +66,16 @@ class Workspace
     public function setOwnerId(?int $ownerId): void
     {
         $this->ownerId = $ownerId;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 
     public function getMailSettings(): array|false

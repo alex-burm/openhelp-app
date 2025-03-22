@@ -24,20 +24,15 @@ class SettingsService
             $setting = new Settings($name);
         }
 
-//        $setting->setValue($isSensitive ? $this->encryptionService->encrypt($value) : $value);
-        
-        $setting->setValue($value);
+        $setting->setValue($isSensitive ? $this->encryptionService->encrypt($value) : $value);
         $this->repository->save($setting);
     }
 
     public function getSetting(SettingName $name): ?string
     {
         $setting = $this->repository->getAll()->get($name);
-
-        return $setting?->getValue();
-
-//        return $setting?->isSensitive()
-//            ? $this->encryptionService->decrypt($setting->getValue())
-//            : $setting?->getValue();
+        return $setting?->isSensitive()
+            ? $this->encryptionService->decrypt($setting->getValue())
+            : $setting?->getValue();
     }
 }
