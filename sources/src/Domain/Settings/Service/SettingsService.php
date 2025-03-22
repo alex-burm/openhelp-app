@@ -31,6 +31,7 @@ class SettingsService
     public function getSetting(SettingName $name): ?string
     {
         $setting = $this->repository->getAll()->get($name);
+
         return $setting?->isSensitive()
             ? $this->encryptionService->decrypt($setting->getValue())
             : $setting?->getValue();
