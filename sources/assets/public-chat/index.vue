@@ -40,7 +40,7 @@ export default {
   methods: {
     setupCentrifugo() {
       this.centrifuge = new Centrifuge('ws://localhost:8018/connection/websocket', {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZXhwIjoxNzQyNzQ4OTU1LCJpYXQiOjE3NDI3NDUzNTUsImNoYW5uZWxzIjpbInVzZXIjMTIzIl19.xdCvGEoaZq65Bj82RYDlw-C0UJ_5bkKeq8nn-hNqgoY'
+        token: ''
       });
 
       const sub = this.centrifuge.newSubscription('user#123');
@@ -59,7 +59,7 @@ export default {
       this.centrifuge.on('disconnect', (ctx) => {
         console.log('Disconnected from Centrifugo', ctx);
       });
-     
+
       this.centrifuge.connect();
     },
     addMessage(content) {
