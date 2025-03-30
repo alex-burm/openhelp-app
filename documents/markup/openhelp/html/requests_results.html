@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>OpenHelp</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="overlay"></div>
+        <div class="sidebar">
+            <a class="logo" href="#">
+                <img src="../assets/img/logo.svg" alt="logo">
+            </a>
+            <nav class="nav">
+                <a class="nav__link active" href="#">
+                    <i class="icon-dashboard"></i>
+                    Dashboard
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-requests"></i>
+                    Requests
+                    <span class="badge">2</span>
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-knowledge-base"></i>
+                    Knowledge base
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-agent"></i>
+                    Agents
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-settings"></i>
+                    Settings
+                </a>
+                <div class="nav__bot">
+                    <a class="nav__link" href="#">
+                        <i class="icon-question"></i>
+                        Help & Info
+                    </a>
+                    <a class="nav__link" href="#">
+                        <i class="icon-exit"></i>
+                        Log out
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="layout">
+            <header class="header">
+                <h1 class="header__title">
+                    Requests
+                </h1>
+                <div class="header__right">
+                    <form action="#" class="header__form">
+                        <div class="form__row">
+                            <i class="icon-search"></i>
+                            <input type="text" class="form__control form__control--xl" placeholder="Search for anything in the system...">
+                            <button type="button" class="btn__clear-search">
+                                <i class="icon-cross"></i>
+                            </button>
+                        </div>
+                        <div class="search">
+                            <!-- <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div> -->
+                            <!-- <div class="empty">
+                                <div class="empty__inner">
+                                    <img src="../assets/img/no-search.svg" alt="no requests">
+                                    <span class="empty__text">
+                                        There are no search results for this query.
+                                    </span>
+                                </div>
+                            </div> -->
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Customers
+                                    </h2>
+                                    <span class="search__result">
+                                        1 result
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="avatar">
+                                            <span class="avatar__name">
+                                                HW
+                                            </span>
+                                            <i class="icon-profile-customer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello Wilson
+                                        </span>
+                                        <span class="item__text">
+                                            hellowilson@gmail.com
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Requests
+                                    </h2>
+                                    <span class="search__result">
+                                        3 results
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-chat"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I just wanted to clarify few
+                                        </span>
+                                        <span class="item__text">
+                                            Gerd Muller • 50m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-medium-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-form"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello! It seems that I found a lot
+                                        </span>
+                                        <span class="item__text">
+                                            Marta Fix • 44m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-low-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-mail"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I don’t know what to do in
+                                        </span>
+                                        <span class="item__text">
+                                            John Jones • 1h ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-high-priority"></i>
+                                        <i class="icon-agent"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="avatar">
+                        <span class="avatar__name">
+                            Me
+                        </span>
+                        <i class="icon-profile-agent"></i>
+                    </div>
+                </div>
+            </header>
+            <main class="main">
+                <section class="requests">
+                    <div class="requests__left">
+                        <div class="form__row">
+                            <i class="icon-search"></i>
+                            <input type="text" class="form__control form__control--xl" placeholder="Search inside the requests...">
+                            <button type="button" class="btn__clear-search">
+                                <i class="icon-cross"></i>
+                            </button>
+                        </div>
+                        <div class="results">
+                            <!-- <div class="empty">
+                                <div class="empty__inner">
+                                    <img src="../assets/img/no-search.svg" alt="no requests">
+                                    <span class="empty__text">
+                                        There are no search results for this query.
+                                    </span>
+                                </div>
+                            </div> -->
+                            <!-- <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div> -->
+                            <h2 class="results__title">
+                                3 results
+                            </h2>
+                            <div class="results__items">
+                                <div class="results__item">
+                                    <div class="results__top">
+                                        <span class="tabs__link">
+                                            <span class="tabs__circle error"></span>
+                                            New
+                                        </span>
+                                    </div>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    GB
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I just wanted to clarify few
+                                            </span>
+                                            <span class="item__text">
+                                                Gerd Muller • 50m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-medium-priority"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    GB
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I just wanted to clarify few
+                                            </span>
+                                            <span class="item__text">
+                                                Gerd Muller • 50m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-medium-priority"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    GB
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I just wanted to clarify few
+                                            </span>
+                                            <span class="item__text">
+                                                Gerd Muller • 50m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-medium-priority"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="results__item">
+                                    <div class="results__top">
+                                        <span class="tabs__link">
+                                            <span class="tabs__circle warning"></span>
+                                            In progress
+                                        </span>
+                                    </div>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    MF
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello! It seems that I found a lot
+                                            </span>
+                                            <span class="item__text">
+                                                Marta Fix • 44m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-low-priority"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    MF
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello! It seems that I found a lot
+                                            </span>
+                                            <span class="item__text">
+                                                Marta Fix • 44m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-low-priority"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    MF
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello! It seems that I found a lot
+                                            </span>
+                                            <span class="item__text">
+                                                Marta Fix • 44m ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-low-priority"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="results__item">
+                                    <div class="results__top">
+                                        <span class="tabs__link">
+                                            <span class="tabs__circle success"></span>
+                                            Resolved
+                                        </span>
+                                    </div>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    JJ
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I don’t know what to do in
+                                            </span>
+                                            <span class="item__text">
+                                                John Jones • 1h ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-high-priority"></i>
+                                            <i class="icon-agent"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    JJ
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I don’t know what to do in
+                                            </span>
+                                            <span class="item__text">
+                                                John Jones • 1h ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-high-priority"></i>
+                                            <i class="icon-agent"></i>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    JJ
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Hello, I don’t know what to do in
+                                            </span>
+                                            <span class="item__text">
+                                                John Jones • 1h ago
+                                            </span>
+                                        </div>
+                                        <div class="item__right">
+                                            <i class="icon-high-priority"></i>
+                                            <i class="icon-agent"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="requests__right">
+                        <div class="chat">
+                            <div class="chat__header">
+                                <div class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-mail"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <input type="text"class="form__control" value="Topic name"></input>
+                                        <span class="item__text">
+                                            Victor Black
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="chat__header-actions">
+                                    <div class="dropdown dropdown--secondary">
+                                        <a href="#" class="btn__status btn__dropdown error">
+                                            <i class="icon-status-circle-sm"></i>
+                                            <span class="tooltip">
+                                                Change priority
+                                            </span>
+                                        </a>
+                                        <div class="dropdown__menu">
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority error active">
+                                                    <i class="icon-high-priority"></i>
+                                                    <span class="btn__text">
+                                                        High
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority warning">
+                                                    <i class="icon-medium-priority"></i>
+                                                    <span class="btn__text">
+                                                        Medium
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority success">
+                                                    <i class="icon-low-priority"></i>
+                                                    <span class="btn__text">
+                                                        Low
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown dropdown--secondary">
+                                        <a href="#" class="btn__priority btn__dropdown error">
+                                            <i class="icon-high-priority"></i>
+                                            <span class="tooltip">
+                                                Change priority
+                                            </span>
+                                        </a>
+                                        <div class="dropdown__menu">
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority error active">
+                                                    <i class="icon-high-priority"></i>
+                                                    <span class="btn__text">
+                                                        High
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority warning">
+                                                    <i class="icon-medium-priority"></i>
+                                                    <span class="btn__text">
+                                                        Medium
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__priority success">
+                                                    <i class="icon-low-priority"></i>
+                                                    <span class="btn__text">
+                                                        Low
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="avatar">
+                                        <span class="avatar__name">
+                                            Me
+                                        </span>
+                                        <i class="icon-profile-agent"></i>
+                                    </div>
+                                    <div class="dropdown dropdown--search">
+                                        <a href="#" class="btn__primary btn__dropdown">
+                                            <i class="icon-assign-agent"></i>
+                                            <span class="tooltip">
+                                                Assign agent
+                                            </span>
+                                        </a>
+                                        <div class="dropdown__menu">
+                                            <div class="dropdown__menu-top">
+                                                <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
+                                            </div>
+                                            <div class="dropdown__menu-bot">
+                                                <div class="dropdown__item">
+                                                    <a href="#" class="btn__primary">
+                                                        <i class="icon-agent"></i>
+                                                        <span class="btn__text">
+                                                            Victor Black
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="dropdown__item-empty">
+                                                    There are no matching agents.
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="dropdown">
+                                        <a href="#" class="btn__primary btn__dropdown">
+                                            <i class="icon-dots"></i>
+                                            <span class="tooltip">
+                                                More
+                                            </span>
+                                        </a>
+                                        <div class="dropdown__menu">
+                                            <div class="dropdown__item">
+                                                <a href="#" class="btn__primary">
+                                                    <i class="icon-customer-details"></i>
+                                                    <span class="btn__text">
+                                                        View customer details
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown__menu-bot">
+                                                <div class="dropdown__item">
+                                                    <a href="#" class="btn__primary danger">
+                                                        <i class="icon-trash"></i>
+                                                        <span class="btn__text">
+                                                            Delete request
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="users">
+                                <li class="separator">
+                                    Request ID: 123e4567-e89b-12d3-a456-426655440000
+                                </li>
+                                <li class="user">
+                                    <div class="item">
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    SN
+                                                </span>
+                                                <i class="icon-profile-customer"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item__box">
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Cannot access my account after password reset.
+                                                </span>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="separator">
+                                    Victor Black was assigned to this request.
+                                </li>
+                                <li class="user user--self">
+                                    <div class="item">
+                                        <div class="item__box">
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Hello, Sonia! Can you specify your problem?
+                                                </span>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Or this.
+                                                </span>
+                                                <div class="item__files">
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Or this.
+                                                </span>
+                                                <div class="item__files">
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Or this.
+                                                </span>
+                                                <div class="item__files">
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                            <div class="item__inner">
+                                                <span class="item__heading">
+                                                    Or this.
+                                                </span>
+                                                <div class="item__files">
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="btn__file">
+                                                        <i class="icon-attach"></i>
+                                                        <span class="btn__text">
+                                                            File.pdf
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="item__text">
+                                                    15:45
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="item__left">
+                                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    VB
+                                                </span>
+                                                <i class="icon-profile-agent"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="send">
+                                <div class="send__left">
+                                    <div class="send__left-inner">
+                                        <div class="autoresizable" data-replicated-value="">
+                                            <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Write your message..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="send__files">
+                                        <a href="#" class="btn__file">
+                                            <span class="btn__decoration">
+                                                <i class="icon-short-arrow-up"></i>
+                                                <svg viewBox="0 0 40 40" class="circular">
+                                                    <path class="circular__decoration" stroke-dasharray="70, 100" stroke-linecap="round" d="M19 3.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="btn__text">
+                                                File.pdf
+                                            </span>
+                                        </a>
+                                        <a href="#" class="btn__file">
+                                            <span class="btn__decoration">
+                                                <i class="icon-short-arrow-down"></i>
+                                                <svg viewBox="0 0 40 40" class="circular">
+                                                    <path class="circular__decoration" stroke-dasharray="70, 100" stroke-linecap="round" d="M19 3.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="btn__text">
+                                                File.pdf
+                                            </span>
+                                        </a>
+                                        <a href="#" class="btn__file">
+                                            <i class="icon-attach"></i>
+                                            <span class="btn__text">
+                                                File.pdf
+                                            </span>
+                                            <i class="icon-cross"></i>
+                                        </a>
+                                        <a href="#" class="btn__file">
+                                            <i class="icon-attach"></i>
+                                            <span class="btn__text">
+                                                File.pdf
+                                            </span>
+                                            <i class="icon-cross"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="send__actions">
+                                    <button type="button" class="btn__attach">
+                                        <i class="icon-attach"></i>
+                                    </button>
+                                    <button type="button" class="btn__send disabled">
+                                        <i class="icon-send"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="../js/main.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -15,7 +15,7 @@ let { src, dest } = require('gulp'),
     uglify = require('gulp-uglify-es').default,
     rename = require('gulp-rename');
 
-let openhelp_project = "../public";
+let openhelp_project = "../../sources/public";
 let openhelp_source = "openhelp";
 
 // theme path

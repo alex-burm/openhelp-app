@@ -12,6 +12,7 @@
 
 <body>
     <div class="wrapper">
+        <div class="overlay"></div>
         <div class="sidebar">
             <a class="logo" href="#">
                 <img src="../assets/img/logo.svg" alt="logo">
@@ -63,6 +64,112 @@
                             <button type="button" class="btn__clear-search">
                                 <i class="icon-cross"></i>
                             </button>
+                        </div>
+                        <div class="search">
+                            <!-- <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div> -->
+                            <!-- <div class="empty">
+                                <div class="empty__inner">
+                                    <img src="../assets/img/no-search.svg" alt="no requests">
+                                    <span class="empty__text">
+                                        There are no search results for this query.
+                                    </span>
+                                </div>
+                            </div> -->
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Customers
+                                    </h2>
+                                    <span class="search__result">
+                                        1 result
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="avatar">
+                                            <span class="avatar__name">
+                                                HW
+                                            </span>
+                                            <i class="icon-profile-customer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello Wilson
+                                        </span>
+                                        <span class="item__text">
+                                            hellowilson@gmail.com
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Requests
+                                    </h2>
+                                    <span class="search__result">
+                                        3 results
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-chat"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I just wanted to clarify few
+                                        </span>
+                                        <span class="item__text">
+                                            Gerd Muller • 50m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-medium-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-form"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello! It seems that I found a lot
+                                        </span>
+                                        <span class="item__text">
+                                            Marta Fix • 44m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-low-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-mail"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I don’t know what to do in
+                                        </span>
+                                        <span class="item__text">
+                                            John Jones • 1h ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-high-priority"></i>
+                                        <i class="icon-agent"></i>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </form>
                     <div class="avatar">
@@ -467,24 +574,32 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn__primary">
-                                        <i class="icon-assign-agent"></i>
-                                        <span class="btn__text">
-                                            Assign agent
-                                        </span>
-                                    </a>
-                                    <form action="#" class="table__search">
-                                        <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
-                                        <div class="table__search-items">
-                                            <a href="" class="table__search-item">
-                                                <i class="icon-agent"></i>
-                                                Victor Black
-                                            </a>
-                                            <span class="table__search-empty">
-                                                There are no matching agents.
+                                    <div class="dropdown dropdown--search">
+                                        <a href="#" class="btn__primary btn__dropdown">
+                                            <i class="icon-assign-agent"></i>
+                                            <span class="btn__text">
+                                                Assign agent
                                             </span>
+                                        </a>
+                                        <div class="dropdown__menu">
+                                            <div class="dropdown__menu-top">
+                                                <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
+                                            </div>
+                                            <div class="dropdown__menu-bot">
+                                                <div class="dropdown__item">
+                                                    <a href="#" class="btn__primary">
+                                                        <i class="icon-agent"></i>
+                                                        <span class="btn__text">
+                                                            Victor Black
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <span class="dropdown__item-empty">
+                                                    There are no matching agents.
+                                                </span>
+                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="dropdown">
