@@ -1,99 +1,57 @@
 <script setup>
-import Header from './components/Header.vue';
-import ChatItem from './components/ChatItem.vue'
+import DefaultHeader from './components/DefaultHeader.vue';
+import ChatItemList from './components/ChatItemList.vue'
 import Loading from './components/Loading.vue'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 
 import MessageInput from './components/MessageInput.vue';
-import { useChatStore } from '@public/stores/ChatStore'
-import { useConnectionStore } from '@public/stores/ConnectionStore'
 
-const isLoading = ref(true);
+const customHeaderHtml = inject('customHeaderHtml', '')
 
-onMounted(() => {
-    setTimeout(() => {
-        isLoading.value = false;
-    }, 2000);
-});
+// const props = defineProps({
+//     customHeaderHtml: String
+// })
 
-const chat = useChatStore()
+console.log('[index.vue] customHeaderHtml:', customHeaderHtml)
 
+
+// console.log(customHeaderHtml.value)
+//const isLoading = ref(true);
+// onMounted(() => {
+//     setTimeout(() => {
+//         isLoading.value = false;
+//     }, 2000);
+// });
+
+const isLoading = ref(false);
 </script>
 
 <template>
-    <div class="chat-container">
+    <div class="chat">
+
+        <div v-if="customHeaderHtml" v-html="customHeaderHtml" />
+        <template v-else>
+            <DefaultHeader />
+        </template>
+
+        <!--
+        <template v-if="$slots.header">
+            <slot name="header" />
+        </template>
+        <template v-else>
+            <DefaultHeader />
+        </template>
+        -->
+        <!--
         <Header/>
+        -->
         <template v-if="isLoading">
             <Loading/>
         </template>
+
         <template v-else>
-            <div class="messages">
-                <ChatItem
-                    v-for="(item, index) in chat.items"
-                    :key="index"
-                    :item="item"
-                />
-            </div>
+            <ChatItemList />
             <MessageInput/>
         </template>
     </div>
 </template>
-
-<style scoped>
-.chat-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.loading-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    background: #F5F5F5;
-}
-
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #eee;
-    border-radius: 50%;
-    border-top-color: #666;
-    animation: spin 1s linear infinite;
-}
-
-.loading-text {
-    color: #666;
-    font-size: 14px;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-h1 {
-    margin: 0 0 20px;
-    font-size: 20px;
-    color: red;
-}
-
-.messages {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    display: flex;
-    flex-direction: column;
-}
-</style>

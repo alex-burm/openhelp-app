@@ -1,5 +1,5 @@
 <template>
-    <div class="divider">{{ text }}</div>
+    <li class="separator">{{ text }}</li>
 </template>
 
 <script setup>

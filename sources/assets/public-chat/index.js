@@ -18,6 +18,7 @@ function init(config) {
     chat.init(config.chat)
     conn.init(config.connection)
 
+    app.provide('customHeaderHtml', config?.customHeaderHtml)
     app.mount(document.querySelector(config?.target || '#app'))
 }
 

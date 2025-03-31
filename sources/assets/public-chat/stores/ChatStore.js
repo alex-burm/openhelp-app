@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { USER_MESSAGE_TYPES } from "@public/constants/UserMessageTypes";
+import { CHAT_ITEM_TYPES } from "@public/constants/ChatItemTypes";
 
 export const useChatStore = defineStore('chat', () => {
     const items = ref([
@@ -15,11 +17,14 @@ export const useChatStore = defineStore('chat', () => {
         items.value = history;
     }
 
-    function add(content, subtype = 'outgoing') {
+    function add(text, subtype = USER_MESSAGE_TYPES.OUTGOING) {
         items.value.push({
-            content,
-            type: "message",
-            time: new Date().toLocaleTimeString(),
+            text,
+            type: CHAT_ITEM_TYPES.MESSAGE,
+            time: new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
             subtype
         })
     }

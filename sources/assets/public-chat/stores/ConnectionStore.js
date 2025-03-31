@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { Centrifuge } from 'centrifuge'
 import { useChatStore } from '@public/stores/ChatStore'
+import { USER_MESSAGE_TYPES } from "@public/constants/UserMessageTypes";
 
 export const useConnectionStore = defineStore('connection', () => {
     const isConnected = ref(false)
@@ -37,7 +38,7 @@ export const useConnectionStore = defineStore('connection', () => {
         subscription.value.on('publication', ctx => {
             // const { content, subtype } = ctx.data
             // console.log('chat', ctx)
-            useChatStore().add(ctx.data.text, 'outgoing')
+            useChatStore().add(ctx.data.text, USER_MESSAGE_TYPES.INCOMING)
         })
     }
 

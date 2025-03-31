@@ -1,71 +1,63 @@
-<template>
-    <div class="chat-input">
-        <input v-model="message" @keyup.enter="sendMessage" placeholder="Write your message..."/>
-        <button @click="sendMessage" :disabled="!message.trim()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-                <path d="M22 2L11 13"/>
-                <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
-            </svg>
-        </button>
-    </div>
-</template>
-
 <script setup>
-import {ref} from 'vue'
-import {useChatStore} from '@public/stores/ChatStore'
+import { ref } from 'vue'
+import { useChatStore } from '@public/stores/ChatStore'
 
+const textarea = ref(null)
 const message = ref('')
 const chat = useChatStore()
 
 function sendMessage() {
     if (message.value.trim().length > 0) {
-        chat.addMessage(message.value)
+        chat.add(message.value)
         message.value = ''
     }
+
+    autoResize();
+}
+
+function handleKeyDown(e) {
+    if (13 !== e.keyCode) {
+        return
+    }
+
+    const isMeta = e.metaKey || e.ctrlKey
+    if (!isMeta && !e.shiftKey) {
+        e.preventDefault()
+        sendMessage()
+    }
+}
+
+function autoResize() {
+    textarea.value.parentNode.dataset.replicatedValue = message.value
 }
 </script>
 
-<style scoped>
-.chat-input {
-    display: flex;
-    gap: 12px;
-    padding: 0px;
-    background: white;
-    border-top: 1px solid #eee;
-}
-
-input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    outline: none;
-    font-size: 14px;
-    color: #1A1A1A;
-}
-
-input::placeholder {
-    color: #666;
-}
-
-input:focus {
-    border-color: #0066FF;
-}
-
-button {
-    background: none;
-    border: none;
-    color: #0066FF;
-    cursor: pointer;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button:disabled {
-    color: #ccc;
-    cursor: not-allowed;
-}
-</style>
+<template>
+    <div class="send">
+        <div class="send__left">
+            <div class="send__left-inner">
+                <div class="autoresizable" data-replicated-value="">
+                    <textarea
+                        ref="textarea"
+                        v-model="message"
+                        rows="1"
+                        name="text"
+                        @keydown="handleKeyDown"
+                        @input="autoResize"
+                        placeholder="Write your message..."
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="send__actions">
+            <!--
+            <button type="button" class="btn__attach">
+                <i class="icon-attach"></i>
+            </button>
+            -->
+            <button type="button" class="btn__send" @click="sendMessage" :disabled="!message.trim()">
+                <i class="icon-send"></i>
+            </button>
+        </div>
+    </div>
+</template>
