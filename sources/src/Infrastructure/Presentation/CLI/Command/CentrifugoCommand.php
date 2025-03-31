@@ -29,7 +29,7 @@ class CentrifugoCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('message')) {
-            $this->client->request('POST', $_ENV['CENTRIFUGO_HOST'] . '/api/publish', [
+            $response = $this->client->request('POST', $_ENV['CENTRIFUGO_HOST'] . '/api/publish', [
                 'headers' => [
                     'Authorization' => 'apikey ' . $_ENV['CENTRIFUGO_API_KEY'],
                     'Content-Type' => 'application/json',
@@ -43,10 +43,10 @@ class CentrifugoCommand extends Command
             ]);
         }
         if ($input->getOption('token')) {
-            $secret = $_ENV['CENTRIFUGO_API_SECRET'];
+            $secret = $_ENV['CENTRIFUGO_TOKEN_HMAC_SECRET_KEY'];
             $payload = [
                 'sub' => 'user123',
-                'exp' => time() + 3600,
+                'exp' => time() + 10,
                 'iat' => time(),
                 'channels' => ['user#123'],
             ];
