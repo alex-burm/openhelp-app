@@ -3,7 +3,7 @@ services:
     image: nginx:latest
     container_name: help_nginx
     ports:
-      - "8012:80"
+      - "${NGINX_PORT}:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ../../data/nginx:/var/log/nginx
@@ -21,7 +21,7 @@ services:
     env_file:
       - ../.env.local
     ports:
-      - "8013:80"
+      - "${FRANKEN_PORT}:80"
     volumes:
       - ../../sources:/app:rw
     networks:
@@ -41,7 +41,7 @@ services:
     networks:
       - help_network
     ports:
-      - "8016:3306"
+      - "${MYSQL_PORT}:3306"
 
   redis:
     image: redis:latest
@@ -50,7 +50,7 @@ services:
     networks:
       - help_network
     ports:
-      - "8017:6379"
+      - "${REDIS_PORT}:6379"
     command: redis-server --save 60 1 --loglevel warning
     volumes:
       - ../../data/redis:/data
@@ -61,7 +61,7 @@ services:
     volumes:
       - ./centrifugo-config.json:/centrifugo/config.json
     ports:
-      - "8018:8000"
+      - "${CENTRIFUGO_PORT}:8000"
     env_file:
       - ../.env.local
     command: centrifugo -c /centrifugo/config.json

@@ -28,6 +28,9 @@ docker-franken-bash:
 docker-franken-check:
 	@docker exec -it help_franken ./bin/console app:check-mail-ticket -vv
 
+docker-franken-test-up: #generate-test-env
+	@docker-compose --env-file documents/.env.test.local -f documents/docker-franken/docker-compose.yaml up --build
+
 generate-env:
 	@if [ ! -f ./documents/.env.local ]; then \
 		cp ./documents/.env.dist ./documents/.env.local && \
@@ -47,3 +50,8 @@ generate-env:
 			sed -i "s/^CENTRIFUGO_API_KEY=/CENTRIFUGO_API_KEY=$(shell openssl rand -hex 16)/" ./documents/.env.local; \
 		fi \
 	fi
+
+# generate-test-env:
+# 	@if [ ! -f ./documents/.env.test.local ]; then \
+# 		cp ./documents/.env.test.dist ./documents/.env.test.local \
+# 	fi
