@@ -15,6 +15,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+SET FOREIGN_KEY_CHECKS=0;
+
 --
 -- Table structure for table `ticket`
 --
@@ -105,6 +107,8 @@ CREATE TABLE `workspace` (
 --
 -- Dumping data for table `workspace`
 --
+
+SET FOREIGN_KEY_CHECKS=1;
 
 /*!40000 ALTER TABLE `workspace` DISABLE KEYS */;
 /*!40000 ALTER TABLE `workspace` ENABLE KEYS */;
