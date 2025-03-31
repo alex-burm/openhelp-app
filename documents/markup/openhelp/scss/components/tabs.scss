@@ -1,0 +1,62 @@
+.tabs {
+    align-items: center;
+    border-bottom: 1px solid var(--soft-grey);
+    display: flex;
+    gap: 0 16px;
+
+    &__link {
+        align-items: center;
+        display: flex;
+        padding: 4px 0 6px;
+        position: relative;
+        transition: background-color .3s ease;
+
+        .badge {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+        }
+
+        &::after {
+            bottom: -1px;
+            content: '';
+            position: absolute;
+            transition: background-color .3s ease;
+            height: 2px;
+            width: 100%;
+        }
+
+        &:hover {
+            &::after {
+                background-color: var(--hard-grey);
+                transition: background-color .3s ease;
+            }
+        }
+
+        &.active {
+            &::after {
+                background-color: var(--blue);
+            }
+        }
+    }
+
+    &__circle {
+        border-radius: 50%;
+        display: inline-flex;
+        margin-right: 8px;
+        height: 8px;
+        width: 8px;
+
+        &.success {
+            background-color: var(--green);
+        }
+
+        &.warning {
+            background-color: var(--orange);
+        }
+
+        &.error {
+            background-color: var(--red);
+        }
+    }
+}

@@ -142,4 +142,88 @@
             }
         }
     }
+
+    &__attach {
+        align-items: center;
+        background-color: initial;
+        display: inline-flex;
+        padding: 4px;
+    }
+
+    &__send {
+        align-items: center;
+        background-color: initial;
+        display: inline-flex;
+        padding: 4px;
+
+        i {
+            color: var(--blue);
+            transition: color .3s ease;
+        }
+
+        &:hover {
+            i {
+                color: var(--blue-hover);
+                transition: color .3s ease;
+            }
+        }
+
+        &:active,
+        &.active {
+            i {
+                color: var(--blue-active);
+            }
+        }
+
+        &:disabled,
+        &.disabled {
+            pointer-events: none;
+
+            i {
+                color: var(--hard-grey);
+            }
+        }
+    }
+
+    &__file {
+        align-items: center;
+        background-color: var(--light-grey);
+        border-radius: 8px;
+        display: inline-flex;
+        padding: 4px;
+
+        .btn__text {
+            margin: 0 4px;
+        }
+    }
+
+    &__decoration {
+        align-items: center;
+        display: inline-flex;
+        justify-content: center;
+        position: relative;
+        height: 20px;
+        width: 20px;
+
+        i {
+            color: var(--blue);
+            font-size: 8px;
+            position: absolute;
+        }
+    }
+
+    &__close {
+        border-radius: 8px;
+        display: inline-flex;
+        padding: 4px;
+    }
+}
+
+//Downloading svg
+.circular {
+    &__decoration {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 3px;
+    }
 }

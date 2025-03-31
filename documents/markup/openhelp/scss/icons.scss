@@ -138,7 +138,9 @@
 }
 
 .icon-profile-customer:before {
+    color: var(--black);
     content: "\e91b";
+    font-size: 48px;
 }
 
 .icon-question:before {

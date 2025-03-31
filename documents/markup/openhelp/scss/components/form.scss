@@ -19,6 +19,10 @@
             transition: background-color 5000s ease-in-out 0s;
         }
 
+        &::placeholder {
+            color: var(--hard-grey);
+        }
+
         &:hover {
             border-color: var(--soft-grey);
         }
@@ -34,6 +38,22 @@
                 transition: opacity .3s, visibility .3s;
                 visibility: visible;
             }
+        }
+    }
+
+    &__control--m {
+        border-style: none none solid none;
+        border-color: transparent;
+        border-radius: 0;
+        padding: 0 0 4px 28px;
+
+        &:hover {
+            border-color: var(--hard-grey);
+        }
+
+        &:focus {
+            border-color: var(--blue);
+            outline: none;
         }
     }
 
@@ -66,5 +86,18 @@
             transition: opacity .3s, visibility .3s;
             visibility: hidden
         }
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    &__label {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+        margin-bottom: 4px;
     }
 }
