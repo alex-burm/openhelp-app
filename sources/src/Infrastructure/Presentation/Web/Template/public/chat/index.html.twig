@@ -24,7 +24,6 @@
             connection: {
                 url: 'ws://localhost:8018/connection/websocket',
                 channel: 'user#123',
-                // token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZXhwIjoxNzQzMTkzNTcyLCJpYXQiOjE3NDMxODk5NzIsImNoYW5uZWxzIjpbInVzZXIjMTIzIl19.4EnLJNjBei1_DpNU17t_8U399kVwkIUNNPqJXu1VKE4",
                 getToken: async () => {
                     const response = await fetch('{{ path('chat_token') }}', {
                         headers: {
