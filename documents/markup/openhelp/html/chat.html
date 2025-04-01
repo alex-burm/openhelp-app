@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>OpenHelp</title>
+</head>
+
+<body>
+    <div class="content">
+        <div class="logo">
+            <img src="../assets/img/logo.svg" alt="logo">
+        </div>
+        <div class="content__chat">
+            <div class="content__top">
+                <a href="#" class="btn__primary">
+                    <i class="icon-short-arrow-left"></i>
+                    <span class="btn__text">
+                        Back
+                    </span>
+                </a>
+                <h1 class="content__title">
+                    Live chat
+                </h1>
+            </div>
+            <div class="chat">
+                <!-- <div class="empty">
+                    <div class="empty__inner">
+                        <div class="loader">
+                            <span class="loader__circle"></span>
+                        </div>
+                        <span class="empty__text">
+                            Please wait, we are loading the chat...
+                        </span>
+                    </div>
+                </div> -->
+                <div class="chat__header">
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="avatar">
+                                <span class="avatar__name">
+                                    YR
+                                </span>
+                                <i class="icon-profile-agent"></i>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                            <span class="item__heading">
+                                Yevhenii Riabukha
+                            </span>
+                            <span class="item__text">
+                                Customer support
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="messages">
+                    <li class="system">
+                        Request ID: 123e4567-e89b-12d3-a456-426655440000
+                    </li>
+                    <li class="message">
+                        <div class="item">
+                            <div class="item__status">
+                                <div class="avatar">
+                                    <span class="avatar__name">
+                                        YR
+                                    </span>
+                                    <i class="icon-profile-agent"></i>
+                                </div>
+                            </div>
+                            <div class="item__box">
+                                <div class="item__inner">
+                                    <span class="item__text">
+                                        Cannot access my account after password reset.
+                                    </span>
+                                    <span class="item__time">
+                                        15:45
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="system">
+                        Victor Black was assigned to this request.
+                    </li>
+                    <li class="message message--outgoing">
+                        <div class="item">
+                            <div class="item__status">
+                                <div class="avatar">
+                                    <span class="avatar__name">
+                                        ME
+                                    </span>
+                                    <i class="icon-profile-customer"></i>
+                                </div>
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-send-again"></i>
+                                </a>
+                            </div>
+                            <div class="item__box">
+                                <div class="item__inner">
+                                    <span class="item__text">
+                                        I have some problems with my password.
+                                    </span>
+                                    <span class="item__send">
+                                        Now • <span class="item__send-failed">Failed to send</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="message message--outgoing">
+                        <div class="item">
+                            <div class="item__status">
+                                <div class="avatar">
+                                    <span class="avatar__name">
+                                        ME
+                                    </span>
+                                    <i class="icon-profile-customer"></i>
+                                </div>
+                                <div class="loader">
+                                    <span class="loader__circle"></span>
+                                </div>
+                            </div>
+                            <div class="item__box">
+                                <div class="item__inner">
+                                    <span class="item__text">
+                                        I have some problems with my password.
+                                    </span>
+                                    <span class="item__send">
+                                        Now • <span class="item__send-failed">Failed to send</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="lost-connection">
+                    <i class="icon-weak-connection"></i>
+                    The internet connection was lost.
+                </div>
+                <div class="send">
+                    <div class="send__left">
+                        <div class="send__left-inner">
+                            <div class="autoresizable" data-replicated-value="">
+                                <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Write your message..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="send__actions">
+                        <button type="button" class="btn__primary">
+                            <i class="icon-attach"></i>
+                        </button>
+                        <button type="button" class="btn__send disabled">
+                            <i class="icon-send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/main.js" type="text/javascript"></script>
+</body>
+
+</html>

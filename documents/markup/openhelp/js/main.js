@@ -32,11 +32,12 @@ const headerSearch = document.querySelector('.header__form .form__control');
 const search = document.querySelector('.search');
 const overlay = document.querySelector('.overlay');
 const layout = document.querySelector('.layout');
-headerSearch.addEventListener('focus', () => {
+
+headerSearch?.addEventListener('focus', () => {
     addOrRemoveSearch('add');
 })
 
-headerSearch.addEventListener('blur', () => {
+headerSearch?.addEventListener('blur', () => {
     addOrRemoveSearch('remove');
 })
 
