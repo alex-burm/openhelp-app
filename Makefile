@@ -25,6 +25,9 @@ docker-franken-down:
 docker-franken-bash:
 	@docker exec -it help_franken bash
 
+docker-franken-test:
+	@docker exec -it help_franken ./bin/phpunit --testdox
+
 docker-franken-check:
 	@docker exec -it help_franken ./bin/console app:check-mail-ticket -vv
 
