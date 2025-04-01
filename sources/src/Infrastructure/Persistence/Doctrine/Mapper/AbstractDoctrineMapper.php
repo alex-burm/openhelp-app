@@ -2,8 +2,6 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Mapper;
 
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -19,7 +17,8 @@ readonly abstract class AbstractDoctrineMapper
 
     public function toDoctrine(object $domainObject, ?object $entity = null): object
     {
-        $normalizedData = \array_filter($this->serializer->normalize($domainObject));
+        //AbstractObjectNormalizer::SKIP_NULL_VALUES => true
+        $normalizedData = \array_filter($this->serializer->normalize($domainObject), fn ($x) => null !== $x);
 
         return $this->serializer->denormalize(
             $normalizedData,
@@ -31,7 +30,7 @@ readonly abstract class AbstractDoctrineMapper
 
     public function fromDoctrine(object $doctrineObject): object
     {
-        $normalizedData = \array_filter($this->serializer->normalize($doctrineObject));
+        $normalizedData = \array_filter($this->serializer->normalize($doctrineObject), fn ($x) => null !== $x);
         return $this->serializer->denormalize(
             $normalizedData,
             static::DOMAIN_CLASS_NAME

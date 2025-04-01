@@ -3,25 +3,26 @@
 namespace App\Application\User\Service;
 
 use App\Application\User\Dto\UserRegisterDto;
-use App\Domain\Mail\Type\RegisterUserMailType;
-use App\Domain\Service\MailHandlerInterface;
+use App\Domain\Common\Event\EventDispatcherInterface;
+use App\Domain\Mail\Outgoing\Service\MailHandlerInterface;
+use App\Domain\Mail\Outgoing\Type\RegisterUserMailType;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Event\UserRegisteredEvent;
-use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Domain\User\Service\PasswordHasher;
 use App\Domain\Workspace\Entity\Workspace;
-use App\Domain\Workspace\Repository\WorkspaceRepository;
-use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineWorkspaceMapper;
+use App\Domain\Workspace\Repository\WorkspaceRepositoryInterface;
 use App\Infrastructure\Service\WorkspaceContext;
 
 class UserRegisterService
 {
     public function __construct(
-        protected WorkspaceContext $workspaceContext,
-        protected UserRepository $userRepository,
-        protected WorkspaceRepository $workspaceRepository,
-        protected PasswordHasher $passwordHasher,
-        protected MailHandlerInterface $mailHandler,
+        protected WorkspaceContext             $workspaceContext,
+        protected UserRepositoryInterface      $userRepository,
+        protected WorkspaceRepositoryInterface $workspaceRepository,
+        protected PasswordHasher               $passwordHasher,
+        protected MailHandlerInterface         $mailHandler,
+        protected EventDispatcherInterface     $eventDispatcher,
     ) {
     }
 
@@ -51,6 +52,6 @@ class UserRegisterService
 
         $this->mailHandler->handle(RegisterUserMailType::create($user));
 
-        return new UserRegisteredEvent($user);
+        return $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
     }
 }

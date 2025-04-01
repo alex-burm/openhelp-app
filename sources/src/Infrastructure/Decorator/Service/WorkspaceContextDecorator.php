@@ -18,6 +18,14 @@ class WorkspaceContextDecorator extends WorkspaceContext
     ) {
     }
 
+    public function setCurrentWorkspace(Workspace $workspace): static
+    {
+        $this->logger->info('Method "setCurrentWorkspace" calling');
+        $this->inner->setCurrentWorkspace($workspace);
+        $this->logger->info('Method "setCurrentWorkspace" called');
+        return $this;
+    }
+
     public function getCurrentWorkspace(): Workspace
     {
         $this->logger->info('Method "getCurrentWorkspace" calling');

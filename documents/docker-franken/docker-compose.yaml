@@ -55,6 +55,18 @@ services:
     volumes:
       - ../../data/redis:/data
 
+  centrifugo:
+    image: centrifugo/centrifugo:v5
+    container_name: help_centrifugo
+    volumes:
+      - ./centrifugo-config.json:/centrifugo/config.json
+    ports:
+      - "8018:8000"
+    env_file:
+      - ../.env.local
+    command: centrifugo -c /centrifugo/config.json
+    networks:
+      - help_network
 networks:
   help_network:
     driver: bridge

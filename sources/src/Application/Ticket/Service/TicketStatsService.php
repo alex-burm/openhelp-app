@@ -2,8 +2,7 @@
 
 namespace App\Application\Ticket\Service;
 
-
-use App\Domain\Ticket\Repository\TicketRepository;
+use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\Counter\TicketChannelsCount;
 use App\Domain\Ticket\ValueObject\Counter\TicketPrioritiesCount;
 use App\Domain\Ticket\ValueObject\Counter\TicketStatusesCount;
@@ -20,7 +19,7 @@ class TicketStatsService
     protected ?TicketChannelsCount $ticketChannels = null;
 
     public function __construct(
-        protected TicketRepository $ticketRepository,
+        protected TicketRepositoryInterface $ticketRepository,
     ) {
     }
 

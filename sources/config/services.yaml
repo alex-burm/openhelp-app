@@ -10,7 +10,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
+        bind:
+            $secret: '%env(APP_SECRET)%'
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -25,10 +26,20 @@ services:
 
     App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
     App\Domain\User\Repository\PasswordResetTokenRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisPasswordResetTokenRepository'
-    App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
+    App\Domain\Ticket\Repository\TicketRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineTicketRepository'
+    App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
+    App\Domain\Settings\Repository\SettingsRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository'
     App\Domain\Service\MailHandlerInterface: '@App\Infrastructure\Service\MailHandler'
+    App\Domain\Common\Event\EventDispatcherInterface: '@App\Infrastructure\Common\Adapter\EventDispatcherAdapter'
+    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Symmetric\SymmetricSodiumEncryptor'
+#    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Symmetric\SymmetricOpenSSLEncryptor'
+#    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Unidirectional\UnidirectionalSodiumEncryptor'
+#    App\Domain\Common\EncryptorÂ\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Unidirectional\UnidirectionalOpenSSLEncryptor'
+#    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Bidirectional\BidirectionalOpenSSLEncryptor'
+#    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Bidirectional\BidirectionalSodiumEncryptor'
+    App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
 
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
@@ -42,6 +53,10 @@ services:
     App\Infrastructure\Persistence\Redis\ForgotPasswordLimiterStorage:
         arguments:
             $rateLimiterFactory: '@limiter.forgot_password'
+
+    App\Infrastructure\Persistence\Redis\TicketRequestLimiterStorage:
+        arguments:
+            $rateLimiterFactory: '@limiter.ticket_request'
 
     monolog.processor.memory_usage:
         class: Monolog\Processor\MemoryUsageProcessor

@@ -8,11 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class ExceptionListener implements EventSubscriberInterface
 {
     public function __construct(
         protected LoggerInterface $logger,
+        protected KernelInterface $kernel,
     ) {
     }
 
@@ -25,6 +27,10 @@ class ExceptionListener implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
+        if ($this->kernel->isDebug()) {
+            return;
+        }
+
         $exception = $event->getThrowable();
         $message = \sprintf(
             'Exception: %s with message: %s',
