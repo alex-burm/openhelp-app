@@ -105,9 +105,11 @@
 
 //Customer details
 .details {
-    padding-left: 16px;
-    min-width: 302px;
-    width: 302px;
+    background-color: var(--white);
+    padding: 22px 32px;
+    height: 100%;
+    min-width: 400px;
+    width: 400px;
 
     &__top {
         align-items: center;

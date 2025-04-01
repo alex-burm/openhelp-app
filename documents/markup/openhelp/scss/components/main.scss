@@ -269,6 +269,42 @@
     transition: background-color .3s ease;
     $self: &;
 
+    &__status {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 4px 0;
+        min-width: 48px;
+        width: 48px;
+
+        .loader {
+            height: 24px;
+            width: 24px;
+
+            &__circle {
+                border-width: 2px;
+                height: 20px;
+                width: 20px;
+
+                &::before,
+                &::after {
+                    left: 0;
+                    height: 2px;
+                    width: 2px;
+                }
+
+                &::before {
+                    top: 1px;
+                }
+
+                &::after {
+                    bottom: 1px;
+                }
+            }
+        }
+    }
+
     &__left {
         align-items: center;
         display: flex;
@@ -361,6 +397,10 @@
         }
     }
 
+    .loader {
+        margin-bottom: 32px;
+    }
+    
     &__text {
         color: var(--hard-grey);
         font-size: 14px;
@@ -406,18 +446,17 @@
     justify-content: center;
     height: 96px;
     width: 96px;
+
     &__circle {
-        animation: loader 1s linear infinite;
-        border-color: var(--hard-grey) var(--hard-grey) var(--hard-grey) transparent;
         border-width: 4px;
         border-style: solid;
+        border-color: var(--hard-grey) var(--hard-grey) var(--hard-grey) transparent;
         border-radius: 50%;
-        box-sizing: border-box;
-        display: inline-block;
+        animation: spin 1.5s infinite;
         position: relative;
         height: 40px;
         width: 40px;
-    
+
         &::before,
         &::after {
             content: "";
@@ -439,10 +478,7 @@
     }
 }
 
-@keyframes loader {
-    0% {
-        transform: rotate(0deg);
-    }
+@keyframes spin {
     100% {
         transform: rotate(360deg);
     }
@@ -470,7 +506,7 @@
     }
 
     .loader {
-        margin: 48px 0;
+        margin: 48px auto;
     }
 
     .empty {
