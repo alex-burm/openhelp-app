@@ -143,13 +143,6 @@
         }
     }
 
-    &__attach {
-        align-items: center;
-        background-color: initial;
-        display: inline-flex;
-        padding: 4px;
-    }
-
     &__send {
         align-items: center;
         background-color: initial;
@@ -210,12 +203,6 @@
             font-size: 8px;
             position: absolute;
         }
-    }
-
-    &__close {
-        border-radius: 8px;
-        display: inline-flex;
-        padding: 4px;
     }
 }
 
