@@ -1,79 +1,90 @@
-<template>
-    <div :class="['message', type]">
-        <div class="message-header" v-if="type === 'incoming'">
-            <span class="user-initials">AA</span>
-            <span class="user-name">Александр, айти-наставник</span>
-            <span class="user-role">https://www.youtube.com/@BurmAlex</span>
-        </div>
-        <div class="message-content">
-            <p>{{ content }}</p>
-            <span class="message-time">{{ time }}</span>
-        </div>
-    </div>
-</template>
-
 <script>
+import { USER_MESSAGE_DIRECTION, USER_MESSAGE_STATUSES } from "@public/constants";
+import { useConnectionStore } from '@public/stores/ConnectionStore'
+
 export default {
+    computed: {
+        USER_MESSAGE_DIRECTION() {
+            return USER_MESSAGE_DIRECTION
+        },
+        USER_MESSAGE_STATUSES() {
+            return USER_MESSAGE_STATUSES
+        },
+        initials() {
+            if (!this.item.name) {
+                return '?'
+            }
+
+            return this.item.name
+                .split(' ')
+                .map(part => part[0]?.toUpperCase())
+                .join('')
+        }
+    },
     props: {
-        content: String,
-        time: String,
-        type: String
+        item: {
+            type: Object,
+            required: true,
+        },
+        validator(value) {
+            return (
+                typeof value.clientId === 'string' &&
+                typeof value.serverId === 'string' &&
+                typeof value.name === 'string' &&
+                typeof value.text === 'string' &&
+                typeof value.time === 'string' &&
+                typeof value.direction === 'string' &&
+                typeof value.status === 'string' &&
+                typeof value.showAvatar === 'boolean'
+            )
+        }
+    },
+    methods: {
+        resend() {
+            const connection = useConnectionStore()
+            connection.resend(this.item)
+        }
     }
 };
 </script>
 
-<style scoped>
-.message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.incoming {
-    background-color: #fff;
-}
-
-.outgoing {
-    background-color: #dcf8c6;
-    align-self: flex-end;
-}
-
-.message-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.user-initials {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-.user-name {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.user-role {
-    color: #888;
-}
-
-.message-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.message-time {
-    color: #888;
-    font-size: 12px;
-}
-</style>
+<template>
+    <li :class="['message', USER_MESSAGE_DIRECTION.INCOMING === item.direction ? '' : 'message--outgoing']">
+        <div class="item">
+            <div class="item__status">
+                <div class="avatar">
+                    <template v-if="item.showAvatar">
+                        <i :class="[USER_MESSAGE_DIRECTION.INCOMING === item.direction ?  'icon-profile-customer' : 'icon-profile-agent']"></i>
+                        <span class="avatar__name">{{ USER_MESSAGE_DIRECTION.OUTGOING === item.direction ? 'ME' : initials }}</span>
+                    </template>
+                </div>
+                <template v-if="USER_MESSAGE_STATUSES.WAITING === item.status">
+                    <div class="loader">
+                        <span class="loader__circle"></span>
+                    </div>
+                </template>
+                <template v-if="USER_MESSAGE_STATUSES.FAILED === item.status">
+                    <a href="javascript:void(0)" class="btn__primary" @click.prevent="resend">
+                        <i class="icon-send-again"></i>
+                    </a>
+                </template>
+            </div>
+            <div class="item__box">
+                <div class="item__inner">
+                    <span class="item__text">{{ item.text }}</span>
+                    <span class="item__time">
+                        <template v-if="item.status === USER_MESSAGE_STATUSES.WAITING">
+                            Sending...
+                        </template>
+                        <template v-else>
+                            {{ item.time }}
+                            <template v-if="USER_MESSAGE_STATUSES.FAILED === item.status">
+                                • <span class="item__send-failed">Failed to send</span>
+                            </template>
+                        </template>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </li>
+</template>

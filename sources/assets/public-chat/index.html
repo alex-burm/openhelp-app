@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Chat</title>
+    <link  href="http://localhost:8012/css/variables.css" rel="stylesheet">
+    <link  href="http://localhost:8012/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<div id="app"></div>
+<div class="wrapper">
+    <div class="main">
+        <div id="app"></div>
+    </div>
+</div>
 <script type="module" src="./index.js"></script>
 <script>
     window.onload = () => {
@@ -23,8 +29,9 @@
             chat: {
                 history: [
                     {type: 'system', text: 'Request #00000-0000-0000-00000'},
-                    {type: 'message', content: 'Привет!!', time: '12:00', subtype: 'incoming'},
-                    {type: 'message', content: 'Здравствуйте!!', time: '12:01', subtype: 'outgoing'},
+                    {type: 'message', text: 'Привет!!', time: '12:00', direction: 'incoming'},
+                    {type: 'message', text: 'Здравствуйте!!', time: '12:01', direction: 'outgoing'},
+                    {type: 'message', text: 'Здравствуйте!!', time: '12:01', direction: 'outgoing'},
                     {type: 'system', text: 'The request was resolved!'}
                 ]
             }

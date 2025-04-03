@@ -1,22 +1,25 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import vueDevTools from 'vite-plugin-vue-devtools'
+
 
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [vue(), vueDevTools()],
     root: 'assets',
     server: {
         port: 5177,
     },
     define: {
-        'process.env.NODE_ENV': JSON.stringify('production')
+        'process.env.NODE_ENV': JSON.stringify('development')
     },
     build: {
+        sourcemap: true,
         outDir: '../public/build',
         emptyOutDir: false,
         lib: {
             entry: {
-                'public-chat': 'assets/public-chat/index.js'  // <-- этот файл должен export
+                'public-chat': 'assets/public-chat/index.js'
             },
             formats: ['es'],
 
