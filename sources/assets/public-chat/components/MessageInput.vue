@@ -1,14 +1,16 @@
 <script setup>
 import { ref } from 'vue'
 import { useChatStore } from '@public/stores/ChatStore'
+import { useConnectionStore } from '@public/stores/ConnectionStore'
 
 const textarea = ref(null)
 const message = ref('')
-const chat = useChatStore()
+// const chat = useChatStore()
+const connection = useConnectionStore()
 
 function sendMessage() {
     if (message.value.trim().length > 0) {
-        chat.add(message.value)
+        connection.send(message.value)
         message.value = ''
     }
 

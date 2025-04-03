@@ -2,7 +2,7 @@
 import { onMounted, onUpdated, ref, nextTick } from 'vue'
 import ChatItem from './ChatItem.vue'
 import { useChatStore } from '@public/stores/chatStore'
-import { CHAT_ITEM_TYPES } from "@public/constants/ChatItemTypes";
+import { CHAT_ITEM_TYPES } from "@public/constants";
 
 const container = ref(null)
 const chat = useChatStore()
@@ -27,39 +27,49 @@ function computeItems(chatItems) {
 
     for (let i = 0; i < chatItems.length; i++) {
         const item = chatItems[i]
-        const messageDate = new Date(item.time).toDateString()
+        const messageDate = new Date(item.datetime).toDateString()
 
         if (messageDate !== lastDate) {
             result.push({
                 type: CHAT_ITEM_TYPES.DATE,
-                date: formatDateForDivider(item.time)
+                date: formatDate(item.datetime)
             })
             lastDate = messageDate
         }
 
-        const showAvatar = item.subtype !== lastAuthor
+        const showAvatar = item.direction !== lastAuthor
         result.push({
             ...item,
-            showAvatar
+            showAvatar,
+            time: formatTime(item.datetime)
         })
-        lastAuthor = item.subtype
+        lastAuthor = item.direction
     }
 
     return result
 }
 
-function formatDateForDivider(dateStr) {
-    const date = new Date(dateStr)
+function formatDate(datetime) {
+    const date = new Date(datetime)
     return date.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     })
 }
+
+function formatTime(datetime) {
+    const date = new Date(datetime)
+    return date.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    })
+}
+
 </script>
 
 <template>
-    <ul class="users" ref="container">
+    <ul class="messages" ref="container">
         <ChatItem
             v-for="(item, index) in computeItems(chat.items)"
             :key="index"

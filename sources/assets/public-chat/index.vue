@@ -1,57 +1,30 @@
 <script setup>
 import DefaultHeader from './components/DefaultHeader.vue';
 import ChatItemList from './components/ChatItemList.vue'
+import ConnectionError from './components/ConnectionError.vue'
+import MessageInput from './components/MessageInput.vue';
 import Loading from './components/Loading.vue'
 import { ref, onMounted, inject } from 'vue';
 
-import MessageInput from './components/MessageInput.vue';
-
 const customHeaderHtml = inject('customHeaderHtml', '')
 
-// const props = defineProps({
-//     customHeaderHtml: String
-// })
-
-console.log('[index.vue] customHeaderHtml:', customHeaderHtml)
-
-
-// console.log(customHeaderHtml.value)
-//const isLoading = ref(true);
-// onMounted(() => {
-//     setTimeout(() => {
-//         isLoading.value = false;
-//     }, 2000);
-// });
-
-const isLoading = ref(false);
+import { useChatStore } from '@public/stores/ChatStore.js'
+const chatStore = useChatStore()
 </script>
 
-<template>
-    <div class="chat">
 
+<template>
+    <template v-if="chatStore.isLoading">
+        <Loading/>
+    </template>
+
+    <template v-else>
         <div v-if="customHeaderHtml" v-html="customHeaderHtml" />
         <template v-else>
             <DefaultHeader />
         </template>
-
-        <!--
-        <template v-if="$slots.header">
-            <slot name="header" />
-        </template>
-        <template v-else>
-            <DefaultHeader />
-        </template>
-        -->
-        <!--
-        <Header/>
-        -->
-        <template v-if="isLoading">
-            <Loading/>
-        </template>
-
-        <template v-else>
-            <ChatItemList />
-            <MessageInput/>
-        </template>
-    </div>
+        <ChatItemList />
+        <ConnectionError />
+        <MessageInput/>
+    </template>
 </template>

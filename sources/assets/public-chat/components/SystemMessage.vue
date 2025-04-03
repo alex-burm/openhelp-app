@@ -1,9 +1,9 @@
-<template>
-    <li class="separator">{{ text }}</li>
-</template>
-
 <script setup>
 defineProps({
-    text: String
+    item: Object
 })
 </script>
+
+<template>
+    <li class="system">{{ item.text }}</li>
+</template>

@@ -1,37 +1,88 @@
 <script>
-import { USER_MESSAGE_TYPES } from "@public/constants/UserMessageTypes";
+import { USER_MESSAGE_DIRECTION, USER_MESSAGE_STATUSES } from "@public/constants";
+import { useConnectionStore } from '@public/stores/ConnectionStore'
 
 export default {
     computed: {
-        USER_MESSAGE_TYPES() {
-            return USER_MESSAGE_TYPES
+        USER_MESSAGE_DIRECTION() {
+            return USER_MESSAGE_DIRECTION
+        },
+        USER_MESSAGE_STATUSES() {
+            return USER_MESSAGE_STATUSES
+        },
+        initials() {
+            if (!this.item.name) {
+                return '?'
+            }
+
+            return this.item.name
+                .split(' ')
+                .map(part => part[0]?.toUpperCase())
+                .join('')
         }
     },
     props: {
-        showAvatar: Boolean,
-        name: String,
-        text: String,
-        time: String,
-        type: String
+        item: {
+            type: Object,
+            required: true,
+        },
+        validator(value) {
+            return (
+                typeof value.clientId === 'string' &&
+                typeof value.serverId === 'string' &&
+                typeof value.name === 'string' &&
+                typeof value.text === 'string' &&
+                typeof value.time === 'string' &&
+                typeof value.direction === 'string' &&
+                typeof value.status === 'string' &&
+                typeof value.showAvatar === 'boolean'
+            )
+        }
+    },
+    methods: {
+        resend() {
+            const connection = useConnectionStore()
+            connection.resend(this.item)
+        }
     }
 };
 </script>
 
 <template>
-    <li :class="['user', type === USER_MESSAGE_TYPES.INCOMING ? '' : 'user--self']">
+    <li :class="['message', USER_MESSAGE_DIRECTION.INCOMING === item.direction ? '' : 'message--outgoing']">
         <div class="item">
-            <template v-if="showAvatar">
-                <div class="item__left">
-                    <div class="avatar">
-                        <i :class="[type === USER_MESSAGE_TYPES.INCOMING ?  'icon-profile-customer' : 'icon-profile-agent']"></i>
-                        <span class="avatar__name">{{ type === USER_MESSAGE_TYPES.OUTGOING ? 'ME' : name }}</span>
-                    </div>
+            <div class="item__status">
+                <div class="avatar">
+                    <template v-if="item.showAvatar">
+                        <i :class="[USER_MESSAGE_DIRECTION.INCOMING === item.direction ?  'icon-profile-customer' : 'icon-profile-agent']"></i>
+                        <span class="avatar__name">{{ USER_MESSAGE_DIRECTION.OUTGOING === item.direction ? 'ME' : initials }}</span>
+                    </template>
                 </div>
-            </template>
+                <template v-if="USER_MESSAGE_STATUSES.WAITING === item.status">
+                    <div class="loader">
+                        <span class="loader__circle"></span>
+                    </div>
+                </template>
+                <template v-if="USER_MESSAGE_STATUSES.FAILED === item.status">
+                    <a href="javascript:void(0)" class="btn__primary" @click.prevent="resend">
+                        <i class="icon-send-again"></i>
+                    </a>
+                </template>
+            </div>
             <div class="item__box">
                 <div class="item__inner">
-                    <span class="item__heading">{{ text }}</span>
-                    <span class="item__text">{{ time }}</span>
+                    <span class="item__text">{{ item.text }}</span>
+                    <span class="item__time">
+                        <template v-if="item.status === USER_MESSAGE_STATUSES.WAITING">
+                            Sending...
+                        </template>
+                        <template v-else>
+                            {{ item.time }}
+                            <template v-if="USER_MESSAGE_STATUSES.FAILED === item.status">
+                                • <span class="item__send-failed">Failed to send</span>
+                            </template>
+                        </template>
+                    </span>
                 </div>
             </div>
         </div>

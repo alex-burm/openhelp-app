@@ -1,9 +1,9 @@
 <script setup>
 defineProps({
-    date: String
+    item: Object
 })
 </script>
 
 <template>
-    <li class="separator">{{ date }}</li>
+    <li class="system">{{ item.date }}</li>
 </template>

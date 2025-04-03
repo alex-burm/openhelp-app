@@ -1,35 +1,35 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { USER_MESSAGE_TYPES } from "@public/constants/UserMessageTypes";
-import { CHAT_ITEM_TYPES } from "@public/constants/ChatItemTypes";
 
 export const useChatStore = defineStore('chat', () => {
-    const items = ref([
-        // { type: 'form' },
-        // {type: 'system', text: 'Request #00000-0000-0000-00000'},
-        // {type: 'message', content: 'Привет!', time: '12:00', subtype: 'incoming'},
-        // {type: 'message', content: 'Здравствуйте!', time: '12:01', subtype: 'outgoing'},
-        // {type: 'system', text: 'The request was resolved.'}
-    ])
+    const isLoading = ref(true);
+    const items = ref([])
 
     function init({ history = [] } = {}) {
-        // console.log(history)
         items.value = history;
+
+        setTimeout(() => {
+            isLoading.value = false;
+        }, 2000);
     }
 
-    function add(text, subtype = USER_MESSAGE_TYPES.OUTGOING) {
-        items.value.push({
-            text,
-            type: CHAT_ITEM_TYPES.MESSAGE,
-            time: new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-            }),
-            subtype
-        })
+    function add(message) {
+        const index = items.value.findIndex(item => item.clientId === message.clientId);
+
+        if (index !== -1) {
+            items.value[index] = {
+                ...items.value[index],
+                ...message,
+            }
+        } else {
+            items.value.push({
+                ...message,
+            })
+        }
     }
 
     return {
+        isLoading,
         items,
         init,
         add,
