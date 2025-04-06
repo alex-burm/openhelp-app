@@ -28,20 +28,13 @@ class TicketCreateService
             return null;
         }
 
-        $user = $this->userRepository->findOneByEmail($data->userEmail);
-        if (\is_null($user)) {
-            $user = new User(
-                name: $data->userName,
-                email: $data->userEmail,
-                roles: new RoleCollection([Role::USER]),
-            );
-            $this->userRepository->save($user);
-        }
+        $user = $this->getOrCreateUser($data->userEmail ?? '', $data->userName ?? '');
 
         $ticket = new Ticket(
             title: $data->ticketTitle,
             message: $data->ticketMessage,
-            customerId: $user->getId(),
+            customerId: $user?->getId(),
+            channel: $data->ticketChannel,
         );
 
         $this->ticketRepository->save($ticket);
@@ -52,5 +45,24 @@ class TicketCreateService
                 user: $user,
             )
         );
+    }
+
+    protected function getOrCreateUser(string $email, string $name): ?User
+    {
+        if (\strlen($email) === 0) {
+            return null;
+        }
+
+        $user = $this->userRepository->findOneByEmail($email);
+        if (\is_null($user)) {
+            $user = new User(
+                name: $name,
+                email: $email,
+                roles: new RoleCollection([Role::USER]),
+            );
+            $this->userRepository->save($user);
+        }
+
+        return $user;
     }
 }

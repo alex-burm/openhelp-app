@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import { Centrifuge } from 'centrifuge'
 import { useChatStore } from '@public/stores/ChatStore'
 import { USER_MESSAGE_DIRECTION, USER_MESSAGE_STATUSES } from "@public/constants";
-import { createOutgoingMessage } from "@public/helpers";
+import { createOutgoingMessage, getLocalDateTime } from "@public/helpers";
+
+let subscribedChannel = null;
 
 export const useConnectionStore = defineStore('connection', () => {
     const isConnected = ref(false)
@@ -11,14 +13,18 @@ export const useConnectionStore = defineStore('connection', () => {
     const subscription = ref(null)
     const sendUrl = ref(null)
 
-    function init(options = {}) {
-        options = {
+    async function init(defaults = {}) {
+        let options = {
             socketUrl: null,
             sendUrl: null,
             channel: null,
             token: null,
             getToken: null,
-            ...options,
+            ...defaults,
+        }
+
+        if ((options.channel || '').toString().length === 0) {
+            return ;
         }
 
         const centrifugoOptions = {
@@ -45,7 +51,13 @@ export const useConnectionStore = defineStore('connection', () => {
 
         centrifuge.value.connect()
 
-        subscription.value = centrifuge.value.newSubscription(options.channel);
+        useChatStore().isLoading = false;
+        subscribedChannel = options.channel;
+
+        console.log('subscribedChannel', subscribedChannel);
+
+        useChatStore().isLoading = false;
+        subscription.value = centrifuge.value.newSubscription(subscribedChannel);
         subscription.value.on('publication', ctx => {
 
             console.log('publication', ctx)
@@ -74,21 +86,24 @@ export const useConnectionStore = defineStore('connection', () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(message)
-        })
-            .then(async response => {
-                const json = await response.json();
-                if (!response.ok) {
-                    throw new Error(json?.message)
-                }
-
-                message.status = USER_MESSAGE_STATUSES.SENT;
-                useChatStore().add(message)
+            body: JSON.stringify({
+                clientId: message.clientId,
+                datetime: new Date().toISOString(),
+                channel: subscribedChannel,
+                text: message.text,
             })
-            .catch(e => {
-                message.status = USER_MESSAGE_STATUSES.FAILED;
-                useChatStore().add(message)
-            });
+        }).then(async response => {
+            const json = await response.json();
+            if (!response.ok) {
+                throw new Error(json?.message)
+            }
+
+            message.status = USER_MESSAGE_STATUSES.SENT;
+            useChatStore().add(message)
+        }).catch(e => {
+            message.status = USER_MESSAGE_STATUSES.FAILED;
+            useChatStore().add(message)
+        });
     }
 
     function send(text) {

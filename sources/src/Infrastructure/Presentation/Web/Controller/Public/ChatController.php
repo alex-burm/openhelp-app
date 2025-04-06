@@ -2,20 +2,18 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
-use App\Application\Ticket\Service\Source\FormTicketSource;
+use App\Application\Messaging\Dto\PublishMessageDto;
+use App\Application\Messaging\Service\PublishMessageService;
+use App\Application\Ticket\Service\Source\ChatTicketSource;
 use App\Application\Ticket\Service\TicketCreateService;
 use App\Infrastructure\Persistence\Redis\TicketRequestLimiterStorage;
-use App\Infrastructure\Presentation\Web\Form\CreateTicketForm;
 use Firebase\JWT\JWT;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ChatController extends AbstractController
 {
@@ -26,66 +24,55 @@ class ChatController extends AbstractController
     }
 
     #[Route('/chat/token', name: 'chat_token', methods: ['GET'])]
-    public function token(): Response
+    public function token(Request $request): Response
     {
+        $channel = $request->query->get('channel');
+
+        if (false === Uuid::isValid($channel)) {
+            return $this->json([], Response::HTTP_BAD_REQUEST);
+        }
+
         $secret = $_ENV['CENTRIFUGO_TOKEN_HMAC_SECRET_KEY'];
         $payload = [
-            'sub' => 'user123',
+            //'sub' => 'user123',
             'exp' => time() + 3600,
             'iat' => time(),
-            'channels' => ['user#123'],
+            'channels' => [
+                $request->query->get('channel'),
+            ],
         ];
 
-        return new JsonResponse([
+        return $this->json([
             'token' => JWT::encode($payload, $secret, 'HS256'),
+        ]);
+    }
+
+    #[Route('/chat/channel', name: 'chat_channel', methods: ['GET'])]
+    public function channel(
+        Request $request,
+        TicketCreateService $ticketCreateService,
+        TicketRequestLimiterStorage $rateLimiter,
+    ): Response {
+        if (false === $rateLimiter->consume($request->getClientIp())->isAccepted()) {
+            return $this->json([], Response::HTTP_TOO_MANY_REQUESTS);
+        }
+
+        $event = $ticketCreateService->createTicket(new ChatTicketSource());
+
+        return new JsonResponse([
+            'channel' => $event->ticket->getId()->toRfc4122()
         ]);
     }
 
     #[Route('/chat/send', name: 'chat_send', methods: ['POST'])]
     public function send(
         Request $request,
-        HttpClientInterface $client
+        PublishMessageService $messageService,
     ): Response {
-        $payload = $request->getPayload();
+        $data = $request->getPayload()->all();
 
-        $message = [
-            'serverId' => Uuid::v7()->toRfc4122(),
-            'clientId' => $payload->get('clientId'),
-            'text' => $payload->get('text'),
-            'direction' => $payload->get('direction', 'outgoing'),
-            'datetime' => $payload->get('datetime', (new \DateTime())->format('Y-m-d H:i:s')),
-        ];
+        $messageService->publish(new PublishMessageDto(...$data));
 
-        if (\strlen($message['text'] ?? '') === 0) {
-            return $this->json([], Response::HTTP_BAD_REQUEST);
-        }
-
-        $response = $client->request('POST', $_ENV['CENTRIFUGO_HOST'] . '/api/publish', [
-            'headers' => [
-                'Authorization' => 'apikey ' . $_ENV['CENTRIFUGO_API_KEY'],
-                'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'channel' => 'user#123',
-                'message' => $message,
-            ],
-        ]);
-
-        if ($response->getStatusCode() !== Response::HTTP_OK) {
-            return $this->json([], Response::HTTP_BAD_REQUEST);
-        }
-
-        if ($message['text'] === 'error') {
-            return $this->json([], Response::HTTP_BAD_REQUEST);
-        }
-
-
-        if ($message['text'] === 'sleep') {
-            sleep(5);
-        }
-
-        return $this->json([
-            'message' => $message,
-        ]);
+        return $this->json([], Response::HTTP_OK);
     }
 }

@@ -7,10 +7,6 @@ export const useChatStore = defineStore('chat', () => {
 
     function init({ history = [] } = {}) {
         items.value = history;
-
-        setTimeout(() => {
-            isLoading.value = false;
-        }, 2000);
     }
 
     function add(message) {

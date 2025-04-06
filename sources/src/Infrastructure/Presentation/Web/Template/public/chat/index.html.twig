@@ -6,7 +6,7 @@
     <link  href="{{ asset('css/variables.css') }}" rel="stylesheet">
     <link  href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    <script src="http://localhost:8098"></script>
+{#    <script src="http://localhost:8098"></script>#}
 
 </head>
 <body>
@@ -30,26 +30,51 @@
         </div>
     </div>
 
-    <link  href="{{ asset('build/public-chat.css') }}" rel="stylesheet">
+{#    <link  href="{{ asset('build/public-chat.css') }}" rel="stylesheet">#}
     <script src="{{ asset('build/public-chat.js') }}"></script>
 
     <script type="application/x-chat-header" id="public-chat-header">
         Custom header
     </script>
 
-    <script>
+    <script type="module">
+        const getSubscribedChannel = async () => {
+            const key = '__OPEN-HELP__';
+            const cached = localStorage.getItem(key);
+            if (cached) {
+                try {
+                    const { channel } = JSON.parse(cached);
+                    if (channel) {
+                        return channel;
+                    }
+                } catch {
+                }
+            }
+
+            const response = await fetch('{{ path('chat_channel') }}', {
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            const { channel } = await response.json();
+            localStorage.setItem(key, JSON.stringify({ channel }));
+            return channel;
+        }
+
+        const channel = await getSubscribedChannel();
+
         OpenHelpChat.init({
             //customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
             user: {
                 name: 'Alex',
                 email: 'user@example.com',
             },
+
             connection: {
                 socketUrl: 'ws://localhost:8018/connection/websocket',
                 sendUrl: '{{ path('chat_send') }}',
-                channel: 'user#123',
+                channel: channel,
                 getToken: async () => {
-                    const response = await fetch('{{ path('chat_token') }}', {
+                    const response = await fetch('{{ path('chat_token') }}?channel=' + channel, {
                         headers: {
                             'Content-Type': 'application/json'
                         },
