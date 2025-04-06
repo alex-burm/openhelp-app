@@ -5,6 +5,7 @@ namespace App\Application\Ticket\Service;
 use App\Application\Ticket\Dto\TicketDraftDto;
 use App\Domain\Mail\Incoming\Service\MailFetcherInterface;
 use App\Domain\Ticket\Service\TicketSourceInterface;
+use App\Domain\Ticket\ValueObject\TicketChannel;
 
 class EmailTicketSource implements TicketSourceInterface
 {
@@ -23,6 +24,7 @@ class EmailTicketSource implements TicketSourceInterface
         return new TicketDraftDto(
             ticketTitle: $email->subject,
             ticketMessage: $email->body,
+            ticketChannel: TicketChannel::EMAIL,
             userName: $email->name,
             userEmail: $email->address,
         );

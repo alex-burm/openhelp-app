@@ -9,6 +9,8 @@ use Symfony\Component\Uid\Uuid;
 
 class Ticket
 {
+    const DEFAULT_TITLE = 'Untitled ticket';
+
     protected \DateTimeImmutable $createdAt;
 
     public function __construct(
