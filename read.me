@@ -1,0 +1,46 @@
+# OpenHelp
+
+**OpenHelp** is a modern, open-source help-desk system built using **DDD (Domain-Driven Design)** principles. It is developed as part of the educational YouTube channel [Александр, айти-наставник](https://www.youtube.com/@BurmAlex), where the full development journey is shared: from architecture to production.
+
+## 🚀 Features
+
+- 📩 Ticketing system: create tickets, reply to them, manage status, priority and history
+- 📚 Knowledge base: searchable articles and categories
+- 💬 Built-in chat system (powered by Centrifugo)
+- 🧠 Clean DDD structure with focus on maintainability and business logic clarity
+
+## ⚙️ Tech Stack
+
+**Backend:**
+
+- PHP 8.3
+- Symfony 7
+- Doctrine DBAL
+- Redis
+- Centrifugo
+
+**Frontend:**
+
+- Vue 3
+- Pinia
+- Centrifugo client
+
+**DevOps:**
+
+- Docker + Makefile
+- MySQL, Redis
+
+## 🧪 Installation & Launch
+
+```bash
+git clone https://github.com/alex-burm/openhelp-app.git
+cd openhelp-app/documents
+
+# Build and start containers
+make docker-franken-up
+```
+
+📺 Follow the Development
+This project is being built in public. Full development process is shared on YouTube:
+
+👉 [OpenHelp.dev — HelpDesk проект на Symfony и DDD подходом](https://www.youtube.com/playlist?list=PLQA8o9MSrB3Dj_FYJ7xHHNeLi0K-mrdHz)
