@@ -9,8 +9,10 @@ use App\Application\Messaging\Service\PublishMessageService;
 use App\Application\Normalization\DtoNormalizerRegistry;
 use App\Application\Ticket\Service\Source\ChatTicketSource;
 use App\Application\Ticket\Service\TicketCreateService;
+use App\Domain\Messaging\Entity\Message;
 use App\Domain\Messaging\ValueObject\MessageType;
 use App\Infrastructure\Persistence\Redis\TicketRequestLimiterStorage;
+use App\Infrastructure\Presentation\Web\Request\PublishMessageInput;
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -71,13 +73,17 @@ class ChatController extends AbstractController
 
     #[Route('/chat/send', name: 'chat_send', methods: ['POST'])]
     public function send(
-        Request $request,
+        PublishMessageInput $input,
         PublishMessageService $messageService,
     ): Response {
-        $data = $request->getPayload()->all();
-        $data['type'] = MessageType::TYPE_MESSAGE->value;
-
-        $messageService->publish(new PublishMessageDto(...$data));
+        $messageService->publish(new PublishMessageDto(
+            id: $input->id,
+            text: $input->text,
+            ticketId: Uuid::fromRfc4122($input->channel),
+            type: MessageType::TYPE_MESSAGE,
+            sentAt: (new \DateTimeImmutable($input->datetime))
+                ->setTimezone(new \DateTimeZone('UTC')),
+        ));
 
         return $this->json([]);
     }
