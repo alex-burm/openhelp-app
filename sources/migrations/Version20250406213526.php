@@ -26,5 +26,6 @@ final class Version20250406213526 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE message DROP COLUMN type');
+        $this->addSql('ALTER TABLE message DROP COLUMN client_id');
     }
 }
