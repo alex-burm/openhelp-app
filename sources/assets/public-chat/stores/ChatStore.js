@@ -34,14 +34,12 @@ export const useChatStore = defineStore('chat', () => {
                 ...message,
                 clientId: clientId,
                 id: serverId || clientId,
-                status: USER_MESSAGE_STATUSES.SENT,
             };
         } else {
             items.value.push({
                 ...message,
                 clientId: clientId,
                 id: serverId || clientId,
-                status: message.status || USER_MESSAGE_STATUSES.RECEIVED,
             });
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Presentation\Web\Request;
 
+use App\Infrastructure\Validation\Iso8601DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PublishMessageInput
@@ -19,6 +20,6 @@ class PublishMessageInput
     public string $text;
 
     #[Assert\NotBlank]
-    #[Assert\DateTime]
+    #[Iso8601DateTime]
     public string $datetime;
 }
