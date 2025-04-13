@@ -1,7 +1,6 @@
 import { CHAT_ITEM_TYPES, USER_MESSAGE_DIRECTION, USER_MESSAGE_STATUSES } from "@public/constants";
 
-export const uuid = (id) =>
-    id ||
+export const generateUUID = () =>
         ([1e7]+-1e3+-4e3+-8e3+-1e11)
             .replace(
                 /[018]/g,
@@ -23,7 +22,7 @@ export const getLocalDateTime = () => {
 export const createOutgoingMessage = text => {
     return {
         text,
-        clientId: uuid(),
+        id: generateUUID(),
         type: CHAT_ITEM_TYPES.MESSAGE,
         status: USER_MESSAGE_STATUSES.SENDING,
         direction: USER_MESSAGE_DIRECTION.OUTGOING,
@@ -31,12 +30,11 @@ export const createOutgoingMessage = text => {
     }
 }
 
-export const createIncomingMessage = ({text, clientId, serverId, datetime}) => {
+export const createIncomingMessage = ({id, text, datetime}) => {
     return {
-        serverId,
-        clientId,
-        datetime,
+        id,
         text,
+        datetime,
         type: CHAT_ITEM_TYPES.MESSAGE,
         direction: USER_MESSAGE_DIRECTION.INCOMING,
     }

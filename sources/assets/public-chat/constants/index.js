@@ -14,4 +14,5 @@ export const USER_MESSAGE_STATUSES = {
     SENDING: 'sending',
     WAITING: 'waiting',
     FAILED: 'failed',
+    RECEIVED: 'received',
 }

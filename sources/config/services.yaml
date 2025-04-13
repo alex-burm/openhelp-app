@@ -43,6 +43,12 @@ services:
     App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
 
+    App\Application\Normalization\DtoNormalizerRegistry:
+        arguments:
+            $normalizers:
+                - '@App\Application\Normalization\MessageViewNormalizer'
+                - '@App\Application\Normalization\MessageCollectionNormalizer'
+
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }

@@ -30,7 +30,6 @@
         </div>
     </div>
 
-{#    <link  href="{{ asset('build/public-chat.css') }}" rel="stylesheet">#}
     <script src="{{ asset('build/public-chat.js') }}"></script>
 
     <script type="application/x-chat-header" id="public-chat-header">
@@ -38,30 +37,6 @@
     </script>
 
     <script type="module">
-        const getSubscribedChannel = async () => {
-            const key = '__OPEN-HELP__';
-            const cached = localStorage.getItem(key);
-            if (cached) {
-                try {
-                    const { channel } = JSON.parse(cached);
-                    if (channel) {
-                        return channel;
-                    }
-                } catch {
-                }
-            }
-
-            const response = await fetch('{{ path('chat_channel') }}', {
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            const { channel } = await response.json();
-            localStorage.setItem(key, JSON.stringify({ channel }));
-            return channel;
-        }
-
-        const channel = await getSubscribedChannel();
-
         OpenHelpChat.init({
             //customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
             user: {
@@ -72,31 +47,10 @@
             connection: {
                 socketUrl: 'ws://localhost:8018/connection/websocket',
                 sendUrl: '{{ path('chat_send') }}',
-                channel: channel,
-                getToken: async () => {
-                    const response = await fetch('{{ path('chat_token') }}?channel=' + channel, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    });
-
-                    const data = await response.json();
-                    return data.token;
-                },
+                historyUrl: '{{ path('chat_history') }}',
+                tokenUrl: '{{ path('chat_token') }}',
+                channelUrl: '{{ path('chat_channel') }}',
             },
-            chat: {
-                history: [
-                    {type: 'system', text: 'Request #00000-0000-0000-00000', datetime: '2025-03-30 12:01'},
-                    {type: 'message', text: 'Здравствуйте!', datetime: '2025-03-30 12:00', name: 'Alex Burm', direction: 'incoming'},
-                    {type: 'message', text: 'Привет!', datetime: '2025-03-30 12:01', direction: 'outgoing'},
-                    {type: 'system', text: 'The request was resolved!', datetime: '2025-03-31 12:02'},
-                    // {type: 'message', text: 'Здравствуйте 2!', datetime: '2025-03-30 12:01', subtype: 'outgoing'},
-                    // {type: 'message', text: 'Здравствуйте 3!', datetime: '2025-03-31 12:01', subtype: 'outgoing'},
-                    // {type: 'message', text: 'Здравствуйте 10!', datetime: '2025-03-31 12:01', subtype: 'outgoing'},
-                    // {type: 'message', text: 'Здравствуйте 11!', datetime: '2025-04-01 11:01', subtype: 'outgoing'},
-                    // {type: 'message', text: 'Здравствуйте 12!', datetime: '2025-04-01 12:01', subtype: 'outgoing'},
-                ]
-            }
         });
     </script>
 </body>

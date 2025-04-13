@@ -2,72 +2,113 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { Centrifuge } from 'centrifuge'
 import { useChatStore } from '@public/stores/ChatStore'
-import { USER_MESSAGE_DIRECTION, USER_MESSAGE_STATUSES } from "@public/constants";
-import { createOutgoingMessage, getLocalDateTime } from "@public/helpers";
-
-let subscribedChannel = null;
+import { USER_MESSAGE_STATUSES } from "@public/constants";
+import { createOutgoingMessage } from "@public/helpers";
 
 export const useConnectionStore = defineStore('connection', () => {
     const isConnected = ref(false)
+    const isReconnected = ref(false)
     const centrifuge = ref(null)
     const subscription = ref(null)
     const sendUrl = ref(null)
+    const tokenUrl = ref(null)
+    const historyUrl = ref(null)
+    const channelUrl = ref(null)
+    const channel = ref(null)
+    const token = ref(null)
 
     async function init(defaults = {}) {
         let options = {
             socketUrl: null,
             sendUrl: null,
-            channel: null,
-            token: null,
-            getToken: null,
+            tokenUrl: null,
+            historyUrl: null,
+            channelUrl: null,
             ...defaults,
         }
 
-        if ((options.channel || '').toString().length === 0) {
-            return ;
-        }
-
-        const centrifugoOptions = {
-            ...(options.token && { token: options.token }),
-            ...(options.getToken && { getToken: options.getToken })
-        }
-
         sendUrl.value = options.sendUrl
-        centrifuge.value = new Centrifuge(options.socketUrl, centrifugoOptions)
+        tokenUrl.value = options.tokenUrl
+        historyUrl.value = options.historyUrl
+        channelUrl.value = options.channelUrl
+
+        channel.value = await getChannel();
+
+        centrifuge.value = new Centrifuge(options.socketUrl, {
+            getToken: createGetTokenFunction(),
+        })
 
         centrifuge.value.on('connecting', () => isConnected.value = false);
-        centrifuge.value.on('connected', () => {
-            console.log('connected')
+        centrifuge.value.on('connected', async () => {
+            useChatStore().items = await getHistory();
+
             isConnected.value = true
+            useChatStore().isLoading = false;
         })
         centrifuge.value.on('disconnected', () => {
-            console.log('disconnected');
             isConnected.value = false;
+            isReconnected.value = true;
         })
 
+        /*
         centrifuge.value.on('state', (ctx) => {
             console.log('[state]', ctx)
         })
+        */
 
         centrifuge.value.connect()
 
-        useChatStore().isLoading = false;
-        subscribedChannel = options.channel;
-
-        console.log('subscribedChannel', subscribedChannel);
-
-        useChatStore().isLoading = false;
-        subscription.value = centrifuge.value.newSubscription(subscribedChannel);
+        subscription.value = centrifuge.value.newSubscription(channel.value);
         subscription.value.on('publication', ctx => {
-
-            console.log('publication', ctx)
-            // const { content, direction } = ctx.data
-            // console.log('chat', ctx)
-            // useChatStore().add({
-            //     text: ctx.data.text,
-            //     direction: USER_MESSAGE_DIRECTION.INCOMING
-            // })
+            useChatStore().add(ctx.data)
         })
+    }
+
+    function createGetTokenFunction()
+    {
+        return async () => {
+            const response = await fetch(tokenUrl.value + '?channel=' + channel.value, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const data = await response.json();
+
+            // store token to use it in the next requests
+            token.value = data.token;
+
+            return data.token;
+        }
+    }
+
+    async function getChannel()
+    {
+        const key = '__OPEN-HELP__';
+        let { channel } = JSON.parse(localStorage.getItem(key) || '{}');
+        if (channel) {
+            return channel;
+        }
+
+        const response = await fetch(channelUrl.value, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await response.json();
+        channel = data.channel;
+
+        localStorage.setItem(key, JSON.stringify({ channel }));
+        return channel;
+    }
+
+    async function getHistory()
+    {
+        const response = await fetch(historyUrl.value + '?channel=' + channel.value, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value,
+            },
+        });
+
+        const { history } = await response.json();
+        return history;
     }
 
     function sendMessage(message)
@@ -84,13 +125,14 @@ export const useConnectionStore = defineStore('connection', () => {
         fetch(sendUrl.value, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.value,
             },
             body: JSON.stringify({
-                clientId: message.clientId,
-                datetime: new Date().toISOString(),
-                channel: subscribedChannel,
+                id: message.id,
                 text: message.text,
+                channel: channel.value,
+                datetime: new Date().toISOString(),
             })
         }).then(async response => {
             const json = await response.json();
@@ -125,6 +167,7 @@ export const useConnectionStore = defineStore('connection', () => {
 
     return {
         isConnected,
+        isReconnected,
         init,
         send,
         resend,

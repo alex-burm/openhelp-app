@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
+use App\Domain\Messaging\ValueObject\MessageType;
 use App\Domain\Ticket\Entity\Ticket;
 use App\Domain\User\Entity\User;
 use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineMessageRepository;
@@ -32,6 +33,12 @@ class DoctrineMessage implements WorkspaceAwareEntity
     #[ORM\Column(type: 'string', nullable: false)]
     protected string $text = '';
 
+    #[ORM\Column(type: 'integer', nullable: false)]
+    protected int $type = MessageType::TYPE_MESSAGE->value;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $clientId = null;
+
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
 
@@ -52,6 +59,16 @@ class DoctrineMessage implements WorkspaceAwareEntity
     public function setId(?Uuid $id): void
     {
         $this->id = $id;
+    }
+
+    public function getClientId(): ?string
+    {
+        return $this->clientId;
+    }
+
+    public function setClientId(?string $clientId): void
+    {
+        $this->clientId = $clientId;
     }
 
     public function getTicket(): ?DoctrineTicket
@@ -82,6 +99,16 @@ class DoctrineMessage implements WorkspaceAwareEntity
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
