@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistence\Doctrine\Mapper;
 
 use App\Domain\Messaging\Entity\Message;
+use App\Domain\Messaging\ValueObject\MessageType;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineMessage;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
@@ -22,8 +23,10 @@ readonly final class DoctrineMessageMapper
         }
 
         $entity->setId($domainObject->getId());
+        $entity->setClientId($domainObject->getClientId());
         $entity->setTicket($this->entityManager->getReference(DoctrineTicket::class, $domainObject->getTicketId()));
         $entity->setText($domainObject->getText());
+        $entity->setType($domainObject->getType()->value);
         $entity->setCreatedAt($domainObject->getCreatedAt());
         $entity->setSentAt($domainObject->getSentAt());
 
@@ -40,13 +43,16 @@ readonly final class DoctrineMessageMapper
     public function fromDoctrine(DoctrineMessage $doctrineObject): Message
     {
         $message = new Message(
+            $doctrineObject->getClientId(),
             $doctrineObject->getTicket()->getId(),
             $doctrineObject->getText(),
+            MessageType::from($doctrineObject->getType()),
             $doctrineObject->getSentAt(),
         );
 
         $message->setCreatedAt($doctrineObject->getCreatedAt());
         $message->setUserId($doctrineObject->getUser()?->getId());
+        $message->setId($doctrineObject->getId());
         return $message;
     }
 }

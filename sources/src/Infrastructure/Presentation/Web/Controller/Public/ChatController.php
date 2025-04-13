@@ -2,13 +2,18 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
+use App\Application\Messaging\Dto\MessageHistoryRequestDto;
 use App\Application\Messaging\Dto\PublishMessageDto;
+use App\Application\Messaging\Service\MessageHistoryService;
 use App\Application\Messaging\Service\PublishMessageService;
+use App\Application\Normalization\DtoNormalizerRegistry;
 use App\Application\Ticket\Service\Source\ChatTicketSource;
 use App\Application\Ticket\Service\TicketCreateService;
+use App\Domain\Messaging\ValueObject\MessageType;
 use App\Infrastructure\Persistence\Redis\TicketRequestLimiterStorage;
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,9 +75,25 @@ class ChatController extends AbstractController
         PublishMessageService $messageService,
     ): Response {
         $data = $request->getPayload()->all();
+        $data['type'] = MessageType::TYPE_MESSAGE->value;
 
         $messageService->publish(new PublishMessageDto(...$data));
 
-        return $this->json([], Response::HTTP_OK);
+        return $this->json([]);
+    }
+
+    #[Route('/chat/history', name: 'chat_history', methods: ['GET'])]
+    public function history(
+        Request $request,
+        MessageHistoryService $historyService,
+        Security $security,
+        DtoNormalizerRegistry $normalizer,
+    ): Response {
+        $viewDto = $historyService->getHistory(new MessageHistoryRequestDto(
+            channel: $request->query->get('channel'),
+            userId: $security->getUser()?->getId(),
+        ));
+
+        return $this->json(['history' => $normalizer->normalize($viewDto)]);
     }
 }

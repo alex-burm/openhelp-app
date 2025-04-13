@@ -28,8 +28,7 @@ export default {
         },
         validator(value) {
             return (
-                typeof value.clientId === 'string' &&
-                typeof value.serverId === 'string' &&
+                typeof value.id === 'string' &&
                 typeof value.name === 'string' &&
                 typeof value.text === 'string' &&
                 typeof value.time === 'string' &&
