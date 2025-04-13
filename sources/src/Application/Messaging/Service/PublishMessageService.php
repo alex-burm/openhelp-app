@@ -5,8 +5,6 @@ namespace App\Application\Messaging\Service;
 use App\Application\Messaging\Dto\PublishMessageDto;
 use App\Domain\Messaging\Entity\Message;
 use App\Domain\Messaging\Repository\MessageRepositoryInterface;
-use App\Domain\Messaging\ValueObject\MessageType;
-use Symfony\Component\Uid\Uuid;
 
 class PublishMessageService
 {
@@ -19,11 +17,10 @@ class PublishMessageService
     {
         $message = new Message(
             clientId: $messageDto->id,
-            ticketId: Uuid::fromRfc4122($messageDto->channel),
+            ticketId: $messageDto->ticketId,
             text: $messageDto->text,
-            type:  MessageType::from($messageDto->type),
-            sentAt: (new \DateTimeImmutable($messageDto->datetime))
-                ->setTimezone(new \DateTimeZone('UTC')),
+            type:  $messageDto->type,
+            sentAt: $messageDto->sentAt,
         );
         $this->repository->save($message);
 
