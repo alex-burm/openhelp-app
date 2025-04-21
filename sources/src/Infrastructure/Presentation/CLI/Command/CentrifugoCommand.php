@@ -24,31 +24,35 @@ class CentrifugoCommand extends Command
     {
         $this->addOption('token', 't', InputOption::VALUE_NONE, 'Generate token');
         $this->addOption('message', 'm', InputOption::VALUE_REQUIRED, 'Send test message');
+        $this->addOption('channel', 'c', InputOption::VALUE_REQUIRED, 'Channel to send message');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('message')) {
+            $json = [
+                'channel' => $input->getOption('channel') ?? 'user#123',
+                'data' => [
+                    'text' => $input->getOption('message'),
+                ],
+            ];
             $response = $this->client->request('POST', $_ENV['CENTRIFUGO_HOST'] . '/api/publish', [
                 'headers' => [
                     'Authorization' => 'apikey ' . $_ENV['CENTRIFUGO_API_KEY'],
                     'Content-Type' => 'application/json',
                 ],
-                'json' => [
-                    'channel' => 'user#123',
-                    'data' => [
-                        'text' => $input->getOption('message'),
-                    ],
-                ],
+                'json' => $json,
             ]);
+
+            $output->writeln(sprintf('<info>Message to channel %s: </info> %s', $json['channel'], $json['data']['text']));
         }
         if ($input->getOption('token')) {
             $secret = $_ENV['CENTRIFUGO_TOKEN_HMAC_SECRET_KEY'];
             $payload = [
-                'sub' => 'user123',
+                //'sub' => 'user123',
                 'exp' => time() + 10,
                 'iat' => time(),
-                'channels' => ['user#123'],
+                'channels' => [$input->getOption('channel') ?? 'user#123'],
             ];
 
             $jwt = JWT::encode($payload, $secret, 'HS256');

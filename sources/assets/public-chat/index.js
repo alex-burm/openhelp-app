@@ -7,7 +7,7 @@ import index from './index.vue'
 
 function init(config) {
     const app = createApp(index)
-
+    app.config.devtools = true;
     app.use(createPinia())
 
     const user = useUserStore()
@@ -18,7 +18,9 @@ function init(config) {
     chat.init(config.chat)
     conn.init(config.connection)
 
+    app.provide('customHeaderHtml', config?.customHeaderHtml)
     app.mount(document.querySelector(config?.target || '#app'))
+    document.querySelector(config?.target || '#app').classList.add('chat');
 }
 
 window.OpenHelpChat = {

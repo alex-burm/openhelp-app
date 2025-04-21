@@ -1,12 +1,9 @@
-<template>
-    <div class="divider">{{ text }}</div>
-</template>
-
 <script setup>
 defineProps({
-    text: String
+    item: Object
 })
 </script>
 
-<style scoped>
-</style>
+<template>
+    <li class="system">{{ item.date }}</li>
+</template>

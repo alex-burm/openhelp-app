@@ -29,6 +29,7 @@ services:
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
     App\Domain\Ticket\Repository\TicketRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineTicketRepository'
+    App\Domain\Messaging\Repository\MessageRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineMessageRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\Settings\Repository\SettingsRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository'
     App\Domain\Service\MailHandlerInterface: '@App\Infrastructure\Service\MailHandler'
@@ -41,6 +42,12 @@ services:
 #    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Bidirectional\BidirectionalSodiumEncryptor'
     App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
+
+    App\Application\Normalization\DtoNormalizerRegistry:
+        arguments:
+            $normalizers:
+                - '@App\Application\Normalization\MessageViewNormalizer'
+                - '@App\Application\Normalization\MessageCollectionNormalizer'
 
     App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
         tags:
@@ -58,6 +65,12 @@ services:
         arguments:
             $rateLimiterFactory: '@limiter.ticket_request'
 
+    App\Application\Messaging\Service\MessagePublisherInterface:
+        class: App\Infrastructure\Messaging\Centrifugo\CentrifugoMessagePublisher
+        arguments:
+            $apiUrl: '%env(CENTRIFUGO_HOST)%'
+            $apiKey: '%env(CENTRIFUGO_API_KEY)%'
+
     monolog.processor.memory_usage:
         class: Monolog\Processor\MemoryUsageProcessor
         tags:
@@ -72,4 +85,11 @@ services:
         class: App\Infrastructure\Service\Logger\UserIdProcessor
         tags:
             - { name: monolog.processor }
-#
+
+when@test:
+    services:
+        # default configuration for services in *this* file
+        _defaults:
+            autowire: true      # Automatically injects dependencies in your services.
+            autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+            public: true

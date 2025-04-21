@@ -1,30 +1,51 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { USER_MESSAGE_STATUSES } from "@public/constants";
 
 export const useChatStore = defineStore('chat', () => {
-    const items = ref([
-        // { type: 'form' },
-        // {type: 'system', text: 'Request #00000-0000-0000-00000'},
-        // {type: 'message', content: 'Привет!', time: '12:00', subtype: 'incoming'},
-        // {type: 'message', content: 'Здравствуйте!', time: '12:01', subtype: 'outgoing'},
-        // {type: 'system', text: 'The request was resolved.'}
-    ])
+    const isLoading = ref(true);
+    const items = ref([])
 
     function init({ history = [] } = {}) {
-        // console.log(history)
         items.value = history;
     }
 
-    function add(content, subtype = 'outgoing') {
-        items.value.push({
-            content,
-            type: "message",
-            time: new Date().toLocaleTimeString(),
-            subtype
-        })
+    function add(message) {
+        let index = -1;
+
+        const clientId = message.clientId || message.id || null;
+        const serverId = message.serverId || null;
+
+        if (clientId) {
+            index = items.value.findIndex(
+                item => item.id === clientId || item.clientId === clientId
+            );
+        }
+
+        if (index === -1 && serverId) {
+            index = items.value.findIndex(item => item.id === serverId);
+        }
+
+        if (index !== -1) {
+            const existing = items.value[index];
+
+            items.value[index] = {
+                ...existing,
+                ...message,
+                clientId: clientId,
+                id: serverId || clientId,
+            };
+        } else {
+            items.value.push({
+                ...message,
+                clientId: clientId,
+                id: serverId || clientId,
+            });
+        }
     }
 
     return {
+        isLoading,
         items,
         init,
         add,
