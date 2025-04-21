@@ -204,6 +204,58 @@
             position: absolute;
         }
     }
+
+    &__apply {
+        align-items: center;
+        border-radius: 4px;
+        background-color: var(--washed-green);
+        display: inline-flex;
+        justify-content: center;
+        transition: background-color .3s ease;
+
+        i {
+            color: green;
+        }
+
+        &:hover {
+            background-color: var(--hard-green);
+            transition: background-color .3s ease;
+        }
+
+        &.active {
+            background-color: var(--green);
+
+            i {
+                color: var(--white);
+            }
+        }
+    }
+
+    &__cancel {
+        align-items: center;
+        border-radius: 4px;
+        background-color: var(--washed-red);
+        display: inline-flex;
+        justify-content: center;
+        transition: background-color .3s ease;
+
+        i {
+            color: red;
+        }
+
+        &:hover {
+            background-color: var(--hard-red);
+            transition: background-color .3s ease;
+        }
+
+        &.active {
+            background-color: var(--red);
+
+            i {
+                color: var(--white);
+            }
+        }
+    }
 }
 
 //Downloading svg

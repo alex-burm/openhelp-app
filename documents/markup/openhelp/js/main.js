@@ -1,3 +1,5 @@
+const modal = document.querySelector('.modal');
+
 document.querySelectorAll('.btn__dropdown').forEach(button => {
     button.addEventListener('click', function (e) {
         e.preventDefault();        
@@ -15,8 +17,12 @@ document.querySelectorAll('.btn__dropdown').forEach(button => {
 });
 
 window.addEventListener('click', function (e) {
-    if (!e.target.closest('.btn__dropdown, .form__control--sm')) {
+    if (!e.target.closest('.btn__dropdown, .form__control--sm, .form__control--m')) {
         closeDropdown();
+    }
+
+    if (e.target.closest('.modal__close, .modal__overlay')) {
+        modal.classList.remove('modal--visible');
     }
 });
 

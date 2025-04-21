@@ -7,7 +7,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    // visibility: hidden;
+    visibility: hidden;
     width: 100%;
     z-index: 100;
 
@@ -37,10 +37,13 @@
         #{$self}__inner {
             right: 0;
             height: 100%;
+            transform: translateX(100%);
         }
     }
 
     &--visible {
+        visibility: visible;
+        
         #{$self}__overlay {
             opacity: 1;
             transition-delay: 0s;
@@ -49,6 +52,91 @@
 
         #{$self}__inner {
             opacity: 1;
+            transform: translateX(0);
+            transition: all 0.3s 0.12s;
+        }
+    }
+}
+
+//Customer details
+.details {
+    background-color: var(--white);
+    padding: 22px 32px;
+    height: 100%;
+    min-width: 400px;
+    width: 400px;
+
+    &__top {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
+    .form {
+        &__row {
+            &:not(:first-child) {
+                margin-top: 16px;
+            }
+
+            i {
+                font-size: 24px;
+                bottom: 4px;
+                position: absolute;
+            }
+
+            .btn__primary {
+                margin: auto 0 0 4px;
+                display: none;
+                
+                i {
+                    bottom: unset;
+                    position: unset;
+                }
+            }
+
+            &:hover {
+                .btn__primary {
+                    display: flex;
+                }
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        margin-top: 30px;
+
+        .dropdown {
+            width: 100%;
+
+            &__menu {
+                width: 100%;
+            }
+
+            &__menu-bot {
+                display: flex;
+                gap: 0 4px;
+
+                .dropdown__item {
+                    overflow: hidden;
+                    width: 100%;
+
+                    .btn__text {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+
+            .form__row {
+                gap: 0 4px;
+                margin-top: 10px;
+            }
+        }
+
+        .btn__dropdown {
+            width: 100%;
         }
     }
 }

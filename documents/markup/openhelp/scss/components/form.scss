@@ -24,12 +24,14 @@
         }
 
         &:hover {
-            border-color: var(--soft-grey);
+            border-color: var(--grey);
+            transition: border-color .3s ease;
         }
 
         &:focus {
             border-color: var(--blue);
             outline: none;
+            transition: border-color .3s ease;
         }
 
         &:not(:placeholder-shown) {

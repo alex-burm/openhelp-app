@@ -92,6 +92,21 @@
         text-align: center;
     }
 
+    &__top {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-weight: var(--font-weight-medium);
+    }
+
+    &__top-actions {
+        align-items: center;
+        display: flex;
+        gap: 0 4px;
+    }
+
     &--secondary {
         #{$self}__menu {
             padding: 16px 24px 16px 16px;
