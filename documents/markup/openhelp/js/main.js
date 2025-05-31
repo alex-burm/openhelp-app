@@ -17,7 +17,7 @@ document.querySelectorAll('.btn__dropdown').forEach(button => {
 });
 
 window.addEventListener('click', function (e) {
-    if (!e.target.closest('.btn__dropdown, .form__control--sm, .form__control--m')) {
+    if (!e.target.closest('.btn__dropdown, .form__control--sm, .form__control--m, .dropdown--filter')) {
         closeDropdown();
     }
 
@@ -52,3 +52,16 @@ const addOrRemoveSearch = (method) => {
     overlay.classList[method]('show');
     layout.classList[method]('no__scroll');
 }
+
+//Login
+document.querySelector('.login .form__row .btn__primary')?.addEventListener('click', function() {
+    const input = document.querySelector('#password');
+    
+    if (input.getAttribute('type') === 'password') {
+        input.setAttribute('type', 'text');
+        this.classList.add('show');
+    } else {
+        input.setAttribute('type', 'password');
+        this.classList.remove('show');
+    }
+});

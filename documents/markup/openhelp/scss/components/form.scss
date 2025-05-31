@@ -1,4 +1,6 @@
 .form {
+    $self: &;
+
     &__control {
         background-color: var(--white);
         border: 1px solid var(--soft-grey);
@@ -39,6 +41,14 @@
                 opacity: 1;
                 transition: opacity .3s, visibility .3s;
                 visibility: visible;
+            }
+        }
+        
+        @at-root {
+            textarea#{&} {
+                resize: none;
+                padding: 15px 51px 15px 15px;
+                height: 104px;
             }
         }
     }
@@ -88,18 +98,159 @@
             transition: opacity .3s, visibility .3s;
             visibility: hidden
         }
+
+        &--files {
+            align-items: center;
+            display: flex;
+            gap: 0 4px;
+        }
+    }
+
+    &__cols {
+        gap: 0 8px;
     }
 
     &__group {
         display: flex;
         flex-direction: column;
         width: 100%;
+
+        &.error {
+            .form__control {
+                border-color: var(--red);
+            }
+        }
     }
 
     &__label {
-        color: var(--hard-grey);
-        font-size: var(--text-size-m);
-        line-height: var(--line-height-m);
-        margin-bottom: 4px;
+        font-weight: var(--font-weight-semi-bold);
+        margin-bottom: 8px;
+
+        &.required {
+            &:after {
+                content: '*';
+                color: var(--red);
+            }
+        }
+    }
+
+    &__check {
+        align-items: flex-start;
+        display: flex;
+        cursor: pointer;
+        user-select: none;
+
+        input {
+            appearance: none;
+            align-items: center;
+            border: 1px solid var(--soft-grey);
+            background-color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            transition: background-color .2s ease, border-color .2s ease;
+            margin-top: 2px;
+            min-width: 20px;
+            height: 20px;
+            width: 20px;
+            
+            &[type="checkbox"] {
+                &:after {
+                    content: "\e905";
+                    color: var(--white);
+                    display: none;
+                    font-family: "icomoon" !important;
+                    font-size: 17px;
+                    position: absolute;
+                }
+            }
+
+            &[type="radio"] {
+                border-radius: 50%;
+
+                &:after {
+                    background-color: var(--white);
+                    border-radius: 50%;
+                    content: "";
+                    display: none;
+                    position: absolute;
+                    height: 10px;
+                    width: 10px;
+                }
+            }
+
+            &:checked {
+                background-color: var(--blue);
+                border-color: var(--blue);
+
+                &:after {
+                    display: block;
+                }
+
+                &:hover {
+                    background-color: var(--blue-hover);
+                    border-color: var(--blue-hover);
+                    transition: background-color .2s ease, border-color .2s ease;
+                }
+
+                // &:disabled {
+                //     background-color: var(--light-grey);
+                //     border-color: var(--light-grey);
+                // }
+            }
+
+            &:hover {
+                border-color: var(--grey);
+                transition: background-color .2s ease, border-color .2s ease;
+            }
+
+            &:disabled {
+                pointer-events: none;
+                border-color: var(--off-white);
+                background-color: var(--white);
+            }
+        }
+
+        &-text {
+            margin-left: 8px;
+        }
+    }
+
+    &__select {
+        align-items: center;
+        display: flex;
+        
+        #{$self}__control {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+            line-height: var(--line-height-m);
+            transition: color .3s ease;
+            
+            &:invalid{
+                color: var(--hard-grey);
+            }
+        }
+
+        i {
+            font-size: 24px;
+            transition: color .3s ease;
+        }
+
+        &:hover {
+            #{$self}__control {
+                color: var(--black);
+                transition: color .3s ease;
+            }
+
+            i {
+                color: var(--black);
+                transition: color .3s ease;
+            }
+        }
     }
 }

@@ -123,7 +123,8 @@
             background-color: var(--light-grey);
         }
 
-        &.active {
+        &.active,
+        &:active {
             background-color: var(--soft-grey);
         }
 
@@ -139,6 +140,28 @@
                 &:only-child {
                     margin: 0 -4px;
                 }
+            }
+        }
+
+        &--blue {
+            background-color: var(--blue);
+            color: var(--white);
+            outline-color: var(--blue);
+            gap: 0 4px;
+
+            i {
+                color: var(--white);
+            }
+            
+            &:hover {
+                background-color: var(--blue-hover);
+                outline-color: var(--blue-hover);
+            }
+
+            &.active,
+            &:active {
+                background-color: var(--blue-active);
+                outline-color: var(--blue-active);
             }
         }
     }
@@ -254,6 +277,31 @@
             i {
                 color: var(--white);
             }
+        }
+    }
+
+    &__filter {
+        outline: 1px solid var(--soft-grey);
+        border-radius: 32px;
+        display: flex;
+        padding: 12px 16px;
+        transition: outline .3s ease;
+        gap: 0 8px;
+
+        &:hover {
+            outline-color: var(--grey);
+            transition: outline .3s ease;
+        }
+
+        &:active,
+        &.active {
+            outline-color: var(--blue);
+        }
+
+        .badge {
+            position: absolute;
+            right: 18px;
+            top: -10px;
         }
     }
 }

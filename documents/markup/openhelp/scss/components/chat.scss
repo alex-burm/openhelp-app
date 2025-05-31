@@ -8,6 +8,10 @@
     height: 100%;
     width: 100%;
 
+    .empty {
+        margin: auto;
+    }
+
     &__header {
         align-items: center;
         display: flex;
@@ -248,34 +252,6 @@
             gap: 0 8px
         }
 
-        .autoresizable {
-            display: grid;
-            position: relative;
-        
-            &:after {
-                background-color: initial;
-                content: attr(data-replicated-value) " ";
-                grid-area: 1 / 1 / 2 / 2;
-                visibility: hidden;
-                min-height: 32px;
-                padding: 4px 0;
-                white-space: pre-wrap;
-                word-break: break-word;
-            }
-        
-            textarea {
-                border: none;
-                background-color: initial;
-                resize: none;
-                grid-area: 1 / 1 / 2 / 2;
-                outline: none;
-                min-height: 32px;
-                padding: 4px 0;
-                word-break: break-word;
-                width: 100%;
-            }
-        }
-
         &__files {
             align-items: center;
             display: flex;
@@ -299,6 +275,34 @@
             margin-right: 8px;
             font-size: 24px;
         }
+    }
+}
+
+.autoresizable {
+    display: grid;
+    position: relative;
+
+    &:after {
+        background-color: initial;
+        content: attr(data-replicated-value) " ";
+        grid-area: 1 / 1 / 2 / 2;
+        visibility: hidden;
+        min-height: 32px;
+        padding: 4px 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    textarea {
+        border: none;
+        background-color: initial;
+        resize: none;
+        grid-area: 1 / 1 / 2 / 2;
+        outline: none;
+        min-height: 32px;
+        padding: 4px 0;
+        word-break: break-word;
+        width: 100%;
     }
 }
 
@@ -342,14 +346,14 @@
         margin-top: 16px;
     }
 
-    .empty {
-        margin: auto;
-    }
-
     .item {
         &__inner {
             margin-right: 0;
             max-width: unset;
         }
+    }
+
+    &__form {
+        width: 524px;
     }
 }

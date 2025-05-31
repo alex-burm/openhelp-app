@@ -1,0 +1,157 @@
+.login {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 96px auto 0;
+    position: relative;
+    width: 400px;
+    
+    &__logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        margin-bottom: 8px;
+    }
+
+    &__subtitle {
+        text-align: center;
+
+        b {
+            color: var(--black);
+            font-weight: var(--font-weight-semi-bold);
+        }
+
+        & + .login__subtitle {
+            margin-top: 8px;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    &__actions {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 48px;
+        gap: 16px 0;
+        
+        .btn__primary--xl {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    &__bot {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 48px;
+    }
+
+    &__bot-text {
+        margin-bottom: 16px;
+    }
+
+    .form {
+        &__row {
+            &:not(:first-child) {
+                margin-top: 16px;
+            }
+
+            .btn__primary {
+                position: absolute;
+                right: 11px;
+                top: 44px;
+
+                &.show {
+                    i {
+                        &::before {
+                            content: "\e92e";
+                        }
+                    }
+                }
+            }
+        }
+
+        &__row-actions {
+            margin-top: 16px;
+        }
+        
+        &__control#password {
+            padding-right: 50px;
+        }
+    }
+
+    .btn__back {
+        position: absolute;
+        left: -150px;
+    }
+
+    .progress {
+        width: 400px;
+
+        &__wrapper {
+            margin: -66px 0 32px;
+        }
+    }
+}
+
+.state {
+    margin-top: 16px;
+
+    &__item {
+        align-items: center;
+        color: var(--hard-grey);
+        display: flex;
+        gap: 0 8px;
+
+        &.error {
+            color: var(--red);
+
+            .state__icon {
+                background-color: var(--red);
+            }
+        }
+
+        &:not(:first-child) {
+            margin-top: 8px;
+        }
+
+        &.success {
+            color: var(--hard-grey);
+            text-decoration: line-through;
+
+            .state__icon {
+                background-color: var(--green);
+            }
+        }
+    }
+
+    &__icon {
+        background-color: var(--grey);
+        border-radius: 50%;
+        display: flex;
+        height: 8px;
+        min-width: 8px;
+        width: 8px;
+    }
+
+    &__text {
+        font-size: var(--text-size-sm);
+        line-height: var(--line-height-m);
+    }
+
+    .state__item {
+        .state__text {
+            font-size: var(--text-size-m);
+        }
+    }
+}

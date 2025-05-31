@@ -26,6 +26,7 @@
 
     &__inner {
         background-color: var(--white);
+        border-radius: 16px;
         opacity: 0;
         overflow: hidden;
         position: fixed;
@@ -35,6 +36,7 @@
 
     &--side {
         #{$self}__inner {
+            border-radius: 0;
             right: 0;
             height: 100%;
             transform: translateX(100%);
@@ -101,6 +103,14 @@
                 }
             }
         }
+
+        &__label {
+            color: var(--hard-grey);
+            font-size: var(--text-size-m);
+            font-weight: var(--font-weight-base);
+            line-height: var(--line-height-m);
+            margin-bottom: 4px;
+        }
     }
 
     &__actions {
@@ -137,6 +147,81 @@
 
         .btn__dropdown {
             width: 100%;
+        }
+    }
+}
+
+//Category modal
+.category {
+    padding: 16px 24px 24px;
+    min-width: 600px;
+    width: 600px;
+
+    &__top {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 8px;
+
+        .btn__primary {
+            margin-right: -8px;
+        }
+    }
+
+    &__top-inner {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        gap: 4px 0;
+    }
+
+    &__subtitle {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 24px;
+    }
+
+    &__box {
+        overflow-y: auto;
+        height: 342px;
+
+        &::-webkit-scrollbar {
+            display: none;
+            height: 0;
+            width: 0;
+        }
+    }
+
+    &__item {
+        border-bottom: 1px solid var(--soft-grey);
+        padding: 12px 0;
+    }
+
+    .form {
+        &__check-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &__row {
+            gap: 0 8px;
+            margin-top: 12px;
+
+            .form__check {
+                input {
+                    margin: 0 0 4px;
+                }
+            }
+        }
+    
+        &__control {
+            padding: 0 0 4px;
         }
     }
 }
