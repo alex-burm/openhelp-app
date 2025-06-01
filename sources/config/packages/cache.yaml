@@ -6,6 +6,12 @@ framework:
                 default_lifetime: 300
                 provider: '%env(REDIS_URL)%'
                 tags: false
+
+            app.mute_cache:
+                adapter: cache.adapter.redis
+                default_lifetime: 0
+                provider: '%env(REDIS_URL)%'
+
         # Unique name of your app: used to compute stable namespaces for cache keys.
         #prefix_seed: your_vendor_name/app_name
 
