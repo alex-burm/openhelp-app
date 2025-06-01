@@ -20,4 +20,13 @@ class ChannelDistribution
     {
         return $this->ticketStatsService->getCountByChannel($this->channel);
     }
+
+    public function getIcon(): string
+    {
+        return match ($this->channel) {
+            TicketChannel::EMAIL => 'icon-mail',
+            TicketChannel::FORM => 'icon-form',
+            TicketChannel::CHAT => 'icon-chat',
+        };
+    }
 }

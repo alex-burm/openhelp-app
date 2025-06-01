@@ -20,4 +20,13 @@ class PriorityDistribution
     {
         return $this->ticketStatsService->getCountByPriority($this->priority);
     }
+
+    public function getIcon(): string
+    {
+        return match ($this->priority) {
+            TicketPriority::HIGH => 'icon-high-priority',
+            TicketPriority::MEDIUM => 'icon-medium-priority',
+            TicketPriority::LOW => 'icon-low-priority',
+        };
+    }
 }
