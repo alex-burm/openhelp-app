@@ -12,59 +12,60 @@
 
 <body>
     <div class="content">
-        <div class="logo">
-            <img src="../assets/img/logo.svg" alt="logo">
-        </div>
-        <div class="content__chat">
-            <div class="content__top">
-                <a href="#" class="btn__primary">
-                    <i class="icon-short-arrow-left"></i>
-                    <span class="btn__text">
-                        Back
-                    </span>
-                </a>
-                <h1 class="content__title">
-                    Live chat
-                </h1>
+        <div class="content__inner">
+            <svg style="position: absolute; top: 0; left: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14300)">
+                <circle cx="-140" cy="20" r="300" fill="#E0EDFF"/>
+                </g>
+                <defs>
+                <filter id="filter0_f_2656_14300" x="-760" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14300"/>
+                </filter>
+                </defs>
+            </svg>
+            <svg style="position: absolute; top: 0; right: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14299)">
+                <circle cx="620" cy="20" r="300" fill="#E0EDFF"/>
+                </g>
+                <defs>
+                <filter id="filter0_f_2656_14299" x="0" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14299"/>
+                </filter>
+                </defs>
+            </svg>
+            <div class="logo">
+                <img src="../assets/img/logo.svg" alt="logo">
             </div>
-            <div class="chat">
-                <!-- <div class="empty">
-                    <div class="empty__inner">
-                        <div class="loader">
-                            <span class="loader__circle"></span>
-                        </div>
-                        <span class="empty__text">
-                            Please wait, we are loading the chat...
+            <div class="content__chat">
+                <div class="content__top">
+                    <a href="#" class="btn__primary">
+                        <i class="icon-short-arrow-left"></i>
+                        <span class="btn__text">
+                            Back
                         </span>
-                    </div>
-                </div> -->
-                <div class="chat__header">
-                    <div class="item">
-                        <div class="item__left">
-                            <div class="avatar">
-                                <span class="avatar__name">
-                                    YR
-                                </span>
-                                <i class="icon-profile-agent"></i>
-                            </div>
-                        </div>
-                        <div class="item__inner">
-                            <span class="item__heading">
-                                Yevhenii Riabukha
-                            </span>
-                            <span class="item__text">
-                                Customer support
-                            </span>
-                        </div>
-                    </div>
+                    </a>
+                    <h1 class="content__title">
+                        Live chat
+                    </h1>
                 </div>
-                <ul class="messages">
-                    <li class="system">
-                        Request ID: 123e4567-e89b-12d3-a456-426655440000
-                    </li>
-                    <li class="message">
+                <div class="chat">
+                    <!-- <div class="empty">
+                        <div class="empty__inner">
+                            <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div>
+                            <span class="empty__text">
+                                Please wait, we are loading the chat...
+                            </span>
+                        </div>
+                    </div> -->
+                    <div class="chat__header">
                         <div class="item">
-                            <div class="item__status">
+                            <div class="item__left">
                                 <div class="avatar">
                                     <span class="avatar__name">
                                         YR
@@ -72,91 +73,116 @@
                                     <i class="icon-profile-agent"></i>
                                 </div>
                             </div>
-                            <div class="item__box">
-                                <div class="item__inner">
-                                    <span class="item__text">
-                                        Cannot access my account after password reset.
-                                    </span>
-                                    <span class="item__time">
-                                        15:45
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="system">
-                        Victor Black was assigned to this request.
-                    </li>
-                    <li class="message message--outgoing">
-                        <div class="item">
-                            <div class="item__status">
-                                <div class="avatar">
-                                    <span class="avatar__name">
-                                        ME
-                                    </span>
-                                    <i class="icon-profile-customer"></i>
-                                </div>
-                                <a href="#" class="btn__primary">
-                                    <i class="icon-send-again"></i>
-                                </a>
-                            </div>
-                            <div class="item__box">
-                                <div class="item__inner">
-                                    <span class="item__text">
-                                        I have some problems with my password.
-                                    </span>
-                                    <span class="item__send">
-                                        Now • <span class="item__send-failed">Failed to send</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="message message--outgoing">
-                        <div class="item">
-                            <div class="item__status">
-                                <div class="avatar">
-                                    <span class="avatar__name">
-                                        ME
-                                    </span>
-                                    <i class="icon-profile-customer"></i>
-                                </div>
-                                <div class="loader">
-                                    <span class="loader__circle"></span>
-                                </div>
-                            </div>
-                            <div class="item__box">
-                                <div class="item__inner">
-                                    <span class="item__text">
-                                        I have some problems with my password.
-                                    </span>
-                                    <span class="item__send">
-                                        Now • <span class="item__send-failed">Failed to send</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="lost-connection">
-                    <i class="icon-weak-connection"></i>
-                    The internet connection was lost.
-                </div>
-                <div class="send">
-                    <div class="send__left">
-                        <div class="send__left-inner">
-                            <div class="autoresizable" data-replicated-value="">
-                                <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Write your message..."></textarea>
+                            <div class="item__inner">
+                                <span class="item__heading">
+                                    Yevhenii Riabukha
+                                </span>
+                                <span class="item__text">
+                                    Customer support
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="send__actions">
-                        <button type="button" class="btn__primary">
-                            <i class="icon-attach"></i>
-                        </button>
-                        <button type="button" class="btn__send disabled">
-                            <i class="icon-send"></i>
-                        </button>
+                    <ul class="messages">
+                        <li class="system">
+                            Request ID: 123e4567-e89b-12d3-a456-426655440000
+                        </li>
+                        <li class="message">
+                            <div class="item">
+                                <div class="item__status">
+                                    <div class="avatar">
+                                        <span class="avatar__name">
+                                            YR
+                                        </span>
+                                        <i class="icon-profile-agent"></i>
+                                    </div>
+                                </div>
+                                <div class="item__box">
+                                    <div class="item__inner">
+                                        <span class="item__text">
+                                            Cannot access my account after password reset.
+                                        </span>
+                                        <span class="item__time">
+                                            15:45
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="system">
+                            Victor Black was assigned to this request.
+                        </li>
+                        <li class="message message--outgoing">
+                            <div class="item">
+                                <div class="item__status">
+                                    <div class="avatar">
+                                        <span class="avatar__name">
+                                            ME
+                                        </span>
+                                        <i class="icon-profile-customer"></i>
+                                    </div>
+                                    <a href="#" class="btn__primary">
+                                        <i class="icon-send-again"></i>
+                                    </a>
+                                </div>
+                                <div class="item__box">
+                                    <div class="item__inner">
+                                        <span class="item__text">
+                                            I have some problems with my password.
+                                        </span>
+                                        <span class="item__send">
+                                            Now • <span class="item__send-failed">Failed to send</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="message message--outgoing">
+                            <div class="item">
+                                <div class="item__status">
+                                    <div class="avatar">
+                                        <span class="avatar__name">
+                                            ME
+                                        </span>
+                                        <i class="icon-profile-customer"></i>
+                                    </div>
+                                    <div class="loader">
+                                        <span class="loader__circle"></span>
+                                    </div>
+                                </div>
+                                <div class="item__box">
+                                    <div class="item__inner">
+                                        <span class="item__text">
+                                            I have some problems with my password.
+                                        </span>
+                                        <span class="item__send">
+                                            Now • <span class="item__send-failed">Failed to send</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="lost-connection">
+                        <i class="icon-weak-connection"></i>
+                        The internet connection was lost.
+                    </div>
+                    <div class="send">
+                        <div class="send__left">
+                            <div class="send__left-inner">
+                                <div class="autoresizable" data-replicated-value="">
+                                    <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Type your question..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="send__actions">
+                            <button type="button" class="btn__primary">
+                                <i class="icon-attach"></i>
+                            </button>
+                            <button type="button" class="btn__send disabled">
+                                <i class="icon-send"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

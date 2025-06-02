@@ -1,0 +1,115 @@
+.global {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 24px;
+
+    .loader {
+        margin-top: 120px;
+    }
+
+    &__top {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 48px;
+        width: 524px;
+    }
+
+    &__title {
+        font-weight: var(--font-weight-semi-bold);
+        line-height: 1.2;
+        margin-bottom: 32px;
+        text-align: center;
+    }
+    
+    .form {
+        &__control {
+            outline: 8px solid #E0EDFF;
+        }
+    }
+}
+
+.categories {
+    display: flex;
+    gap: 0 16px;
+    width: 1064px;
+
+    &__nav {
+        width: 254px;
+    }
+
+    &__top {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
+    &__results {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    &__list {
+        margin: 16px 0;
+    }
+
+    &__list-item {
+        align-items: center;
+        display: flex;
+        font-size: var(--text-size-m);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--line-height-m);
+
+        &:not(:last-child) {
+            margin-bottom: 8px;
+        }
+    }
+
+    &__link {
+        align-items: flex-start;
+        border: 1px solid var(--soft-grey);
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        margin-right: 8px;
+        transition: background-color .3s ease;
+        height: 24px;
+        min-width: 40px;
+        width: 40px;
+
+        &:hover {
+            background-color: var(--light-grey);
+            transition: background-color .3s ease;
+        }
+
+        &.active {
+            background-color: var(--blue);
+            border-color: var(--blue);
+            color: var(--white)
+        }
+    }
+
+    .cards {
+        width: 100%;
+
+        .card {
+            width: 100%;
+        }
+
+        &__items {
+            width: 100%;
+        }
+    }
+
+    .highlight {
+        background-color: var(--hard-orange);
+    }
+}

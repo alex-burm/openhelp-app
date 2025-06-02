@@ -58,6 +58,12 @@
         width: 160px;
     }
 
+    &__col120 {
+        min-width: 120px;
+        max-width: 120px;
+        width: 120px;
+    }
+
     &__col240 {
         min-width: 240px;
         max-width: 240px;
@@ -110,4 +116,25 @@
     //     line-height: var(--line-height-m);
     //     text-align: center;
     // }
+
+    .published__tag {
+        align-items: center;
+        display: inline-flex;
+        justify-content: center;
+        padding: 4px 8px 4px 4px;
+        gap: 0 4px;
+
+        i {
+            color: var(--green);
+            font-size: 24px;
+        }
+
+        &.disabled {
+            color: var(--hard-grey);
+
+            i {
+                color: var(--grey);
+            }
+        }
+    }
 }
