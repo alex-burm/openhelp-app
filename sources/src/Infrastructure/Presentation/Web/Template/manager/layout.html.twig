@@ -16,15 +16,15 @@
         <div class="overlay"></div>
         {% set menu = block('menu') is defined ? block('menu') : 'dashboard' %}
         <div class="sidebar">
-            <a class="logo" href="#">
+            <a class="logo" href="{{ path('manager_default_index') }}">
                 <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
             </a>
             <nav class="nav">
-                <a class="nav__link {{ 'dashboard' == menu ? 'active' }}" href="#">
+                <a class="nav__link {{ 'dashboard' == menu ? 'active' }}" href="{{ path('manager_default_index') }}">
                     <i class="icon-dashboard"></i>
                     Dashboard
                 </a>
-                <a class="nav__link {{ 'requests' == menu ? 'active' }}" href="#">
+                <a class="nav__link {{ 'requests' == menu ? 'active' }}" href="{{ path('manager_ticket_index') }}">
                     <i class="icon-requests"></i>
                     Requests
                     <span class="badge">2</span>

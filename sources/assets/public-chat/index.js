@@ -23,15 +23,13 @@ function init(config) {
     document.querySelector(config?.target || '#app').classList.add('chat');
 }
 
-window.OpenHelpChat = {
-    init,
+function switchChannel(channel)
+{
+    const conn = useConnectionStore()
+    conn.switchChannel(channel)
 }
 
-//
-// import {createApp} from 'vue';
-// import {createPinia} from 'pinia'
-// import app from './index.vue';
-//
-// createApp(app)
-//     .use(createPinia())
-//     .mount('#app')
+window.OpenHelpChat = {
+    init,
+    switchChannel,
+}

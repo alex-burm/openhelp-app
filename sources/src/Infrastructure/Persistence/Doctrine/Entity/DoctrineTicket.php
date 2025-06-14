@@ -47,6 +47,14 @@ class DoctrineTicket implements WorkspaceAwareEntity
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?\DateTimeImmutable $deletedAt;
 
+    #[ORM\ManyToOne(targetEntity: DoctrineUser::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', nullable: false)]
+    protected ?DoctrineUser $customer = null;
+
+    #[ORM\ManyToOne(targetEntity: DoctrineUser::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'assignee_id', referencedColumnName: 'id', nullable: false)]
+    protected ?DoctrineUser $assignee = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -141,5 +149,25 @@ class DoctrineTicket implements WorkspaceAwareEntity
     public function setDeletedAt(?\DateTimeImmutable $deletedAt): void
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function getCustomer(): ?DoctrineUser
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?DoctrineUser $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    public function getAssignee(): ?DoctrineUser
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee(?DoctrineUser $assignee): void
+    {
+        $this->assignee = $assignee;
     }
 }

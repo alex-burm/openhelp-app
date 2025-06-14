@@ -22,7 +22,7 @@ class FormLoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         $user = $token->getUser();
 
         return new RedirectResponse(match (true) {
-            $user->isManager() => $this->router->generate('manager_index'),
+            $user->isManager() => $this->router->generate('manager_default_index'),
             $user->isCustomer() => throw new \Exception('not implemented yet'),
             default => $this->router->generate('home')
         });

@@ -33,7 +33,7 @@ class CentrifugoMessagePublisher implements MessagePublisherInterface
                     new MessageViewDto(
                         serverId: $message->getId()->toRfc4122(),
                         clientId: $message->getClientId(),
-                        text: $message->getText() . '(updated)',
+                        text: $message->getText(),
                         type: $message->getType()->value,
                         direction: MessageDirection::fromIsAuthor(
                             $message->getUserId() === $this->security->getUser()?->getId()

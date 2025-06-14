@@ -46,7 +46,6 @@ services:
   redis:
     image: redis:latest
     container_name: help_redis
-    restart: always
     networks:
       - help_network
     ports:
