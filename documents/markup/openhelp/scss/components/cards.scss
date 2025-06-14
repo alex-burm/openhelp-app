@@ -1,0 +1,122 @@
+.cards {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 704px;
+
+    &__top {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 16px;
+        max-width: 524px;
+    }
+
+    &__subtitle {
+        margin-top: 8px;
+    }
+
+    &__items {
+        background-color: var(--light-grey);
+        border-radius: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 8px;
+        gap: 8px;
+    }
+}
+
+.card {
+    $self: &;
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    transition: box-shadow .3s ease;
+    width: calc(50% - 4px);
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    &__sub {
+        color: var(--hard-grey);
+        display: inline-block;
+        font-size: var(--text-size-sm);
+        margin-top: 2px;
+    }
+
+    svg {
+        margin-bottom: 16px;
+    }
+
+    &__inner-top {
+        margin-bottom: 8px;
+        position: relative;
+
+        i {
+            color: var(--blue);
+            position: absolute;
+            right: 0;
+            top: 2px;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+    }
+
+    &__first-color,
+    &__second-color,
+    &__third-color {
+        transition: fill .3s ease;
+    }
+
+    &:hover {
+        box-shadow: 0px 1px 16px 0px #70757D1F;
+        transition: box-shadow .3s ease;
+
+        #{$self}__first-color {
+            fill: #E0EDFF;
+            transition: fill .3s ease;
+        }
+
+        #{$self}__second-color {
+            fill: #0B68E8;
+            transition: fill .3s ease;
+        }
+
+        #{$self}__third-color {
+            fill: #FFFFFF;
+            transition: fill .3s ease;
+        }
+
+        #{$self}__inner-top {
+            i {
+                opacity: 1;
+                transition: opacity .3s ease;
+            }
+        }
+    }
+
+    &--secondary {
+        #{$self}__text {
+            font-size: var(--text-size-base);
+            line-height: var(--line-height-base);
+        }
+
+        #{$self}__description {
+            font-size: var(--text-size-m);
+            line-height: var(--line-height-m);
+        }
+    }
+
+    &__list {
+        margin-left: 16px;
+        list-style: decimal;
+    }
+
+    &__list-item {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+    }
+}

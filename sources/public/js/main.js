@@ -1,3 +1,5 @@
+const modal = document.querySelector('.modal');
+
 const handleDropdown = element => {
     element.querySelectorAll('.btn__dropdown').forEach(button => {
         button.addEventListener('click', function (e) {
@@ -19,8 +21,12 @@ const handleDropdown = element => {
 handleDropdown(document);
 
 window.addEventListener('click', function (e) {
-    if (!e.target.closest('.btn__dropdown')) {
+    if (!e.target.closest('.btn__dropdown, .form__control--sm, .form__control--m')) {
         closeDropdown();
+    }
+
+    if (e.target.closest('.modal__close, .modal__overlay')) {
+        modal.classList.remove('modal--visible');
     }
 });
 

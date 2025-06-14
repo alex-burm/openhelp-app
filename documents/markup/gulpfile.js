@@ -88,7 +88,7 @@ function watchOpenhelpFiles(params) {
 }
 
 function onError(err) {
-    console.log(err); //or other way you may prefer to log
+    console.log(err.formatted.replace(/\\n/g, '\n'));
     this.emit('end');
 }
 
