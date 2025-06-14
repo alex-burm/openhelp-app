@@ -1,20 +1,24 @@
 const modal = document.querySelector('.modal');
 
-document.querySelectorAll('.btn__dropdown').forEach(button => {
-    button.addEventListener('click', function (e) {
-        e.preventDefault();        
+const handleDropdown = element => {
+    element.querySelectorAll('.btn__dropdown').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
 
-        if (this.parentElement.classList.contains('show')) {
-            this.parentElement.classList.remove('show');
-            this.classList.remove('active');
+            if (this.parentElement.classList.contains('show')) {
+                this.parentElement.classList.remove('show');
+                this.classList.remove('active');
 
-        } else {
-            closeDropdown();
-            this.parentElement.classList.add('show');
-            this.classList.add('active')
-        }
+            } else {
+                closeDropdown();
+                this.parentElement.classList.add('show');
+                this.classList.add('active')
+            }
+        });
     });
-});
+}
+
+handleDropdown(document);
 
 window.addEventListener('click', function (e) {
     if (!e.target.closest('.btn__dropdown, .form__control--sm, .form__control--m')) {
@@ -27,7 +31,7 @@ window.addEventListener('click', function (e) {
 });
 
 const closeDropdown = () => {
-    document.querySelectorAll('.dropdown').forEach(function (dropdown) { 
+    document.querySelectorAll('.dropdown').forEach(function (dropdown) {
         dropdown.classList.remove('show');
         dropdown.firstElementChild.classList.remove('active');
     });
@@ -52,15 +56,3 @@ const addOrRemoveSearch = (method) => {
     overlay.classList[method]('show');
     layout.classList[method]('no__scroll');
 }
-
-document.querySelector('.login .form__row .btn__primary')?.addEventListener('click', function() {
-    const input = document.querySelector('#password');
-    
-    if (input.getAttribute('type') === 'password') {
-        input.setAttribute('type', 'text');
-        this.classList.add('show');
-    } else {
-        input.setAttribute('type', 'password');
-        this.classList.remove('show');
-    }
-});

@@ -1,149 +1,546 @@
 {% extends 'manager/layout.html.twig' %}
 
+{% block menu %}dashboard{% endblock %}
+
+{% block header %}Dashboard{% endblock %}
+
 {% block content %}
-    <div class="p-4">
-            <div class="container-fluid">
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="w-100">
-                        <h1 class="h3 mb-1 fw-bold">Support Dashboard</h1>
-                        <div class="unread-tickets-alert">
-                            <p class="text-secondary mb-0">
-                                <i data-lucide="bell" class="text-warning me-1"></i>
-                                Welcome back! You have <b>5 unread tickets</b>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Overall Stats -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-3">
-                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW') }) }}
-                    </div>
-                    <div class="col-md-3">
-                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS') }) }}
-                    </div>
-                    <div class="col-md-3">
-                        {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED') }) }}
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-card">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="stat-number">15m
-                                        <span class="stat-trend trend-up">-2m</span>
-                                    </p>
-                                    <p class="stat-label">Avg Response</p>
-                                </div>
-                                <i data-lucide="clock" class="text-primary" style="width: 32px; height: 32px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Channels & Priority -->
-                <div class="row g-4 mb-4">
-                    <div class="col-lg-8">
-                        <div class="chart-card">
-                            <div class="chart-header mb-4">
-                                <h5 class="chart-title">Tickets by Channel</h5>
-                            </div>
-                            <div class="row g-4">
-                                <div class="col-md-4">
-                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::EMAIL') }) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::CHAT') }) }}
-                                </div>
-                                <div class="col-md-4">
-                                    {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::FORM') }) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="chart-card">
-                            <div class="chart-header mb-3">
-                                <h5 class="chart-title">Priority Distribution</h5>
-                            </div>
-                            <div class="priority-list">
-                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::HIGH') }) }}
-                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::MEDIUM') }) }}
-                                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::LOW') }) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Tickets & Agent Stats -->
-                <div class="row g-4">
-                    <div class="col-lg-8">
-                        <div class="task-list">
-                            <div class="task-header">
-                                <h5 class="mb-0 fw-semibold">Recent Tickets</h5>
-                                <div class="d-flex align-items-center gap-2">
-                                    <button class="btn btn-light">All Tickets</button>
-                                </div>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-status status-in-progress"></div>
-                                <div class="task-content">
-                                    <h6 class="task-title">Cannot access my account after password reset</h6>
-                                    <p class="task-meta">John Smith • High Priority • 15m ago</p>
-                                </div>
-                                <span class="badge bg-warning">In Progress</span>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-status status-on-hold"></div>
-                                <div class="task-content">
-                                    <h6 class="task-title">Integration with third-party service failing</h6>
-                                    <p class="task-meta">Sarah Johnson • Medium Priority • 1h ago</p>
-                                </div>
-                                <span class="badge bg-secondary">On Hold</span>
-                            </div>
-                            <div class="task-item">
-                                <div class="task-status status-done"></div>
-                                <div class="task-content">
-                                    <h6 class="task-title">Need help with installation process</h6>
-                                    <p class="task-meta">Mike Brown • Low Priority • 2h ago</p>
-                                </div>
-                                <span class="badge bg-success">Resolved</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="user-profile">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=faces"
-                                 class="profile-image"
-                                 alt="Agent Profile">
-                            <h5 class="profile-name">Sarah Parker</h5>
-                            <p class="profile-handle">Support Agent</p>
-                            <div class="agent-stats mt-4">
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="p-3 rounded bg-light">
-                                            <h6 class="small text-secondary mb-1">Assigned</h6>
-                                            <p class="h4 mb-0">24</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="p-3 rounded bg-light">
-                                            <h6 class="small text-secondary mb-1">Resolved</h6>
-                                            <p class="h4 mb-0">18</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="p-3 rounded bg-light">
-                                            <h6 class="small text-secondary mb-1">Average Response Time</h6>
-                                            <p class="h4 mb-0">12m</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section class="status">
+        <h2 class="status__title">
+            Status distribution
+        </h2>
+        <div class="cards">
+            {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW') }) }}
+            {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS') }) }}
+            {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED') }) }}
+        </div>
+    </section>
+    <section class="statistic">
+        <div class="statistic__col">
+            <h2 class="statistic__title">
+                Priority distribution
+            </h2>
+            <div class="statistic__items">
+                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::HIGH') }) }}
+                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::MEDIUM') }) }}
+                {{ component('PriorityDistribution', { priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::LOW') }) }}
             </div>
         </div>
+        <div class="statistic__col">
+            <h2 class="statistic__title">
+                Channels
+            </h2>
+            <div class="statistic__items">
+                {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::EMAIL') }) }}
+                {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::CHAT') }) }}
+                {{ component('ChannelDistribution', { channel: constant('App\\Domain\\Ticket\\ValueObject\\TicketChannel::FORM') }) }}
+            </div>
+        </div>
+    </section>
+
+    {#
+    <section class="recent">
+        <h2 class="recent__title">
+            Recent requests
+        </h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <div class="table__heading">
+                        Request
+                        <a href="#">
+                            <i class="icon-sort"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col160">
+                    <div class="table__heading">
+                        Status
+                        <a href="#">
+                            <i class="icon-sort"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col160">
+                    <div class="table__heading">
+                        Priority
+                        <a href="#">
+                            <i class="icon-sort"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col240">
+                    <div class="table__heading">
+                        Agent
+                        <a href="#">
+                            <i class="icon-sort"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col64"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="item__decoration">
+                                <i class="icon-mail"></i>
+                                <span class="badge">2</span>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Cannot access my account after password reset
+                                            </span>
+                            <span class="item__text">
+                                                John Smith • 15m ago
+                                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__status btn__dropdown error">
+                            <i class="icon-status-circle-sm"></i>
+                            <span class="btn__text">
+                                                New
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status error active">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        New
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status warning">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        In progress
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status success">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        Resolved
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__priority btn__dropdown error">
+                            <i class="icon-high-priority"></i>
+                            <span class="btn__text">
+                                                High
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority error active">
+                                    <i class="icon-high-priority"></i>
+                                    <span class="btn__text">
+                                                        High
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority warning">
+                                    <i class="icon-medium-priority"></i>
+                                    <span class="btn__text">
+                                                        Medium
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority success">
+                                    <i class="icon-low-priority"></i>
+                                    <span class="btn__text">
+                                                        Low
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    Me
+                                                </span>
+                                <i class="icon-profile-agent"></i>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Yevhenii Riabukha
+                                            </span>
+                            <span class="item__text">
+                                                Manager
+                                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a href="#" class="btn__primary btn__dropdown">
+                            <i class="icon-dots"></i>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-open"></i>
+                                    <span class="btn__text">
+                                                        Open request
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-reset"></i>
+                                    <span class="btn__text">
+                                                        Reset agent
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a href="#" class="btn__primary">
+                                        <i class="icon-trash"></i>
+                                        <span class="btn__text">
+                                                            Remove from recents
+                                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="item__decoration">
+                                <i class="icon-form"></i>
+                                <span class="badge">1</span>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                I don’t know what to do w/ this stufff
+                                            </span>
+                            <span class="item__text">
+                                                Vinland Vista • 22m ago
+                                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__status btn__dropdown warning">
+                            <i class="icon-status-circle-sm"></i>
+                            <span class="btn__text">
+                                                In progress
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status error">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        New
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status warning active">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        In progress
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status success">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        Resolved
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__priority btn__dropdown success">
+                            <i class="icon-low-priority"></i>
+                            <span class="btn__text">
+                                                Low
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority error">
+                                    <i class="icon-high-priority"></i>
+                                    <span class="btn__text">
+                                                        High
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority warning">
+                                    <i class="icon-medium-priority"></i>
+                                    <span class="btn__text">
+                                                        Medium
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority success active">
+                                    <i class="icon-low-priority"></i>
+                                    <span class="btn__text">
+                                                        Low
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--search">
+                        <a href="#" class="btn__primary btn__dropdown">
+                            <i class="icon-assign-agent"></i>
+                            <span class="btn__text">
+                                                Assign agent
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__menu-top">
+                                <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
+                            </div>
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a href="#" class="btn__primary">
+                                        <i class="icon-agent"></i>
+                                        <span class="btn__text">
+                                                            Victor Black
+                                                        </span>
+                                    </a>
+                                </div>
+                                <span class="dropdown__item-empty">
+                                                    There are no matching agents.
+                                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a href="#" class="btn__primary btn__dropdown">
+                            <i class="icon-dots"></i>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-open"></i>
+                                    <span class="btn__text">
+                                                        Open request
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-reset"></i>
+                                    <span class="btn__text">
+                                                        Reset agent
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a href="#" class="btn__primary">
+                                        <i class="icon-trash"></i>
+                                        <span class="btn__text">
+                                                            Remove from recents
+                                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="item__decoration">
+                                <i class="icon-chat"></i>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                How to add new type of content?
+                                            </span>
+                            <span class="item__text">
+                                                Sophia Martinez • 15h ago
+                                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__status btn__dropdown success">
+                            <i class="icon-status-circle-sm"></i>
+                            <span class="btn__text">
+                                                Resolved
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status error">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        New
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status warning">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        In progress
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__status success active">
+                                    <i class="icon-status-circle-sm"></i>
+                                    <span class="btn__text">
+                                                        Resolved
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown--secondary">
+                        <a href="#" class="btn__priority btn__dropdown warning">
+                            <i class="icon-medium-priority"></i>
+                            <span class="btn__text">
+                                                Medium
+                                            </span>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority error">
+                                    <i class="icon-high-priority"></i>
+                                    <span class="btn__text">
+                                                        High
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority warning active">
+                                    <i class="icon-medium-priority"></i>
+                                    <span class="btn__text">
+                                                        Medium
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__priority success">
+                                    <i class="icon-low-priority"></i>
+                                    <span class="btn__text">
+                                                        Low
+                                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="avatar">
+                                                <span class="avatar__name">
+                                                    Me
+                                                </span>
+                                <i class="icon-profile-agent"></i>
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                                            <span class="item__heading">
+                                                Emiliano Perez
+                                            </span>
+                            <span class="item__text">
+                                                Agent
+                                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a href="#" class="btn__primary btn__dropdown">
+                            <i class="icon-dots"></i>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-open"></i>
+                                    <span class="btn__text">
+                                                        Open request
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary">
+                                    <i class="icon-reset"></i>
+                                    <span class="btn__text">
+                                                        Reset agent
+                                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a href="#" class="btn__primary">
+                                        <i class="icon-trash"></i>
+                                        <span class="btn__text">
+                                                            Remove from recents
+                                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="empty">
+            <div class="empty__inner">
+                <img src="../assets/img/no-requests.svg" alt="no requests">
+                <span class="empty__text">
+                                Your recent interactions and new requests will be shown here.
+                            </span>
+            </div>
+        </div>
+    </section>
+    #}
 {% endblock %}

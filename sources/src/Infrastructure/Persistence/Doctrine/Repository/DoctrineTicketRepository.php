@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Application\Ticket\Dto\TicketWithUserCollectionDto;
 use App\Domain\Ticket\Entity\Ticket;
 use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\Counter\TicketChannelsCount;
@@ -111,5 +112,30 @@ class DoctrineTicketRepository implements TicketRepositoryInterface
     public function delete(Ticket $ticket): void
     {
         $this->_delete($ticket);
+    }
+
+    public function findByStatus(TicketStatus $status): TicketWithUserCollectionDto
+    {
+        $dql = <<<DQL
+            SELECT NEW App\Application\Ticket\Dto\TicketWithUserDto(
+                t.id,
+                customer.id,
+                assignee.id,
+                t.title,
+                t.status,
+                t.priority
+            )
+            FROM App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket t
+            LEFT JOIN t.customer customer
+            LEFT JOIN t.assignee assignee
+            WHERE t.status = :status
+            ORDER BY t.createdAt DESC
+        DQL;
+
+        $result = $this->entityManager->createQuery($dql)
+            ->setParameter('status', $status->value)
+            ->getResult();
+
+        return new TicketWithUserCollectionDto($result);
     }
 }

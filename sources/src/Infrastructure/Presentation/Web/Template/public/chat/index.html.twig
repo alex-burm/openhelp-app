@@ -5,9 +5,6 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link  href="{{ asset('css/variables.css') }}" rel="stylesheet">
     <link  href="{{ asset('css/styles.css') }}" rel="stylesheet">
-
-{#    <script src="http://localhost:8098"></script>#}
-
 </head>
 <body>
     <div class="content">
@@ -32,20 +29,15 @@
 
     <script src="{{ asset('build/public-chat.js') }}"></script>
 
-    <script type="application/x-chat-header" id="public-chat-header">
-        Custom header
-    </script>
-
     <script type="module">
         OpenHelpChat.init({
-            //customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
             user: {
                 name: 'Alex',
                 email: 'user@example.com',
             },
 
             connection: {
-                socketUrl: 'ws://localhost:8018/connection/websocket',
+                socketUrl: '{{ socketUrl }}',
                 sendUrl: '{{ path('chat_send') }}',
                 historyUrl: '{{ path('chat_history') }}',
                 tokenUrl: '{{ path('chat_token') }}',
