@@ -8,22 +8,49 @@
 </head>
 <body>
     <div class="content">
-        <div class="logo">
-            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
-        </div>
-        <div class="content__chat">
-            <div class="content__top">
-                <a href="{{ path('home') }}" class="btn__primary">
-                    <i class="icon-short-arrow-left"></i>
-                    <span class="btn__text">
-                        Back
-                    </span>
-                </a>
-                <h1 class="content__title">
-                    Live chat
-                </h1>
+        <div class="content__inner">
+            <svg style="position: absolute; top: 0; left: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14300)">
+                    <circle cx="-140" cy="20" r="300" fill="#E0EDFF"></circle>
+                </g>
+                <defs>
+                    <filter id="filter0_f_2656_14300" x="-760" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                        <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14300"></feGaussianBlur>
+                    </filter>
+                </defs>
+            </svg>
+
+            <svg style="position: absolute; top: 0; right: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14299)">
+                    <circle cx="620" cy="20" r="300" fill="#E0EDFF"></circle>
+                </g>
+                <defs>
+                    <filter id="filter0_f_2656_14299" x="0" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                        <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14299"></feGaussianBlur>
+                    </filter>
+                </defs>
+            </svg>
+            <div class="logo">
+                <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
             </div>
-            <div id="app"></div>
+            <div class="content__chat">
+                <div class="content__top">
+                    <a href="{{ path('home') }}" class="btn__primary">
+                        <i class="icon-short-arrow-left"></i>
+                        <span class="btn__text">
+                            Back
+                        </span>
+                    </a>
+                    <h1 class="content__title">
+                        Live chat
+                    </h1>
+                </div>
+                <div id="app"></div>
+            </div>
         </div>
     </div>
 
