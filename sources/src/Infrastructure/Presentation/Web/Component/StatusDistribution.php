@@ -24,9 +24,9 @@ class StatusDistribution
     public function getClass(): string
     {
         return match ($this->status) {
-            TicketStatus::NEW => 'card--error',
-            TicketStatus::IN_PROGRESS => 'card--warning',
-            TicketStatus::RESOLVED => 'card--success',
+            TicketStatus::NEW => 'chart--error',
+            TicketStatus::IN_PROGRESS => 'chart--warning',
+            TicketStatus::RESOLVED => 'chart--success',
         };
     }
 }

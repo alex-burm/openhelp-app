@@ -9,7 +9,7 @@
         <h2 class="status__title">
             Status distribution
         </h2>
-        <div class="cards">
+        <div class="charts">
             {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW') }) }}
             {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS') }) }}
             {{ component('StatusDistribution', { status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED') }) }}
