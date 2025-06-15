@@ -20,4 +20,13 @@ class StatusDistribution
     {
         return $this->ticketStatsService->getCountByStatus($this->status);
     }
+
+    public function getClass(): string
+    {
+        return match ($this->status) {
+            TicketStatus::NEW => 'chart--error',
+            TicketStatus::IN_PROGRESS => 'chart--warning',
+            TicketStatus::RESOLVED => 'chart--success',
+        };
+    }
 }

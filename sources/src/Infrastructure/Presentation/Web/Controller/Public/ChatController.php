@@ -11,8 +11,11 @@ use App\Application\Ticket\Service\Source\ChatTicketSource;
 use App\Application\Ticket\Service\TicketCreateService;
 use App\Domain\Messaging\Entity\Message;
 use App\Domain\Messaging\ValueObject\MessageType;
+use App\Domain\SpamAssistant\MuteStorageInterface;
+use App\Domain\SpamAssistant\SpamAssistantInterface;
 use App\Infrastructure\Persistence\Redis\TicketRequestLimiterStorage;
 use App\Infrastructure\Presentation\Web\Request\PublishMessageInput;
+use App\Infrastructure\Security\CurrentUser;
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -75,7 +78,20 @@ class ChatController extends AbstractController
     public function send(
         PublishMessageInput $input,
         PublishMessageService $messageService,
+        SpamAssistantInterface $spamAssistant,
+        Security $security,
     ): Response {
+        $user = $security->getUser()->getDomainUser();
+
+        $spamResult = $spamAssistant->check($input->text, $user);
+        if ($spamResult->isSpam) {
+            return $this->json([
+                'error' => 'spam',
+                'reason' => $spamResult->reasons,
+                'data' => $input,
+            ], 403);
+        }
+
         $messageService->publish(new PublishMessageDto(
             id: $input->id,
             text: $input->text,

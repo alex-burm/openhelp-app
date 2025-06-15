@@ -148,6 +148,27 @@ export const useConnectionStore = defineStore('connection', () => {
         });
     }
 
+    async function switchChannel(value) {
+        if (subscription.value) {
+            subscription.value.unsubscribe()
+            subscription.value = null
+        }
+
+        channel.value = value
+
+        const chatStore = useChatStore()
+        const history = await getHistory()
+
+        chatStore.init({ history })
+
+        subscription.value = centrifuge.value.newSubscription(channel.value);
+        subscription.value.on('publication', ctx => {
+            useChatStore().add(ctx.data)
+        })
+
+        subscription.value.subscribe()
+    }
+
     function send(text) {
         const message = createOutgoingMessage(text);
         sendMessage(message);
@@ -171,6 +192,7 @@ export const useConnectionStore = defineStore('connection', () => {
         init,
         send,
         resend,
+        switchChannel,
         disconnect,
     }
 })
