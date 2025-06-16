@@ -4,6 +4,9 @@ namespace App\Infrastructure\Presentation\Web\Component;
 
 use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\ReadModel\TicketSummaryView;
+use App\Application\Ticket\Service\RecentTicketFilterService;
+use App\Application\Ticket\Service\TicketAssignAgentService;
+use App\Application\Ticket\Service\TicketSummaryService;
 use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\TicketStatus;
 use App\Domain\User\Repository\UserRepositoryInterface;
@@ -22,9 +25,9 @@ class RecentTicketAssignee
     public TicketSummaryView $item;
 
     public function __construct(
-        protected UserRepositoryInterface $userRepository,
-        protected TicketRepositoryInterface $ticketRepository,
-        protected RecentTicketViewRepository $recentTicketRepository,
+        protected TicketAssignAgentService $ticketAssignAgentService,
+        protected RecentTicketFilterService $recentTicketFilterService,
+        protected TicketSummaryService $ticketSummaryService,
     ) {
     }
 
@@ -33,15 +36,12 @@ class RecentTicketAssignee
         #[LiveArg] Uuid $ticketId,
         #[LiveArg] int $userId,
     ): void {
-        $user = $this->userRepository->findOneById($userId);
-        $ticket = $this->ticketRepository->findOneById($ticketId);
-        $ticket->setAssigneeId($user->getId());
+        $this->ticketAssignAgentService->assignAgent($ticketId, $userId);
 
-        $this->ticketRepository->save($ticket);
+        // refresh summary for view
+        $this->item = $this->ticketSummaryService->getSummary($ticketId);
 
-        $ticketSummary = $this->ticketRepository->getSummary($ticket->getId());
-        $this->recentTicketRepository->saveRecent($ticketSummary);
-
-        $this->item = $ticketSummary;
+        // update recent
+        $this->recentTicketFilterService->save($this->item);
     }
 }

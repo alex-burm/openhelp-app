@@ -5,6 +5,8 @@ namespace App\Infrastructure\Presentation\Web\Component;
 use App\Application\Ticket\Dto\TicketSummaryCollectionDto;
 use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\Service\RecentTicketFilterService;
+use App\Application\Ticket\Service\TicketAssignAgentService;
+use App\Application\Ticket\Service\TicketSummaryService;
 use App\Domain\Ticket\Entity\Ticket;
 use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use Symfony\Component\Uid\Uuid;
@@ -28,9 +30,9 @@ class RecentTickets
     protected ?TicketSummaryCollectionDto $cached = null;
 
     public function __construct(
-        protected TicketRepositoryInterface $ticketRepository,
-        protected RecentTicketViewRepository $recentTicketRepository,
+        protected TicketAssignAgentService $ticketAssignAgentService,
         protected RecentTicketFilterService $recentTicketFilterService,
+        protected TicketSummaryService $ticketSummaryService,
     ) {
     }
 
@@ -50,20 +52,18 @@ class RecentTickets
     public function resetAgent(
         #[LiveArg] Uuid $ticketId,
     ): void {
-        $ticket = $this->ticketRepository->findOneById($ticketId);
-        $ticket->setAssigneeId(null);
+        $this->ticketAssignAgentService->resetAgent($ticketId);
 
-        $this->ticketRepository->save($ticket);
-
-        $ticketSummary = $this->ticketRepository->getSummary($ticket->getId());
-        $this->recentTicketRepository->saveRecent($ticketSummary);
+        // update recent
+        $summary = $this->ticketSummaryService->getSummary($ticketId);
+        $this->recentTicketFilterService->save($summary);
     }
 
     #[LiveAction]
     public function removeItem(
         #[LiveArg] Uuid $ticketId,
     ): void {
-        $this->recentTicketRepository->deleteRecent($ticketId);
+        $this->recentTicketFilterService->delete($ticketId);
     }
 
     public function getList(): TicketSummaryCollectionDto

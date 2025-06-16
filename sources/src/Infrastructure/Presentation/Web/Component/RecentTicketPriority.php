@@ -2,11 +2,11 @@
 
 namespace App\Infrastructure\Presentation\Web\Component;
 
-use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\ReadModel\TicketSummaryView;
-use App\Domain\Ticket\Repository\TicketRepositoryInterface;
+use App\Application\Ticket\Service\RecentTicketFilterService;
+use App\Application\Ticket\Service\TicketChangePriorityService;
+use App\Application\Ticket\Service\TicketSummaryService;
 use App\Domain\Ticket\ValueObject\TicketPriority;
-use App\Domain\Ticket\ValueObject\TicketStatus;
 use Symfony\Component\Uid\Uuid;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -21,8 +21,9 @@ class RecentTicketPriority
     public TicketSummaryView $item;
 
     public function __construct(
-        protected TicketRepositoryInterface $ticketRepository,
-        protected RecentTicketViewRepository $recentTicketRepository,
+        protected RecentTicketFilterService $recentTicketFilterService,
+        protected TicketChangePriorityService $ticketChangePriorityService,
+        protected TicketSummaryService $ticketSummaryService,
     ) {
     }
 
@@ -31,14 +32,12 @@ class RecentTicketPriority
         #[LiveArg] Uuid $ticketId,
         #[LiveArg] TicketPriority $priority
     ): void {
-        $ticket = $this->ticketRepository->findOneById($ticketId);
-        $ticket->setPriority($priority);
+        $this->ticketChangePriorityService->process($ticketId, $priority);
 
-        $this->ticketRepository->save($ticket);
+        // refresh summary for view
+        $this->item = $this->ticketSummaryService->getSummary($ticketId);
 
-        $ticketSummary = $this->ticketRepository->getSummary($ticket->getId());
-        $this->recentTicketRepository->saveRecent($ticketSummary);
-
-        $this->item = $ticketSummary;
+        // update recent
+        $this->recentTicketFilterService->save($this->item);
     }
 }

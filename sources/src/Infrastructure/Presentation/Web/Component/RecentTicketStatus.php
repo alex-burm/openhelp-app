@@ -2,9 +2,10 @@
 
 namespace App\Infrastructure\Presentation\Web\Component;
 
-use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\ReadModel\TicketSummaryView;
-use App\Domain\Ticket\Repository\TicketRepositoryInterface;
+use App\Application\Ticket\Service\RecentTicketFilterService;
+use App\Application\Ticket\Service\TicketChangeStatusService;
+use App\Application\Ticket\Service\TicketSummaryService;
 use App\Domain\Ticket\ValueObject\TicketStatus;
 use Symfony\Component\Uid\Uuid;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -20,8 +21,9 @@ class RecentTicketStatus
     public TicketSummaryView $item;
 
     public function __construct(
-        protected TicketRepositoryInterface $ticketRepository,
-        protected RecentTicketViewRepository $recentTicketRepository,
+        protected RecentTicketFilterService $recentTicketFilterService,
+        protected TicketChangeStatusService $ticketChangeStatusService,
+        protected TicketSummaryService      $ticketSummaryService,
     ) {
     }
 
@@ -30,14 +32,12 @@ class RecentTicketStatus
         #[LiveArg] Uuid $ticketId,
         #[LiveArg] TicketStatus $status
     ): void {
-        $ticket = $this->ticketRepository->findOneById($ticketId);
-        $ticket->setStatus($status);
+        $this->ticketChangeStatusService->process($ticketId, $status);
 
-        $this->ticketRepository->save($ticket);
+        // update summary
+        $this->item = $this->ticketSummaryService->getSummary($ticketId);
 
-        $ticketSummary = $this->ticketRepository->getSummary($ticket->getId());
-        $this->recentTicketRepository->saveRecent($ticketSummary);
-
-        $this->item = $ticketSummary;
+        // update recent
+        $this->recentTicketFilterService->save($this->item);
     }
 }

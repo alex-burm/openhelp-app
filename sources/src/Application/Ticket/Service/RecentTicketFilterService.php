@@ -5,6 +5,7 @@ namespace App\Application\Ticket\Service;
 use App\Application\Ticket\Dto\TicketSummaryCollectionDto;
 use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\ReadModel\TicketSummaryView;
+use Symfony\Component\Uid\Uuid;
 
 readonly class RecentTicketFilterService
 {
@@ -32,5 +33,15 @@ readonly class RecentTicketFilterService
         });
 
         return new TicketSummaryCollectionDto($list);
+    }
+
+    public function save(TicketSummaryView $summary): void
+    {
+        $this->repository->saveRecent($summary);
+    }
+
+    public function delete(Uuid $ticketId): void
+    {
+        $this->repository->deleteRecent($ticketId);
     }
 }
