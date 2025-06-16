@@ -70,13 +70,13 @@
                     </div>
                 </td>
                 <td>
-                    {{ component('RecentTicketStatus', {item}) }}
+                    {{ component('RecentTicketStatus', {item, key: 'status-' ~ item.ticketId}) }}
                 </td>
                 <td>
-                    {{ component('RecentTicketPriority', {item}) }}
+                    {{ component('RecentTicketPriority', {item, key: 'priority-' ~ item.ticketId}) }}
                 </td>
                 <td>
-                    {{ component('RecentTicketAssignee', {item}) }}
+                    {{ component('RecentTicketAssignee', {item, agent: 'agent-' ~ item.ticketId}) }}
                 </td>
                 <td>
                     <div class="dropdown">
