@@ -1,0 +1,37 @@
+<div {{ attributes }}>
+    {% if item.assigneeId > 0 %}
+        <div class="item">
+            <div class="item__left">
+                <div class="avatar">
+                    <span class="avatar__name">
+                        Me
+                    </span>
+                    <i class="icon-profile-agent"></i>
+                </div>
+            </div>
+            <div class="item__inner">
+                <span class="item__heading">
+                    {{ item.assigneeName }}
+                </span>
+                <span class="item__text">
+                    Agent
+                </span>
+            </div>
+        </div>
+    {% else %}
+        <diеv class="dropdown dropdown--search">
+            <a href="#" class="btn__primary btn__dropdown">
+                <i class="icon-assign-agent"></i>
+                <span class="btn__text">
+                    Assign agent
+                </span>
+            </a>
+
+            {{ component('UserAutocompleteComponent', {
+                parentElementQuery: '#' ~ attributes.all.id,
+                parentActionName: 'setUser',
+                parentActionParams: { ticketId: item.ticketId }|json_encode
+            }) }}
+        </diеv>
+    {% endif %}
+</div>

@@ -1,0 +1,123 @@
+<section class="recent" {{ attributes }}>
+    <h2 class="recent__title">
+        Recent requests
+    </h2>
+
+    {% if this.list is empty %}
+        <div class="empty">
+            <div class="empty__inner">
+                <img src="{{ asset('assets/img/no-requests.svg') }}" alt="no requests">
+                <span class="empty__text">
+                    Your recent interactions and new requests will be shown here.
+                </span>
+            </div>
+        </div>
+    {% else %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <div class="table__heading">
+                        Request
+                    </div>
+                </th>
+                <th class="table__col160">
+                    <div class="table__heading">
+                        <a {{ live_action('setSortBy', {value: 'ticketStatus'}) }}>
+                            Status
+                            <i class="icon-sort {{ this.sortBy == 'ticketStatus' ? this.sortDirection }}"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col160">
+                    <div class="table__heading">
+                        <a {{ live_action('setSortBy', {value: 'ticketPriority'}) }}>
+                            Priority
+                            <i class="icon-sort {{ this.sortBy == 'ticketPriority' ? this.sortDirection }}"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col240">
+                    <div class="table__heading">
+                        <a {{ live_action('setSortBy', {value: 'agentName'}) }}>
+                            Agent
+                            <i class="icon-sort {{ this.sortBy == 'agentName' ? this.sortDirection }}"></i>
+                        </a>
+                    </div>
+                </th>
+                <th class="table__col64"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in this.list %}
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item__left">
+                            <div class="item__decoration">
+                                <i class="{{ item.ticketChannelIcon }}"></i>
+{#                                <span class="badge">2</span>#}
+                            </div>
+                        </div>
+                        <div class="item__inner">
+                            <span class="item__heading">
+                                {{ item.ticketTitle }}
+                            </span>
+                            <span class="item__text">
+                                {{ item.customerName|default('Unknown customer') }} • {{ item.updatedAt|ago }}
+                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{ component('RecentTicketStatus', {item}) }}
+                </td>
+                <td>
+                    {{ component('RecentTicketPriority', {item}) }}
+                </td>
+                <td>
+                    {{ component('RecentTicketAssignee', {item}) }}
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <a href="#" class="btn__primary btn__dropdown">
+                            <i class="icon-dots"></i>
+                        </a>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="{{ path('manager_ticket_index', {ticketId: item.ticketId}) }}" class="btn__primary">
+                                    <i class="icon-open"></i>
+                                    <span class="btn__text">
+                                        Open request
+                                    </span>
+                                </a>
+                            </div>
+                            {% if item.assigneeId > 0 %}
+                            <div class="dropdown__item">
+                                <a {{ live_action('resetAgent', {ticketId: item.ticketId}) }} class="btn__primary">
+                                    <i class="icon-reset"></i>
+                                    <span class="btn__text">
+                                        Reset agent
+                                    </span>
+                                </a>
+                            </div>
+                            {% endif %}
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a {{ live_action('removeItem', {ticketId: item.ticketId}) }} class="btn__primary">
+                                        <i class="icon-trash"></i>
+                                        <span class="btn__text">
+                                            Remove from recents
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</section>

@@ -1,0 +1,77 @@
+<div {{ attributes.defaults(stimulus_controller('TicketList')) }}>
+    <div class="form__row">
+        <i class="icon-search"></i>
+        <input type="text"
+               name="search"
+               data-model="debounce(500)|search"
+               class="form__control form__control--xl"
+               placeholder="Search inside the requests..."
+               value="{{ this.search }}"
+        >
+        <button type="button" class="btn__clear-search"
+                onclick="
+                    this.previousElementSibling.value = '';
+                    this.previousElementSibling.dispatchEvent(new Event('change', { bubbles: true }));
+                "
+        >
+            <i class="icon-cross"></i>
+        </button>
+    </div>
+    <div class="requests__box">
+        {% if this.search is empty %}
+        <div class="tabs">
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value ? 'active' }}"
+            >
+                <span class="tabs__circle error"></span>
+                New
+            </a>
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value ? 'active' }}"
+            >
+                <span class="tabs__circle warning"></span>
+                In progress
+{#                <span class="badge">3</span>#}
+            </a>
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value ? 'active' }}"
+            >
+                <span class="tabs__circle success"></span>
+                Resolved
+            </a>
+        </div>
+        {% endif %}
+        <div class="requests__items">
+            {% for item in this.tickets %}
+                <a href="javascript://"
+                   class="item {{ this.selected.ticketId|default(null) == item.ticketId ? 'active' }}"
+                   data-ticket-id="{{ item.ticketId }}"
+                   data-action="click->TicketList#open"
+                >
+                    <div class="item__left">
+                        <div class="item__decoration">
+                            <i class="{{ item.ticketChannelIcon }}"></i>
+                        </div>
+                    </div>
+                    <div class="item__inner">
+                    <span class="item__heading">
+                        {{ item.ticketTitle }}
+                    </span>
+                        <span class="item__text">
+                        {{ item.customerName|default('Unknown customer') }} • {{ item.updatedAt|ago }}
+                    </span>
+                    </div>
+                    <div class="item__right">
+                        <i class="{{ item.ticketPriorityIcon }}"></i>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

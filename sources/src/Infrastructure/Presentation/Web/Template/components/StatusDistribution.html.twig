@@ -1,7 +1,7 @@
 <div class="chart {{ this.class }}">
     <div class="chart__left">
         <span class="chart__number">{{ this.counter }}</span>
-        <span class="chart__status">{{ this.status.name|lower|replace({'_': ' '})|capitalize }}</span>
+        <span class="chart__status">{{ this.status.label|capitalize }}</span>
     </div>
     <i class="icon-status-circle-xl"></i>
 </div>

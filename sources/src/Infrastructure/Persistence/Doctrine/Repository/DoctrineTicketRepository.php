@@ -2,7 +2,8 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Application\Ticket\Dto\TicketWithUserCollectionDto;
+use App\Application\Ticket\Dto\TicketSummaryCollectionDto;
+use App\Application\Ticket\ReadModel\TicketSummaryView;
 use App\Domain\Ticket\Entity\Ticket;
 use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\Counter\TicketChannelsCount;
@@ -114,16 +115,21 @@ class DoctrineTicketRepository implements TicketRepositoryInterface
         $this->_delete($ticket);
     }
 
-    public function findByStatus(TicketStatus $status): TicketWithUserCollectionDto
+    public function findByStatus(TicketStatus $status): TicketSummaryCollectionDto
     {
         $dql = <<<DQL
-            SELECT NEW App\Application\Ticket\Dto\TicketWithUserDto(
+            SELECT NEW App\Application\Ticket\ReadModel\TicketSummaryView(
                 t.id,
-                customer.id,
-                assignee.id,
                 t.title,
+                t.channel,
                 t.status,
-                t.priority
+                t.priority,
+                assignee.id,
+                assignee.name,
+                customer.id,
+                customer.name,
+                0,
+                t.createdAt
             )
             FROM App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket t
             LEFT JOIN t.customer customer
@@ -136,6 +142,34 @@ class DoctrineTicketRepository implements TicketRepositoryInterface
             ->setParameter('status', $status->value)
             ->getResult();
 
-        return new TicketWithUserCollectionDto($result);
+        return new TicketSummaryCollectionDto($result);
+    }
+
+    public function getSummary(Uuid $ticketId): ?TicketSummaryView
+    {
+        $dql = <<<DQL
+            SELECT NEW App\Application\Ticket\ReadModel\TicketSummaryView(
+                t.id,
+                t.title,
+                t.channel,
+                t.status,
+                t.priority,
+                assignee.id,
+                assignee.name,
+                customer.id,
+                customer.name,
+                0,
+                t.createdAt
+            )
+            FROM App\Infrastructure\Persistence\Doctrine\Entity\DoctrineTicket t
+            LEFT JOIN t.customer customer
+            LEFT JOIN t.assignee assignee
+            WHERE t.id = :id
+        DQL;
+
+        return $this->entityManager->createQuery($dql)
+            ->setParameter(':id', $ticketId->toBinary(), ParameterType::BINARY)
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
     }
 }

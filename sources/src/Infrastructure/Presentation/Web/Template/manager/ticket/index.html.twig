@@ -8,54 +8,7 @@
     <section class="requests">
         <div class="requests__inner">
             <div class="requests__left">
-                <div class="form__row">
-                    <i class="icon-search"></i>
-                    <input type="text" class="form__control form__control--xl"
-                           placeholder="Search inside the requests...">
-                    <button type="button" class="btn__clear-search">
-                        <i class="icon-cross"></i>
-                    </button>
-                </div>
-                <div class="requests__box">
-                    <div class="tabs">
-                        <a href="#" class="tabs__link">
-                            <span class="tabs__circle error"></span>
-                            New
-                        </a>
-                        <a href="#" class="tabs__link">
-                            <span class="tabs__circle warning"></span>
-                            In progress
-                            <span class="badge">3</span>
-                        </a>
-                        <a href="#" class="tabs__link active">
-                            <span class="tabs__circle success"></span>
-                            Resolved
-                        </a>
-                    </div>
-                    <div class="requests__items">
-                        {% for item in ticketsWithUser %}
-                            <a href="javascript://" class="item" data-ticket-id="{{ item.ticketId }}"
-                               onclick="return switchChannel(this)">
-                                <div class="item__left">
-                                    <div class="item__decoration">
-                                        <i class="icon-mail"></i>
-                                    </div>
-                                </div>
-                                <div class="item__inner">
-                                <span class="item__heading">
-                                    {{ item.ticketTitle }}
-                                </span>
-                                    <span class="item__text">
-                                    Sophia Nunez • Yesterday
-                                </span>
-                                </div>
-                                <div class="item__right">
-                                    <i class="{{ item.ticketPriorityIcon }}"></i>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {{ component('TicketList') }}
             </div>
             <div class="requests__right">
                 <div id="app"></div>
@@ -232,10 +185,5 @@
         window.addEventListener('chat:ready', () => {
             handleDropdown(document.querySelector('.chat__header'))
         })
-
-        const switchChannel = (el) => {
-            OpenHelpChat.switchChannel(el.dataset.ticketId)
-            return false;
-        }
     </script>
 {% endblock %}
