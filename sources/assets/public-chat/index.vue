@@ -22,7 +22,6 @@ watch(() => chatStore.isLoading, async (isLoading) => {
 })
 
 watch(container, () => {
-
     if (container.value) {
         container.value.appendChild(customHeaderElement);
         console.log('Header moved into container')
@@ -37,12 +36,8 @@ watch(container, () => {
         </template>
 
         <template v-else>
-<!--            <div v-if="customHeaderElement" ref="container" />-->
-<!--            <div v-else-if="customHeaderHtml" v-html="customHeaderHtml" />-->
-<!--            <DefaultHeader v-else />-->
-
-
             <div v-if="customHeaderElement" ref="container" />
+            <div v-else-if="customHeaderHtml" v-html="customHeaderHtml" />
             <DefaultHeader v-else />
 
             <ChatItemList />

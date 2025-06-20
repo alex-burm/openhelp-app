@@ -48,7 +48,7 @@ function Je(r) {
     });
   }
 }
-class Ge {
+class Xe {
   constructor(e) {
     this.application = e, this.eventListenerMaps = /* @__PURE__ */ new Map(), this.started = !1;
   }
@@ -102,7 +102,7 @@ class Ge {
     }), s.join(":");
   }
 }
-const Xe = {
+const Ge = {
   stop({ event: r, value: e }) {
     return e && r.stopPropagation(), !0;
   },
@@ -146,7 +146,7 @@ function ne(r) {
 function Z(r) {
   return ne(r.replace(/--/g, "-").replace(/__/g, "_"));
 }
-function j(r) {
+function x(r) {
   return r.charAt(0).toUpperCase() + r.slice(1);
 }
 function Oe(r) {
@@ -369,7 +369,7 @@ class ke {
     this.elements.has(e) && (this.elements.delete(e), this.delegate.elementUnmatched && this.delegate.elementUnmatched(e));
   }
 }
-class Ce {
+class Te {
   constructor(e, t, s) {
     this.attributeName = t, this.delegate = s, this.elementObserver = new ke(e, this);
   }
@@ -412,12 +412,12 @@ class Ce {
   }
 }
 function at(r, e, t) {
-  Te(r, e).add(t);
+  Ce(r, e).add(t);
 }
 function lt(r, e, t) {
-  Te(r, e).delete(t), ct(r, e);
+  Ce(r, e).delete(t), ct(r, e);
 }
-function Te(r, e) {
+function Ce(r, e) {
   let t = r.get(e);
   return t || (t = /* @__PURE__ */ new Set(), r.set(e, t)), t;
 }
@@ -425,7 +425,7 @@ function ct(r, e) {
   const t = r.get(e);
   t != null && t.size == 0 && r.delete(e);
 }
-class S {
+class F {
   constructor() {
     this.valuesByKey = /* @__PURE__ */ new Map();
   }
@@ -464,7 +464,7 @@ class S {
 }
 class ht {
   constructor(e, t, s, n) {
-    this._selector = t, this.details = n, this.elementObserver = new ke(e, this), this.delegate = s, this.matchesByElement = new S();
+    this._selector = t, this.details = n, this.elementObserver = new ke(e, this), this.delegate = s, this.matchesByElement = new F();
   }
   get started() {
     return this.elementObserver.started;
@@ -586,7 +586,7 @@ class ut {
 }
 class Se {
   constructor(e, t, s) {
-    this.attributeObserver = new Ce(e, t, this), this.delegate = s, this.tokensByElement = new S();
+    this.attributeObserver = new Te(e, t, this), this.delegate = s, this.tokensByElement = new F();
   }
   get started() {
     return this.attributeObserver.started;
@@ -805,13 +805,13 @@ class mt {
     }), e;
   }
   hasValue(e) {
-    const t = this.valueDescriptorNameMap[e], s = `has${j(t.name)}`;
+    const t = this.valueDescriptorNameMap[e], s = `has${x(t.name)}`;
     return this.receiver[s];
   }
 }
 class bt {
   constructor(e, t) {
-    this.context = e, this.delegate = t, this.targetsByName = new S();
+    this.context = e, this.delegate = t, this.targetsByName = new F();
   }
   start() {
     this.tokenListObserver || (this.tokenListObserver = new Se(this.element, this.attributeName, this), this.tokenListObserver.start());
@@ -848,7 +848,7 @@ class bt {
     return this.context.scope;
   }
 }
-function x(r, e) {
+function U(r, e) {
   const t = Ie(r);
   return Array.from(t.reduce((s, n) => (yt(n, e).forEach((i) => s.add(i)), s), /* @__PURE__ */ new Set()));
 }
@@ -871,7 +871,7 @@ function Et(r, e) {
 }
 class At {
   constructor(e, t) {
-    this.started = !1, this.context = e, this.delegate = t, this.outletsByName = new S(), this.outletElementsByName = new S(), this.selectorObserverMap = /* @__PURE__ */ new Map(), this.attributeObserverMap = /* @__PURE__ */ new Map();
+    this.started = !1, this.context = e, this.delegate = t, this.outletsByName = new F(), this.outletElementsByName = new F(), this.selectorObserverMap = /* @__PURE__ */ new Map(), this.attributeObserverMap = /* @__PURE__ */ new Map();
   }
   start() {
     this.started || (this.outletDefinitions.forEach((e) => {
@@ -937,7 +937,7 @@ class At {
     this.selectorObserverMap.set(e, s), s.start();
   }
   setupAttributeObserverForOutlet(e) {
-    const t = this.attributeNameForOutletName(e), s = new Ce(this.scope.element, t, this);
+    const t = this.attributeNameForOutletName(e), s = new Te(this.scope.element, t, this);
     this.attributeObserverMap.set(e, s), s.start();
   }
   selector(e) {
@@ -950,10 +950,10 @@ class At {
     return this.outletDefinitions.find((t) => this.attributeNameForOutletName(t) === e);
   }
   get outletDependencies() {
-    const e = new S();
+    const e = new F();
     return this.router.modules.forEach((t) => {
       const s = t.definition.controllerConstructor;
-      x(s, "outlets").forEach((i) => e.add(i, t.identifier));
+      U(s, "outlets").forEach((i) => e.add(i, t.identifier));
     }), e;
   }
   get outletDefinitions() {
@@ -1065,11 +1065,11 @@ function Mt(r) {
   return Ot(r, kt(r));
 }
 function Ot(r, e) {
-  const t = Ft(r), s = Ct(r.prototype, e);
+  const t = Ft(r), s = Tt(r.prototype, e);
   return Object.defineProperties(t.prototype, s), t;
 }
 function kt(r) {
-  return x(r, "blessings").reduce((t, s) => {
+  return U(r, "blessings").reduce((t, s) => {
     const n = s(r);
     for (const i in n) {
       const o = t[i] || {};
@@ -1078,13 +1078,13 @@ function kt(r) {
     return t;
   }, {});
 }
-function Ct(r, e) {
+function Tt(r, e) {
   return St(e).reduce((t, s) => {
-    const n = Tt(r, e, s);
+    const n = Ct(r, e, s);
     return n && Object.assign(t, { [s]: n }), t;
   }, {});
 }
-function Tt(r, e, t) {
+function Ct(r, e, t) {
   const s = Object.getOwnPropertyDescriptor(r, t);
   if (!(s && "value" in s)) {
     const i = Object.getOwnPropertyDescriptor(e, t).value;
@@ -1385,7 +1385,7 @@ class Vt {
 }
 class Rt {
   constructor(e) {
-    this.application = e, this.scopeObserver = new Vt(this.element, this.schema, this), this.scopesByIdentifier = new S(), this.modulesByIdentifier = /* @__PURE__ */ new Map();
+    this.application = e, this.scopeObserver = new Vt(this.element, this.schema, this), this.scopesByIdentifier = new F(), this.modulesByIdentifier = /* @__PURE__ */ new Map();
   }
   get element() {
     return this.application.element;
@@ -1469,7 +1469,7 @@ class xt {
   constructor(e = document.documentElement, t = jt) {
     this.logger = console, this.debug = !1, this.logDebugActivity = (s, n, i = {}) => {
       this.debug && this.logFormattedMessage(s, n, i);
-    }, this.element = e, this.schema = t, this.dispatcher = new Ge(this), this.router = new Rt(this), this.actionDescriptorFilters = Object.assign({}, Xe);
+    }, this.element = e, this.schema = t, this.dispatcher = new Xe(this), this.router = new Rt(this), this.actionDescriptorFilters = Object.assign({}, Ge);
   }
   static start(e, t) {
     const s = new this(e, t);
@@ -1520,7 +1520,7 @@ function Ut() {
   });
 }
 function qt(r) {
-  return x(r, "classes").reduce((t, s) => Object.assign(t, Ht(s)), {});
+  return U(r, "classes").reduce((t, s) => Object.assign(t, Ht(s)), {});
 }
 function Ht(r) {
   return {
@@ -1540,7 +1540,7 @@ function Ht(r) {
         return this.classes.getAll(r);
       }
     },
-    [`has${j(r)}Class`]: {
+    [`has${x(r)}Class`]: {
       get() {
         return this.classes.has(r);
       }
@@ -1548,7 +1548,7 @@ function Ht(r) {
   };
 }
 function Kt(r) {
-  return x(r, "outlets").reduce((t, s) => Object.assign(t, _t(s)), {});
+  return U(r, "outlets").reduce((t, s) => Object.assign(t, _t(s)), {});
 }
 function ge(r, e, t) {
   return r.application.getControllerForElementAndIdentifier(e, t);
@@ -1597,7 +1597,7 @@ function _t(r) {
         return this.outlets.findAll(r);
       }
     },
-    [`has${j(e)}Outlet`]: {
+    [`has${x(e)}Outlet`]: {
       get() {
         return this.outlets.has(r);
       }
@@ -1605,7 +1605,7 @@ function _t(r) {
   };
 }
 function zt(r) {
-  return x(r, "targets").reduce((t, s) => Object.assign(t, Wt(s)), {});
+  return U(r, "targets").reduce((t, s) => Object.assign(t, Wt(s)), {});
 }
 function Wt(r) {
   return {
@@ -1622,7 +1622,7 @@ function Wt(r) {
         return this.targets.findAll(r);
       }
     },
-    [`has${j(r)}Target`]: {
+    [`has${x(r)}Target`]: {
       get() {
         return this.targets.has(r);
       }
@@ -1640,9 +1640,9 @@ function Jt(r) {
       }
     }
   };
-  return e.reduce((s, n) => Object.assign(s, Gt(n)), t);
+  return e.reduce((s, n) => Object.assign(s, Xt(n)), t);
 }
-function Gt(r, e) {
+function Xt(r, e) {
   const t = De(r, e), { key: s, name: n, reader: i, writer: o } = t;
   return {
     [n]: {
@@ -1654,7 +1654,7 @@ function Gt(r, e) {
         d === void 0 ? this.data.delete(s) : this.data.set(s, o(d));
       }
     },
-    [`has${j(n)}`]: {
+    [`has${x(n)}`]: {
       get() {
         return this.data.has(s) || t.hasCustomDefaultValue;
       }
@@ -1682,7 +1682,7 @@ function J(r) {
       return "string";
   }
 }
-function V(r) {
+function R(r) {
   switch (typeof r) {
     case "boolean":
       return "boolean";
@@ -1696,8 +1696,8 @@ function V(r) {
   if (Object.prototype.toString.call(r) === "[object Object]")
     return "object";
 }
-function Xt(r) {
-  const { controller: e, token: t, typeObject: s } = r, n = ue(s.type), i = ue(s.default), o = n && i, d = n && !i, h = !n && i, u = J(s.type), f = V(r.typeObject.default);
+function Gt(r) {
+  const { controller: e, token: t, typeObject: s } = r, n = ue(s.type), i = ue(s.default), o = n && i, d = n && !i, h = !n && i, u = J(s.type), f = R(r.typeObject.default);
   if (d)
     return u;
   if (h)
@@ -1710,7 +1710,7 @@ function Xt(r) {
     return u;
 }
 function Qt(r) {
-  const { controller: e, token: t, typeDefinition: s } = r, i = Xt({ controller: e, token: t, typeObject: s }), o = V(s), d = J(s), h = i || o || d;
+  const { controller: e, token: t, typeDefinition: s } = r, i = Gt({ controller: e, token: t, typeObject: s }), o = R(s), d = J(s), h = i || o || d;
   if (h)
     return h;
   const u = e ? `${e}.${s}` : t;
@@ -1740,7 +1740,7 @@ function Zt(r) {
       return Yt(t);
     },
     get hasCustomDefaultValue() {
-      return V(t) !== void 0;
+      return R(t) !== void 0;
     },
     reader: es[n],
     writer: ve[n] || ve.default
@@ -1760,7 +1760,7 @@ const be = {
   array(r) {
     const e = JSON.parse(r);
     if (!Array.isArray(e))
-      throw new TypeError(`expected value of type "array" but instead got value "${r}" of type "${V(e)}"`);
+      throw new TypeError(`expected value of type "array" but instead got value "${r}" of type "${R(e)}"`);
     return e;
   },
   boolean(r) {
@@ -1772,7 +1772,7 @@ const be = {
   object(r) {
     const e = JSON.parse(r);
     if (e === null || typeof e != "object" || Array.isArray(e))
-      throw new TypeError(`expected value of type "object" but instead got value "${r}" of type "${V(e)}"`);
+      throw new TypeError(`expected value of type "object" but instead got value "${r}" of type "${R(e)}"`);
     return e;
   },
   string(r) {
@@ -1789,7 +1789,7 @@ function ye(r) {
 function ts(r) {
   return `${r}`;
 }
-class F {
+class k {
   constructor(e) {
     this.context = e;
   }
@@ -1833,15 +1833,15 @@ class F {
     return t.dispatchEvent(h), h;
   }
 }
-F.blessings = [
+k.blessings = [
   qt,
   zt,
   Jt,
   Kt
 ];
-F.targets = [];
-F.outlets = [];
-F.values = {};
+k.targets = [];
+k.outlets = [];
+k.values = {};
 class ss {
   constructor(e, t, s) {
     this.isResolved = !1, this.promise = e, this.promise.then((n) => (this.isResolved = !0, n)), this.actions = t, this.updatedModels = s;
@@ -1865,19 +1865,19 @@ class rs {
       Accept: "application/vnd.live-component+html",
       "X-Requested-With": "XMLHttpRequest"
     };
-    const y = Object.entries(o).reduce((w, M) => w + M.length, 0), k = Object.keys(n).length > 0;
+    const y = Object.entries(o).reduce((w, M) => w + M.length, 0), T = Object.keys(n).length > 0;
     if (t.length === 0 && y === 0 && this.method === "get" && this.willDataFitInUrl(JSON.stringify(e), JSON.stringify(s), f, JSON.stringify(n), JSON.stringify(i)))
-      f.set("props", JSON.stringify(e)), f.set("updated", JSON.stringify(s)), Object.keys(i).length > 0 && f.set("propsFromParent", JSON.stringify(i)), k && f.set("children", JSON.stringify(n)), b.method = "GET";
+      f.set("props", JSON.stringify(e)), f.set("updated", JSON.stringify(s)), Object.keys(i).length > 0 && f.set("propsFromParent", JSON.stringify(i)), T && f.set("children", JSON.stringify(n)), b.method = "GET";
     else {
       b.method = "POST";
       const w = { props: e, updated: s };
-      Object.keys(i).length > 0 && (w.propsFromParent = i), k && (w.children = n), t.length > 0 && (t.length === 1 ? (w.args = t[0].args, h += `/${encodeURIComponent(t[0].name)}`) : (h += "/_batch", w.actions = t));
+      Object.keys(i).length > 0 && (w.propsFromParent = i), T && (w.children = n), t.length > 0 && (t.length === 1 ? (w.args = t[0].args, h += `/${encodeURIComponent(t[0].name)}`) : (h += "/_batch", w.actions = t));
       const M = new FormData();
       M.append("data", JSON.stringify(w));
       for (const [_, z] of Object.entries(o)) {
-        const X = z.length;
-        for (let P = 0; P < X; ++P)
-          M.append(_, z[P]);
+        const G = z.length;
+        for (let N = 0; N < G; ++N)
+          M.append(_, z[N]);
       }
       b.body = M;
     }
@@ -1908,39 +1908,39 @@ class is {
     return this.body || (this.body = await this.response.text()), this.body;
   }
 }
-function B(r) {
+function V(r) {
   return r.innerHTML ? r.outerHTML.slice(0, r.outerHTML.indexOf(r.innerHTML)) : r.outerHTML;
 }
-let G = /* @__PURE__ */ new WeakMap(), R = /* @__PURE__ */ new Map();
+let X = /* @__PURE__ */ new WeakMap(), j = /* @__PURE__ */ new Map();
 const os = (r) => {
-  G.set(r.element, r), R.set(r, r.name);
+  X.set(r.element, r), j.set(r, r.name);
 }, as = (r) => {
-  G.delete(r.element), R.delete(r);
+  X.delete(r.element), j.delete(r);
 }, ls = (r) => new Promise((e, t) => {
   let s = 0;
   const n = 10, i = setInterval(() => {
-    const o = G.get(r);
-    o && (clearInterval(i), e(o)), s++, s > n && (clearInterval(i), t(new Error(`Component not found for element ${B(r)}`)));
+    const o = X.get(r);
+    o && (clearInterval(i), e(o)), s++, s > n && (clearInterval(i), t(new Error(`Component not found for element ${V(r)}`)));
   }, 5);
 }), cs = (r, e, t) => {
   const s = [];
-  return R.forEach((n, i) => {
+  return j.forEach((n, i) => {
     e && (r === i || !i.element.contains(r.element)) || t && n !== t || s.push(i);
   }), s;
 }, hs = (r) => {
   const e = [];
-  return R.forEach((t, s) => {
+  return j.forEach((t, s) => {
     if (r === s || !r.element.contains(s.element))
       return;
     let n = !1;
-    R.forEach((i, o) => {
+    j.forEach((i, o) => {
       n || o !== s && o.element.contains(s.element) && (n = !0);
     }), e.push(s);
   }), e;
 }, us = (r) => {
   let e = r.element.parentElement;
   for (; e; ) {
-    const t = G.get(e);
+    const t = X.get(e);
     if (t)
       return t;
     e = e.parentElement;
@@ -2336,9 +2336,9 @@ function L(r, e = !0) {
   }
   if (!e)
     return null;
-  throw new Error(`Cannot determine the model name for "${B(r)}": the element must either have a "data-model" (or "name" attribute living inside a <form data-model="*">).`);
+  throw new Error(`Cannot determine the model name for "${V(r)}": the element must either have a "data-model" (or "name" attribute living inside a <form data-model="*">).`);
 }
-function U(r, e) {
+function q(r, e) {
   return e.element === r ? !0 : e.element.contains(r) ? r.closest('[data-controller~="live"]') === e.element : !1;
 }
 function Y(r) {
@@ -2387,7 +2387,7 @@ var Me = /* @__PURE__ */ function() {
     }
   };
   function t(a, l, c = {}) {
-    a instanceof Document && (a = a.documentElement), typeof l == "string" && (l = P(l));
+    a instanceof Document && (a = a.documentElement), typeof l == "string" && (l = N(l));
     let p = Ve(l), g = K(a, p, c);
     return s(a, p, g);
   }
@@ -2438,7 +2438,7 @@ var Me = /* @__PURE__ */ function() {
         g = _(g, v, c), i(v, m, c), C(c, m);
         continue;
       }
-      let E = X(a, l, m, g, c);
+      let E = G(a, l, m, g, c);
       if (E) {
         g = _(g, E, c), i(E, m, c), C(c, m);
         continue;
@@ -2487,24 +2487,24 @@ var Me = /* @__PURE__ */ function() {
     }
   }
   function b(a, l, c) {
-    let p = [], g = [], m = [], v = [], E = c.head.style, T = /* @__PURE__ */ new Map();
+    let p = [], g = [], m = [], v = [], E = c.head.style, S = /* @__PURE__ */ new Map();
     for (const A of a.children)
-      T.set(A.outerHTML, A);
+      S.set(A.outerHTML, A);
     for (const A of l.children) {
-      let O = T.has(A.outerHTML), $ = c.head.shouldReAppend(A), Q = c.head.shouldPreserve(A);
-      O || Q ? $ ? g.push(A) : (T.delete(A.outerHTML), m.push(A)) : E === "append" ? $ && (g.push(A), v.push(A)) : c.head.shouldRemove(A) !== !1 && g.push(A);
+      let O = S.has(A.outerHTML), B = c.head.shouldReAppend(A), Q = c.head.shouldPreserve(A);
+      O || Q ? B ? g.push(A) : (S.delete(A.outerHTML), m.push(A)) : E === "append" ? B && (g.push(A), v.push(A)) : c.head.shouldRemove(A) !== !1 && g.push(A);
     }
-    v.push(...T.values());
+    v.push(...S.values());
     let ce = [];
     for (const A of v) {
       let O = document.createRange().createContextualFragment(A.outerHTML).firstChild;
       if (c.callbacks.beforeNodeAdded(O) !== !1) {
         if (O.href || O.src) {
-          let $ = null, Q = new Promise(function(Ke) {
-            $ = Ke;
+          let B = null, Q = new Promise(function(Ke) {
+            B = Ke;
           });
           O.addEventListener("load", function() {
-            $();
+            B();
           }), ce.push(Q);
         }
         l.appendChild(O), c.callbacks.afterNodeAdded(O), p.push(O);
@@ -2516,12 +2516,12 @@ var Me = /* @__PURE__ */ function() {
   }
   function y() {
   }
-  function k(a) {
+  function T(a) {
     let l = {};
     return Object.assign(l, e), Object.assign(l, a), l.callbacks = {}, Object.assign(l.callbacks, e.callbacks), Object.assign(l.callbacks, a.callbacks), l.head = {}, Object.assign(l.head, e.head), Object.assign(l.head, a.head), l;
   }
   function K(a, l, c) {
-    return c = k(c), {
+    return c = T(c), {
       target: a,
       newContent: l,
       config: c,
@@ -2535,7 +2535,7 @@ var Me = /* @__PURE__ */ function() {
     };
   }
   function w(a, l, c) {
-    return a == null || l == null ? !1 : a.nodeType === l.nodeType && a.tagName === l.tagName ? a.id !== "" && a.id === l.id ? !0 : N(c, a, l) > 0 : !1;
+    return a == null || l == null ? !1 : a.nodeType === l.nodeType && a.tagName === l.tagName ? a.id !== "" && a.id === l.id ? !0 : $(c, a, l) > 0 : !1;
   }
   function M(a, l) {
     return a == null || l == null ? !1 : a.nodeType === l.nodeType && a.tagName === l.tagName;
@@ -2548,23 +2548,23 @@ var Me = /* @__PURE__ */ function() {
     return C(c, l), l.nextSibling;
   }
   function z(a, l, c, p, g) {
-    let m = N(g, c, l), v = null;
+    let m = $(g, c, l), v = null;
     if (m > 0) {
-      let E = p, T = 0;
+      let E = p, S = 0;
       for (; E != null; ) {
         if (w(c, E, g))
           return E;
-        if (T += N(g, E, a), T > m)
+        if (S += $(g, E, a), S > m)
           return null;
         E = E.nextSibling;
       }
     }
     return v;
   }
-  function X(a, l, c, p, g) {
+  function G(a, l, c, p, g) {
     let m = p, v = c.nextSibling, E = 0;
     for (; m != null; ) {
-      if (N(g, m, a) > 0)
+      if ($(g, m, a) > 0)
         return null;
       if (M(c, m))
         return m;
@@ -2574,7 +2574,7 @@ var Me = /* @__PURE__ */ function() {
     }
     return m;
   }
-  function P(a) {
+  function N(a) {
     let l = new DOMParser(), c = a.replace(/<svg(\s[^>]*>|>)([\s\S]*?)<\/svg>/gim, "");
     if (c.match(/<\/html>/) || c.match(/<\/head>/) || c.match(/<\/body>/)) {
       let p = l.parseFromString(a, "text/html");
@@ -2629,7 +2629,7 @@ var Me = /* @__PURE__ */ function() {
     return g;
   }
   function xe(a, l, c) {
-    return M(a, l) ? 0.5 + N(c, a, l) : 0;
+    return M(a, l) ? 0.5 + $(c, a, l) : 0;
   }
   function ae(a, l) {
     C(l, a), l.callbacks.beforeNodeRemoved(a) !== !1 && (a.remove(), l.callbacks.afterNodeRemoved(a));
@@ -2645,7 +2645,7 @@ var Me = /* @__PURE__ */ function() {
     for (const p of c)
       a.deadIds.add(p);
   }
-  function N(a, l, c) {
+  function $(a, l, c) {
     let p = a.idMap.get(l) || r, g = 0;
     for (const m of p)
       Ue(a, m) && qe(a, m, c) && ++g;
@@ -2728,8 +2728,8 @@ function vs(r, e, t, s, n) {
           if (b && b.applyToElement(u), h.nodeName.toUpperCase() !== "OPTION" && h.isEqualNode(u)) {
             const y = Y(h);
             re(y);
-            const k = Y(u);
-            if (re(k), y.isEqualNode(k))
+            const T = Y(u);
+            if (re(T), y.isEqualNode(T))
               return !1;
           }
         }
@@ -2770,7 +2770,7 @@ class ys {
     t && this.updateModelFromElement(t);
   }
   updateModelFromElement(e) {
-    if (!U(e, this.component))
+    if (!q(e, this.component))
       return;
     if (!(e instanceof HTMLElement))
       throw new Error("Could not update model for non HTMLElement");
@@ -2878,7 +2878,7 @@ class Os {
     this.fingerprint = "", this.defaultDebounce = 150, this.backendRequest = null, this.pendingActions = [], this.pendingFiles = {}, this.isRequestPending = !1, this.requestDebounceTimeout = null, this.element = e, this.name = t, this.backend = o, this.elementDriver = d, this.id = i, this.listeners = /* @__PURE__ */ new Map(), n.forEach((h) => {
       var u;
       this.listeners.has(h.event) || this.listeners.set(h.event, []), (u = this.listeners.get(h.event)) == null || u.push(h.action);
-    }), this.valueStore = new Ms(s), this.unsyncedInputsTracker = new ys(this, d), this.hooks = new ds(), this.resetPromise(), this.externalMutationTracker = new ps(this.element, (h) => U(h, this)), this.externalMutationTracker.start();
+    }), this.valueStore = new Ms(s), this.unsyncedInputsTracker = new ys(this, d), this.hooks = new ds(), this.resetPromise(), this.externalMutationTracker = new ps(this.element, (h) => q(h, this)), this.externalMutationTracker.start();
   }
   addPlugin(e) {
     e.attachToComponent(this);
@@ -3077,7 +3077,7 @@ function ks(r) {
     }
   });
 }
-class Cs {
+class Ts {
   constructor(e) {
     this.controller = e;
   }
@@ -3125,7 +3125,7 @@ function Ne(r) {
     targetEventName: t
   };
 }
-class Ts {
+class Cs {
   constructor(e) {
     this.parentModelBindings = [], this.component = e;
     const t = Le(this.component.element);
@@ -3258,7 +3258,7 @@ class Fs {
   getLoadingDirectives(e, t) {
     const s = [];
     let n = [...Array.from(t.querySelectorAll("[data-loading]"))];
-    return n = n.filter((i) => U(i, e)), t.hasAttribute("data-loading") && (n = [t, ...n]), n.forEach((i) => {
+    return n = n.filter((i) => q(i, e)), t.hasAttribute("data-loading") && (n = [t, ...n]), n.forEach((i) => {
       if (!(i instanceof HTMLElement) && !(i instanceof SVGElement))
         throw new Error("Invalid Element Type");
       const o = I(i.dataset.loading || "show");
@@ -3478,7 +3478,7 @@ class js {
     e.element.querySelectorAll("[data-model]").forEach((t) => {
       if (!(t instanceof HTMLElement))
         throw new Error("Invalid element using data-model.");
-      if (t instanceof HTMLFormElement || !U(t, e))
+      if (t instanceof HTMLFormElement || !q(t, e))
         return;
       const s = L(t);
       if (!s)
@@ -3501,7 +3501,7 @@ class xs {
     }
   }
 }
-class q extends F {
+class H extends k {
   constructor() {
     super(...arguments), this.pendingActionTriggerModelElement = null, this.elementEventListeners = [
       { event: "input", callback: (e) => this.handleInputEvent(e) },
@@ -3521,13 +3521,13 @@ class q extends F {
   }
   update(e) {
     if (e.type === "input" || e.type === "change")
-      throw new Error(`Since LiveComponents 2.3, you no longer need data-action="live#update" on form elements. Found on element: ${B(e.currentTarget)}`);
+      throw new Error(`Since LiveComponents 2.3, you no longer need data-action="live#update" on form elements. Found on element: ${V(e.currentTarget)}`);
     this.updateModelFromElementEvent(e.currentTarget, null);
   }
   action(e) {
     const t = e.params;
     if (!t.action)
-      throw new Error(`No action name provided on element: ${B(e.currentTarget)}. Did you forget to add the "data-live-action-param" attribute?`);
+      throw new Error(`No action name provided on element: ${V(e.currentTarget)}. Did you forget to add the "data-live-action-param" attribute?`);
     const s = t.action, n = { ...t };
     delete n.action;
     const i = I(s);
@@ -3586,7 +3586,7 @@ class q extends F {
   getEmitDirectives(e) {
     const t = e.params;
     if (!t.event)
-      throw new Error(`No event name provided on element: ${B(e.currentTarget)}. Did you forget to add the "data-live-event-param" attribute?`);
+      throw new Error(`No event name provided on element: ${V(e.currentTarget)}. Did you forget to add the "data-live-event-param" attribute?`);
     const s = t.event, n = { ...t };
     delete n.event;
     const i = I(s), o = [];
@@ -3609,7 +3609,7 @@ class q extends F {
   }
   createComponent() {
     const e = this.element.id || null;
-    this.component = new Os(this.element, this.nameValue, this.propsValue, this.listenersValue, e, q.backendFactory(this), new Cs(this)), this.proxiedComponent = ks(this.component), Object.defineProperty(this.element, "__component", {
+    this.component = new Os(this.element, this.nameValue, this.propsValue, this.listenersValue, e, H.backendFactory(this), new Ts(this)), this.proxiedComponent = ks(this.component), Object.defineProperty(this.element, "__component", {
       value: this.proxiedComponent,
       writable: !0
     }), this.hasDebounceValue && (this.component.defaultDebounce = this.debounceValue), [
@@ -3620,7 +3620,7 @@ class q extends F {
       new Ps(),
       new js(),
       new Rs(this.queryMappingValue),
-      new Ts(this.component)
+      new Cs(this.component)
     ].forEach((s) => {
       this.component.addPlugin(s);
     });
@@ -3647,7 +3647,7 @@ class q extends F {
   }
   updateModelFromElementEvent(e, t) {
     var o;
-    if (!U(e, this.component))
+    if (!q(e, this.component))
       return;
     if (!(e instanceof HTMLElement))
       throw new Error("Could not update model for non HTMLElement");
@@ -3674,7 +3674,7 @@ class q extends F {
     });
   }
 }
-q.values = {
+H.values = {
   name: String,
   url: String,
   props: { type: Object, default: {} },
@@ -3687,8 +3687,8 @@ q.values = {
   requestMethod: { type: String, default: "post" },
   queryMapping: { type: Object, default: {} }
 };
-q.backendFactory = (r) => new ns(r.urlValue, r.requestMethodValue);
-class Us extends F {
+H.backendFactory = (r) => new ns(r.urlValue, r.requestMethodValue);
+class Us extends k {
   async initialize() {
     this.component = await ls(this.element);
   }
@@ -3706,7 +3706,7 @@ function qs(r, e = 300) {
     clearTimeout(t), t = setTimeout(() => r(...s), e);
   };
 }
-class Be extends F {
+class Be extends k {
   // static values = {
   //     url: String
   // }
@@ -3757,11 +3757,17 @@ class Be extends F {
   }
 }
 he(Be, "targets", ["input", "results"]);
-const H = xt.start();
-H.register("live", q);
-H.register("TicketList", Us);
-H.register("UserAutocomplete", Be);
-H.debug = !0;
-window.Stimulus = H;
+class Hs extends k {
+  open(e) {
+    ["A", "BUTTON", "INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName) || e.target.closest(".dropdown") || (document.location.href = e.currentTarget.dataset.url);
+  }
+}
+const P = xt.start();
+P.register("live", H);
+P.register("TicketList", Us);
+P.register("RecentTickets", Hs);
+P.register("UserAutocomplete", Be);
+P.debug = !0;
+window.Stimulus = P;
 console.log("Stimulus started");
 //# sourceMappingURL=live.js.map

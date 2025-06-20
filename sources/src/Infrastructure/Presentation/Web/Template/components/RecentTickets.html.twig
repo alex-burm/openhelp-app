@@ -1,4 +1,4 @@
-<section class="recent" {{ attributes }}>
+<section class="recent" {{ attributes.defaults(stimulus_controller('RecentTickets')) }}>
     <h2 class="recent__title">
         Recent requests
     </h2>
@@ -50,7 +50,10 @@
             </thead>
             <tbody>
             {% for item in this.list %}
-            <tr>
+            <tr data-ticket-id="{{ item.ticketId }}"
+                data-url="{{ path('manager_ticket_index', {ticketId: item.ticketId}) }}"
+                data-action="click->RecentTickets#open"
+            >
                 <td>
                     <div class="item">
                         <div class="item__left">
