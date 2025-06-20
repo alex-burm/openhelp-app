@@ -12,8 +12,11 @@ export default class extends Controller {
     open (event) {
         event.preventDefault()
         const { ticketId } = event.currentTarget.dataset
-        this.component.action('details', { ticketId }).then(() => {
-            OpenHelpChat.switchChannel(ticketId)
+
+        this.component.action('details', { ticketId }).then((data) => {
+            OpenHelpChat.subscribe(ticketId)
+
+            console.log(this.component.getData('selected'))
         })
     }
 }

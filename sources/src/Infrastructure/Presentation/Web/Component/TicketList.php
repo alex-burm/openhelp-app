@@ -26,7 +26,10 @@ class TicketList
     #[LiveProp(writable: true)]
     public string $search = '';
 
-    public ?TicketSummaryView $selected = null;
+    #[LiveProp(writable: true)]
+    public ?string $selected = null;
+
+    private ?TicketSummaryCollectionDto $cached = null;
 
     public function __construct(
         protected TicketRepositoryInterface $ticketRepository,
@@ -37,18 +40,17 @@ class TicketList
     #[ExposeInTemplate]
     public function getTickets(): TicketSummaryCollectionDto
     {
-        return $this->ticketRepository->findByStatus(TicketStatus::from($this->status));
+        return $this->cached ??= $this->ticketRepository->findByStatus(TicketStatus::from($this->status));
     }
 
     #[LiveAction]
     public function details(
         #[LiveArg]
         string $ticketId,
-    ): void
-    {
+    ): void {
         $ticketSummary = $this->ticketRepository->getSummary(Uuid::fromString($ticketId));
 
-        $this->selected = $ticketSummary;
+        $this->selected = $ticketSummary->ticketId;
 
         // save recent viewed
         $this->recentTicketRepository->saveRecent($ticketSummary);

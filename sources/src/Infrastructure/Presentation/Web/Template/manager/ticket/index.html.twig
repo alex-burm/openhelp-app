@@ -11,12 +11,13 @@
                 {{ component('TicketList') }}
             </div>
             <div class="requests__right">
-                <div id="app"></div>
+                <div id="app" class="hidden"></div>
             </div>
         </div>
     </section>
 
-    <script type="application/x-chat-header" id="public-chat-header">
+{#    <script type="application/x-chat-header" id="public-chat-header">#}
+    <div type="application/x-chat-header" id="public-chat-header">
         <div class="chat__header">
             <div class="item">
                 <div class="item__status">
@@ -162,15 +163,16 @@
                 </div>
             </div>
         </div>
-    </script>
+    </div>
 
     <script src="{{ asset('build/public-chat.js') }}"></script>
     <script>
         OpenHelpChat.init({
-            customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
+            //customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
+            customHeaderElement: document.getElementById('public-chat-header'),
             user: {
-                name: 'Alex',
-                email: 'user@example.com',
+                name: '{{ app.user.getName() }}',
+                email: '{{ app.user.getEmail() }}',
             },
 
             connection: {
@@ -181,6 +183,7 @@
                 channelUrl: '{{ path('chat_channel') }}',
             },
         });
+        // OpenHelpChat.connect();
 
         window.addEventListener('chat:ready', () => {
             handleDropdown(document.querySelector('.chat__header'))

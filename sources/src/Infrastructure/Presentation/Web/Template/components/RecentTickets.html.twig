@@ -76,7 +76,7 @@
                     {{ component('RecentTicketPriority', {item, key: 'priority-' ~ item.ticketId}) }}
                 </td>
                 <td>
-                    {{ component('RecentTicketAssignee', {item, agent: 'agent-' ~ item.ticketId}) }}
+                    {{ component('RecentTicketAssignee', {item, key: 'agent-' ~ item.ticketId}) }}
                 </td>
                 <td>
                     <div class="dropdown">

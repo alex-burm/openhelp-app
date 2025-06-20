@@ -3695,8 +3695,8 @@ class Us extends F {
   open(e) {
     e.preventDefault();
     const { ticketId: t } = e.currentTarget.dataset;
-    this.component.action("details", { ticketId: t }).then(() => {
-      OpenHelpChat.switchChannel(t);
+    this.component.action("details", { ticketId: t }).then((s) => {
+      OpenHelpChat.subscribe(t), console.log(this.component.getData("selected"));
     });
   }
 }
