@@ -1,79 +1,87 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { Centrifuge } from 'centrifuge'
 import { useChatStore } from '@public/stores/ChatStore'
 import { USER_MESSAGE_STATUSES } from "@public/constants";
 import { createOutgoingMessage } from "@public/helpers";
 
 export const useConnectionStore = defineStore('connection', () => {
-    const isConnected = ref(false)
-    const isReconnected = ref(false)
-    const centrifuge = ref(null)
-    const subscription = ref(null)
-    const sendUrl = ref(null)
-    const tokenUrl = ref(null)
-    const historyUrl = ref(null)
-    const channelUrl = ref(null)
-    const channel = ref(null)
-    const token = ref(null)
+    const state = reactive({
+        isConnected: false,
+        isReconnected: false,
+        centrifuge: null,
+        subscription: null,
+        sendUrl: null,
+        tokenUrl: null,
+        historyUrl: null,
+        channelUrl: null,
+        channel: null,
+        token: null,
+    })
 
-    async function init(defaults = {}) {
-        let options = {
-            socketUrl: null,
-            sendUrl: null,
-            tokenUrl: null,
-            historyUrl: null,
-            channelUrl: null,
-            ...defaults,
-        }
+    const chat = useChatStore()
 
-        sendUrl.value = options.sendUrl
-        tokenUrl.value = options.tokenUrl
-        historyUrl.value = options.historyUrl
-        channelUrl.value = options.channelUrl
+    function init(defaults = {}) {
+        Object.assign(state, {
+            socketUrl: defaults.socketUrl,
+            sendUrl: defaults.sendUrl,
+            historyUrl: defaults.historyUrl,
+            tokenUrl: defaults.tokenUrl,
+            channelUrl: defaults.channelUrl,
+            channel: defaults.channel,
+        })
+    }
 
-        channel.value = await getChannel();
+    async function connect(channel) {
+        chat.isStarted = true;
+        state.channel = channel ?? state.channel ?? await getChannel();
 
-        centrifuge.value = new Centrifuge(options.socketUrl, {
+        state.centrifuge = new Centrifuge(state.socketUrl, {
             getToken: createGetTokenFunction(),
         })
 
-        centrifuge.value.on('connecting', () => isConnected.value = false);
-        centrifuge.value.on('connected', async () => {
-            useChatStore().items = await getHistory();
-
-            isConnected.value = true
-            useChatStore().isLoading = false;
+        state.centrifuge.on('connecting', () => {
+            state.isConnected = false
+            chat.isLoading = true
+        });
+        state.centrifuge.on('connected', async () => {
+            //chat.items = await getHistory();
+            chat.isLoading = false;
+            state.isConnected = true
         })
-        centrifuge.value.on('disconnected', () => {
-            isConnected.value = false;
-            isReconnected.value = true;
+        state.centrifuge.on('disconnected', () => {
+            state.isConnected = false;
+            state.isReconnected = true;
         })
 
-        /*
-        centrifuge.value.on('state', (ctx) => {
-            console.log('[state]', ctx)
+        state.centrifuge.on('subscribed', () => {
+            console.log('subscribed')
+            chat.isLoading = false;
         })
-        */
 
-        centrifuge.value.connect()
-
-        subscription.value = centrifuge.value.newSubscription(channel.value);
-        subscription.value.on('publication', ctx => {
-            useChatStore().add(ctx.data)
+        state.centrifuge.on('state', (state) => {
+            console.log('state', state)
+            // chat.isLoading = false;
         })
+
+        state.centrifuge.connect()
+
+        // state.subscription = state.centrifuge.newSubscription(state.channel);
+        // state.subscription.on('publication', ctx => {
+        //     chat.add(ctx.data)
+        // })
     }
 
     function createGetTokenFunction()
     {
         return async () => {
-            const response = await fetch(tokenUrl.value + '?channel=' + channel.value, {
+            const response = await fetch(state.tokenUrl + '?channel=' + state.channel, {
                 headers: { 'Content-Type': 'application/json' },
             });
             const data = await response.json();
 
             // store token to use it in the next requests
-            token.value = data.token;
+            state.token = data.token;
 
             return data.token;
         }
@@ -87,7 +95,7 @@ export const useConnectionStore = defineStore('connection', () => {
             return channel;
         }
 
-        const response = await fetch(channelUrl.value, {
+        const response = await fetch(state.channelUrl, {
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -100,10 +108,10 @@ export const useConnectionStore = defineStore('connection', () => {
 
     async function getHistory()
     {
-        const response = await fetch(historyUrl.value + '?channel=' + channel.value, {
+        const response = await fetch(state.historyUrl + '?channel=' + state.channel, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.value,
+                'Authorization': 'Bearer ' + state.token,
             },
         });
 
@@ -113,25 +121,25 @@ export const useConnectionStore = defineStore('connection', () => {
 
     function sendMessage(message)
     {
-        useChatStore().add(message)
+        chat.add(message)
 
         setTimeout(() => {
             if (message.status === USER_MESSAGE_STATUSES.SENDING) {
                 message.status = USER_MESSAGE_STATUSES.WAITING;
-                useChatStore().add(message)
+                chat.add(message)
             }
         }, 2000);
 
-        fetch(sendUrl.value, {
+        fetch(state.sendUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.value,
+                'Authorization': 'Bearer ' + state.token,
             },
             body: JSON.stringify({
                 id: message.id,
                 text: message.text,
-                channel: channel.value,
+                channel: state.channel,
                 datetime: new Date().toISOString(),
             })
         }).then(async response => {
@@ -141,32 +149,36 @@ export const useConnectionStore = defineStore('connection', () => {
             }
 
             message.status = USER_MESSAGE_STATUSES.SENT;
-            useChatStore().add(message)
+            chat.add(message)
         }).catch(e => {
             message.status = USER_MESSAGE_STATUSES.FAILED;
-            useChatStore().add(message)
+            chat.add(message)
         });
     }
 
-    async function switchChannel(value) {
-        if (subscription.value) {
-            subscription.value.unsubscribe()
-            subscription.value = null
+    async function subscribe(value) {
+        state.centrifuge ?? await connect();
+
+        chat.isLoading = true;
+        if (state.subscription) {
+            state.subscription.unsubscribe()
+            state.centrifuge.removeSubscription(state.subscription)
+            state.subscription = null
         }
 
-        channel.value = value
+        state.channel = value ?? state.channel;
 
-        const chatStore = useChatStore()
         const history = await getHistory()
 
-        chatStore.init({ history })
+        chat.init({ history })
 
-        subscription.value = centrifuge.value.newSubscription(channel.value);
-        subscription.value.on('publication', ctx => {
-            useChatStore().add(ctx.data)
+        state.subscription = state.centrifuge.newSubscription(state.channel);
+        state.subscription.on('publication', ctx => {
+            chat.add(ctx.data)
         })
 
-        subscription.value.subscribe()
+        state.subscription.subscribe()
+        chat.isLoading = false;
     }
 
     function send(text) {
@@ -180,19 +192,19 @@ export const useConnectionStore = defineStore('connection', () => {
     }
 
     function disconnect() {
-        if (centrifuge.value) {
-            centrifuge.value.disconnect()
+        if (state.centrifuge) {
+            state.centrifuge.disconnect()
         }
-        isConnected.value = false
+        state.isConnected = false
     }
 
     return {
-        isConnected,
-        isReconnected,
+        isConnected: state.isConnected,
+        isReconnected: state.isReconnected,
         init,
         send,
         resend,
-        switchChannel,
+        subscribe,
         disconnect,
     }
 })

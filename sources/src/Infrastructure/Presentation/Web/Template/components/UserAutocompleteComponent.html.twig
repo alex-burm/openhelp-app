@@ -1,0 +1,16 @@
+<div class="dropdown__menu" {{ attributes.defaults(stimulus_controller('UserAutocomplete')) }}>
+    <div class="dropdown__menu-top">
+        <input type="text"
+               data-action="input->UserAutocomplete#onInput"
+               data-UserAutocomplete-target="input"
+               class="form__control form__control--sm"
+               placeholder="Type agent name...">
+    </div>
+    <div data-UserAutocomplete-target="results"
+         data-parent-element-query="{{ parentElementQuery|default('') }}"
+         data-parent-action-name="{{ parentActionName|default('') }}"
+         data-parent-action-params="{{ parentActionParams|default('{}') }}"
+         data-url="{{ path('autocomplete_fragment_route') }}"
+    >
+    </div>
+</div>

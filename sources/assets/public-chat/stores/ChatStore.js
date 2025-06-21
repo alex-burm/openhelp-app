@@ -3,7 +3,8 @@ import { computed, ref } from 'vue'
 import { USER_MESSAGE_STATUSES } from "@public/constants";
 
 export const useChatStore = defineStore('chat', () => {
-    const isLoading = ref(true);
+    const isLoading = ref(false);
+    const isStarted = ref(false);
     const items = ref([])
 
     function init({ history = [] } = {}) {
@@ -45,6 +46,7 @@ export const useChatStore = defineStore('chat', () => {
     }
 
     return {
+        isStarted,
         isLoading,
         items,
         init,

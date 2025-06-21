@@ -3,10 +3,11 @@
 
 namespace App\Application\Ticket\Dto;
 
+use App\Application\Ticket\ReadModel\TicketSummaryView;
 use IteratorAggregate;
 use ArrayIterator;
 
-class TicketWithUserCollectionDto implements IteratorAggregate
+class TicketSummaryCollectionDto implements IteratorAggregate
 {
     private array $items = [];
 
@@ -17,7 +18,7 @@ class TicketWithUserCollectionDto implements IteratorAggregate
         }
     }
 
-    public function add(TicketWithUserDto $view): void
+    public function add(TicketSummaryView $view): void
     {
         $this->items[] = $view;
     }

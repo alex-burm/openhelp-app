@@ -1,0 +1,40 @@
+<div class="dropdown dropdown--secondary" {{ attributes }}>
+    <a href="#" class="btn__priority btn__dropdown {{ item.ticketPriorityBackground }}">
+        <i class="{{ item.ticketPriorityIcon }}"></i>
+        <span class="btn__text">
+            {{ item.ticketPriorityLabel|capitalize }}
+        </span>
+    </a>
+    <div class="dropdown__menu">
+        <div class="dropdown__item">
+            <a {{ live_action('setPriority', {ticketId: item.ticketId, priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::HIGH')}) }}
+               class="btn__priority error {{ item.ticketPriority == constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::HIGH').value ? 'active' }}"
+            >
+                <i class="icon-high-priority"></i>
+                <span class="btn__text">
+                    High
+                </span>
+            </a>
+        </div>
+        <div class="dropdown__item">
+            <a {{ live_action('setPriority', {ticketId: item.ticketId, priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::MEDIUM')}) }}
+                class="btn__priority warning {{ item.ticketPriority == constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::MEDIUM').value ? 'active' }}"
+            >
+                <i class="icon-medium-priority"></i>
+                <span class="btn__text">
+                    Medium
+                </span>
+            </a>
+        </div>
+        <div class="dropdown__item">
+            <a {{ live_action('setPriority', {ticketId: item.ticketId, priority: constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::LOW')}) }}
+               class="btn__priority success {{ item.ticketPriority == constant('App\\Domain\\Ticket\\ValueObject\\TicketPriority::LOW').value ? 'active' }}"
+            >
+                <i class="icon-low-priority"></i>
+                <span class="btn__text">
+                    Low
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
