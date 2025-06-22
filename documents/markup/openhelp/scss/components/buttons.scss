@@ -96,6 +96,7 @@
 
     &__primary {
         align-items: center;
+        background-color: var(--white);
         border-radius: 8px;
         display: inline-flex;
         padding: 4px 6px;
@@ -162,6 +163,28 @@
             &:active {
                 background-color: var(--blue-active);
                 outline-color: var(--blue-active);
+            }
+        }
+
+        &--danger {
+        background-color: var(--red);
+            color: var(--white);
+            outline-color: var(--red);
+            gap: 0 4px;
+
+            i {
+                color: var(--white);
+            }
+            
+            &:hover {
+                background-color: var(--red);
+                outline-color: var(--red);
+            }
+
+            &.active,
+            &:active {
+                background-color: var(--red);
+                outline-color: var(--red);
             }
         }
     }

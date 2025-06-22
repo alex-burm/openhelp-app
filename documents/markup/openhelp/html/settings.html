@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>OpenHelp</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="overlay"></div>
+        <div class="sidebar">
+            <a class="logo" href="#">
+                <img src="../assets/img/logo.svg" alt="logo">
+            </a>
+            <nav class="nav">
+                <a class="nav__link" href="#">
+                    <i class="icon-dashboard"></i>
+                    Dashboard
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-requests"></i>
+                    Requests
+                    <span class="badge">2</span>
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-knowledge-base"></i>
+                    Knowledge base
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-agent"></i>
+                    Agents
+                </a>
+                <a class="nav__link active" href="#">
+                    <i class="icon-settings"></i>
+                    Settings
+                </a>
+                <div class="nav__bot">
+                    <a class="nav__link" href="#">
+                        <i class="icon-question"></i>
+                        Help & Info
+                    </a>
+                    <a class="nav__link" href="#">
+                        <i class="icon-exit"></i>
+                        Log out
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="layout">
+            <header class="header">
+                <h1 class="header__title">
+                    Settings
+                </h1>
+                <div class="header__right">
+                    <form action="#" class="header__form">
+                        <div class="form__row">
+                            <i class="icon-search"></i>
+                            <input type="text" class="form__control form__control--xl"
+                                placeholder="Search for anything in the system...">
+                            <button type="button" class="btn__clear-search">
+                                <i class="icon-cross"></i>
+                            </button>
+                        </div>
+                        <div class="search">
+                            <!-- <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div> -->
+                            <!-- <div class="empty">
+                                <div class="empty__inner">
+                                    <img src="../assets/img/no-search.svg" alt="no requests">
+                                    <span class="empty__text">
+                                        There are no search results for this query.
+                                    </span>
+                                </div>
+                            </div> -->
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Customers
+                                    </h2>
+                                    <span class="search__result">
+                                        1 result
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="avatar">
+                                            <span class="avatar__name">
+                                                HW
+                                            </span>
+                                            <i class="icon-profile-customer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello Wilson
+                                        </span>
+                                        <span class="item__text">
+                                            hellowilson@gmail.com
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Requests
+                                    </h2>
+                                    <span class="search__result">
+                                        3 results
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-chat"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I just wanted to clarify few
+                                        </span>
+                                        <span class="item__text">
+                                            Gerd Muller • 50m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-medium-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-form"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello! It seems that I found a lot
+                                        </span>
+                                        <span class="item__text">
+                                            Marta Fix • 44m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-low-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-mail"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I don’t know what to do in
+                                        </span>
+                                        <span class="item__text">
+                                            John Jones • 1h ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-high-priority"></i>
+                                        <i class="icon-agent"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="avatar">
+                        <span class="avatar__name">
+                            Me
+                        </span>
+                        <i class="icon-profile-agent"></i>
+                    </div>
+                </div>
+            </header>
+            <main class="main">
+                <div class="cards cards--secondary">
+                    <div class="cards__above">
+                        <h2 class="cards__title">
+                            There are no categories in your knowledge base yet.
+                        </h2>
+                    </div>
+                    <div class="cards__items">
+                        <div class="cards__add">
+                            <span class="cards__add-title">
+                                There are no categories in your knowledge base yet.
+                            </span>
+                            <div class="cards__add-actions">
+                                <a href="#" class="btn__primary btn__primary--xl">
+                                    <i class="icon-plus"></i>
+                                    <span class="btn__text">
+                                        Add category
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cards cards--secondary">
+                    <div class="cards__above">
+                        <h2 class="cards__title">
+                            Knowledge base categories
+                        </h2>
+                        <a href="#" class="btn__primary">
+                            <i class="icon-plus"></i>
+                            <span class="btn__text">
+                                Add
+                            </span>
+                        </a>
+                    </div>
+                    <div class="cards__items">
+                        <div class="card card--third">                      
+                            <div class="card__inner">
+                                <div class="card__inner-top">
+                                    <h2 class="card__text">
+                                        Credentials
+                                    </h2>
+                                    <span class="card__under">
+                                        23 articles inside
+                                    </span>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="#" class="btn__primary btn__primary--xl">
+                                        <i class="icon-edit-secondary"></i>
+                                        <span class="btn__text">
+                                            Edit
+                                        </span>
+                                    </a>
+                                    <a href="#" class="btn__primary btn__primary--xl">
+                                        <i class="icon-trash"></i>
+                                    </a>
+                                </div>
+                            </div>                       
+                        </div>
+                        <div class="card card--third">                      
+                            <div class="card__inner">
+                                <div class="card__inner-top">
+                                    <h2 class="card__text">
+                                        Onboarding
+                                    </h2>
+                                    <span class="card__under">
+                                        5 articles inside
+                                    </span>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="#" class="btn__primary btn__primary--xl">
+                                        <i class="icon-edit-secondary"></i>
+                                        <span class="btn__text">
+                                            Edit
+                                        </span>
+                                    </a>
+                                    <a href="#" class="btn__primary btn__primary--xl">
+                                        <i class="icon-trash"></i>
+                                    </a>
+                                </div>
+                            </div>                       
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Modal add category -->
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__inner">
+                    <div class="modal__top">
+                        <div class="modal__top-inner">
+                            <h2 class="modal__title">
+                                Add category
+                            </h2>
+                            <a href="#" class="btn__primary modal__close">
+                                <i class="icon-cross"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal__body">
+                        <div class="modal__form">
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label for="credentials" class="form__label">Category name</label>
+                                    <input id="credentials" type="text" class="form__control" placeholder="e.g. Credentials">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal__actions">
+                        <a href="#" class="btn__primary btn__primary--xl btn__primary--blue">
+                            Add category
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal delete category -->
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__inner">
+                    <div class="modal__top">
+                        <div class="modal__top-inner">
+                            <a href="#" class="btn__primary modal__close">
+                                <i class="icon-cross"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="empty">
+                        <div class="empty__inner">
+                            <img src="../assets/img/delete.svg" alt="no requests">
+                            <h2 class="empty__title">
+                                Are you sure you want to delete the “Category name” category?
+                            </h2>
+                            <span class="empty__text">
+                                All 23 articles will be assigned to the “Popular” category.
+                            </span>
+                            <div class="empty__actions">
+                                <a href="#" class="btn__primary btn__primary--xl">
+                                    <span class="btn__text">
+                                        Cancel
+                                    </span>
+                                </a>
+                                <a href="#" class="btn__primary btn__primary--xl btn__primary--danger">
+                                    Add category
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/main.js" type="text/javascript"></script>
+</body>
+
+</html>

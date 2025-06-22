@@ -100,11 +100,11 @@
         display: flex;
         flex: 1;
         margin-left: 8px;
+        gap: 0 8px;
     }
 
     &__form {
         position: relative;
-        margin-left: 8px;
         max-width: 468px;
         width: 100%;
         z-index: 100;
@@ -423,14 +423,13 @@
 //Empty
 .empty {
     $self: &;
-    display: flex;
-    justify-content: center;
 
     &__inner {
         align-items: center;
         display: flex;
         flex-direction: column;
         max-width: 303px;
+        margin: 0 auto;
 
         img {
             margin-bottom: 32px;
@@ -452,6 +451,7 @@
         display: flex;
         justify-content: center;
         margin-top: 32px;
+        gap: 0 8px;
     }
 
     &__title {
@@ -511,6 +511,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    margin: 0 auto;
     height: 96px;
     width: 96px;
 
@@ -806,5 +807,51 @@
                 color: var(--hard-grey)
             }
         }
+    }
+}
+
+//Profile
+.profile {
+    margin: 8px auto 0;
+    max-width: 704px;
+
+    &__top {
+        align-items: center;
+        border-bottom: 1px solid var(--soft-grey);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+
+        img {
+            margin-bottom: 8px;
+        }
+    }
+
+    &__name {
+        font-size: var(--text-size-x);
+        font-weight: var(--font-weight-semi-bold);
+        line-height: var(--line-height-m);
+        position: relative;
+
+        i {
+            opacity: 0;
+            position: absolute;
+            top: -12px;
+            transition: opacity .3s ease;
+        }
+
+        &:hover {
+            i {
+                opacity: 1;
+                transition: opacity .3s ease;
+            }
+        }
+    }
+
+    &__text {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
     }
 }
