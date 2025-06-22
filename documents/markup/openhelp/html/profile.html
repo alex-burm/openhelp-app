@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>OpenHelp</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="overlay"></div>
+        <div class="sidebar">
+            <a class="logo" href="#">
+                <img src="../assets/img/logo.svg" alt="logo">
+            </a>
+            <nav class="nav">
+                <a class="nav__link" href="#">
+                    <i class="icon-dashboard"></i>
+                    Dashboard
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-requests"></i>
+                    Requests
+                    <span class="badge">2</span>
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-knowledge-base"></i>
+                    Knowledge base
+                </a>
+                <a class="nav__link" href="#">
+                    <i class="icon-agent"></i>
+                    Agents
+                </a>
+                <a class="nav__link active" href="#">
+                    <i class="icon-settings"></i>
+                    Settings
+                </a>
+                <div class="nav__bot">
+                    <a class="nav__link" href="#">
+                        <i class="icon-question"></i>
+                        Help & Info
+                    </a>
+                    <a class="nav__link" href="#">
+                        <i class="icon-exit"></i>
+                        Log out
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="layout">
+            <header class="header">
+                <h1 class="header__title">
+                    Profile
+                </h1>
+                <div class="header__right">
+                    <form action="#" class="header__form">
+                        <div class="form__row">
+                            <i class="icon-search"></i>
+                            <input type="text" class="form__control form__control--xl"
+                                placeholder="Search for anything in the system...">
+                            <button type="button" class="btn__clear-search">
+                                <i class="icon-cross"></i>
+                            </button>
+                        </div>
+                        <div class="search">
+                            <!-- <div class="loader">
+                                <span class="loader__circle"></span>
+                            </div> -->
+                            <!-- <div class="empty">
+                                <div class="empty__inner">
+                                    <img src="../assets/img/no-search.svg" alt="no requests">
+                                    <span class="empty__text">
+                                        There are no search results for this query.
+                                    </span>
+                                </div>
+                            </div> -->
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Customers
+                                    </h2>
+                                    <span class="search__result">
+                                        1 result
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="avatar">
+                                            <span class="avatar__name">
+                                                HW
+                                            </span>
+                                            <i class="icon-profile-customer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello Wilson
+                                        </span>
+                                        <span class="item__text">
+                                            hellowilson@gmail.com
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="search__box">
+                                <div class="search__top">
+                                    <h2 class="search__title">
+                                        Requests
+                                    </h2>
+                                    <span class="search__result">
+                                        3 results
+                                    </span>
+                                </div>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-chat"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I just wanted to clarify few
+                                        </span>
+                                        <span class="item__text">
+                                            Gerd Muller • 50m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-medium-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-form"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello! It seems that I found a lot
+                                        </span>
+                                        <span class="item__text">
+                                            Marta Fix • 44m ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-low-priority"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="item">
+                                    <div class="item__left">
+                                        <div class="item__decoration">
+                                            <i class="icon-mail"></i>
+                                        </div>
+                                    </div>
+                                    <div class="item__inner">
+                                        <span class="item__heading">
+                                            Hello, I don’t know what to do in
+                                        </span>
+                                        <span class="item__text">
+                                            John Jones • 1h ago
+                                        </span>
+                                    </div>
+                                    <div class="item__right">
+                                        <i class="icon-high-priority"></i>
+                                        <i class="icon-agent"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="avatar">
+                        <span class="avatar__name">
+                            Me
+                        </span>
+                        <i class="icon-profile-agent"></i>
+                    </div>
+                </div>
+            </header>
+            <main class="main">
+                <section class="profile">
+                    <div class="profile__top">
+                        <img src="../assets/img/profile-logo.svg" alt="profile logo">
+                        <a href="#" class="profile__name">
+                            Yevhenii Riabukha
+                            <i class="icon-edit-secondary"></i>
+                        </a>
+                        <span class="profile__text">
+                            You
+                        </span>
+                    </div>
+                    <div class="cards cards--secondary">
+                        <div class="cards__above">
+                            <h2 class="cards__title">
+                                Credentials
+                            </h2>
+                        </div>
+                        <div class="cards__items">
+                            <div class="card card--third">                      
+                                <div class="card__inner">
+                                    <div class="card__inner-top">
+                                        <h2 class="card__text">
+                                            E-mail
+                                        </h2>
+                                        <span class="card__under">
+                                            user@example.com
+                                        </span>
+                                    </div>
+                                    <div class="card__actions">
+                                        <a href="#" class="btn__primary btn__primary--xl">
+                                            <i class="icon-edit-secondary"></i>
+                                            <span class="btn__text">
+                                                Edit
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>                       
+                            </div>
+                            <div class="card card--third">                      
+                                <div class="card__inner">
+                                    <div class="card__inner-top">
+                                        <h2 class="card__text">
+                                            Password
+                                        </h2>
+                                        <span class="card__under">
+                                        ********
+                                        </span>
+                                    </div>
+                                    <div class="card__actions">
+                                        <a href="#" class="btn__primary btn__primary--xl">
+                                            <i class="icon-edit-secondary"></i>
+                                            <span class="btn__text">
+                                                Edit
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>                       
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            <!-- Modal edit name -->
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__inner">
+                    <div class="modal__top">
+                        <div class="modal__top-inner">
+                            <h2 class="modal__title">
+                                Edit your name
+                            </h2>
+                            <a href="#" class="btn__primary modal__close">
+                                <i class="icon-cross"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal__body">
+                        <div class="modal__form">
+                            <div class="form__row form__cols">
+                                <div class="form__group">
+                                    <label for="name" class="form__label">First name</label>
+                                    <input id="name" type="text" class="form__control" value="Yevhenii">
+                                </div>
+                                <div class="form__group">
+                                    <label for="last" class="form__label">Last name</label>
+                                    <input id="last" type="text" class="form__control" value="Riabukha">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal__actions">
+                        <a href="#" class="btn__primary btn__primary--xl btn__primary--blue">
+                            Save
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal edit password -->
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__inner">
+                    <div class="modal__top">
+                        <div class="modal__top-inner">
+                            <h2 class="modal__title">
+                                Edit your password
+                            </h2>
+                            <a href="#" class="btn__primary modal__close">
+                                <i class="icon-cross"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal__body">
+                        <div class="modal__form">
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label" for="password">Password</label>
+                                    <input id="password" type="text" class="form__control" value="parol">
+                                    <button type="button" class="btn__primary show">
+                                        <i class="icon-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="state">
+                                <div class="state__item success">
+                                    <span class="state__icon"></span>
+                                    <span class="state__text">
+                                        At least 1 lower-case letter
+                                    </span>
+                                </div>
+                                <div class="state__item success">
+                                    <span class="state__icon"></span>
+                                    <span class="state__text">
+                                        At least 1 upper-case letter
+                                    </span>
+                                </div>
+                                <div class="state__item success">
+                                    <span class="state__icon"></span>
+                                    <span class="state__text">
+                                        At least 1 number or special character
+                                    </span>
+                                </div>
+                                <div class="state__item success">
+                                    <span class="state__icon"></span>
+                                    <span class="state__text">
+                                        At least 8 total characters
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal__actions">
+                        <a href="#" class="btn__primary btn__primary--xl btn__primary--blue">
+                            Save
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal edit email -->
+            <div class="modal modal--visible">
+                <div class="modal__overlay"></div>
+                <div class="modal__inner">
+                    <div class="modal__top">
+                        <div class="modal__top-inner">
+                            <h2 class="modal__title">
+                                Edit your e-mail
+                            </h2>
+                            <a href="#" class="btn__primary modal__close">
+                                <i class="icon-cross"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal__body">
+                        <div class="modal__form">
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label" for="password">E-mail </label>
+                                    <input id="mail" type="email" class="form__control" value="user@example.com">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal__actions">
+                        <a href="#" class="btn__primary btn__primary--xl btn__primary--blue">
+                            Save
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/main.js" type="text/javascript"></script>
+</body>
+
+</html>

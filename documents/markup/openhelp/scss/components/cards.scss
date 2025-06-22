@@ -4,6 +4,14 @@
     flex-direction: column;
     width: 704px;
 
+    &__above {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        width: 100%;
+    }
+
     &__top {
         display: flex;
         flex-direction: column;
@@ -23,6 +31,40 @@
         flex-wrap: wrap;
         padding: 8px;
         gap: 8px;
+    }
+
+    &__add {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        padding: 56px;
+        gap: 32px 0;
+        width: 100%;
+    }
+
+    &__add-title {
+        color: var(--hard-grey);
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+        text-align: center;
+    }
+
+    &--secondary {
+        cursor: pointer;
+        margin: 8px auto 0;
+        width: 704px;
+
+        .card {
+            width: 100%;
+        }
+
+        .cards__items {
+            width: 100%;
+        }
+
+        .card__inner-top {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -109,6 +151,22 @@
         }
     }
 
+    &--third {
+        #{$self}__inner {
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        &:hover {
+            #{$self}__actions {
+                opacity: 1;
+                visibility: visible;
+                transition: opacity .3s ease, visibility .3s ease;
+            }
+        }
+    }
+
     &__list {
         margin-left: 16px;
         list-style: decimal;
@@ -118,5 +176,22 @@
         color: var(--hard-grey);
         font-size: var(--text-size-m);
         line-height: var(--line-height-m);
+    }
+
+    &__under {
+        color: var(--hard-grey);
+        display: inline-block;
+        margin-top: 4px;
+        font-size: var(--text-size-m);
+        line-height: var(--line-height-m);
+    }
+
+    &__actions {
+        align-items: center;
+        display: flex;
+        gap: 0 8px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .3s ease, visibility .3s ease;
     }
 }

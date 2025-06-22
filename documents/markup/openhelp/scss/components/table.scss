@@ -41,7 +41,25 @@
 
         a {
             display: flex;
+            flex-direction: column;
             margin-left: 4px;
+
+            i {
+                font-size: 12px;
+                width: 24px;
+            }
+
+            &.asc {
+                .icon-sort-down {
+                    color: var(--grey);
+                }
+            }
+
+            &.desc {
+                .icon-sort-up {
+                    color: var(--grey);
+                }
+            }
         }
     }
 

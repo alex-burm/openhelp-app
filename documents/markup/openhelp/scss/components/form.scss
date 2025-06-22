@@ -44,6 +44,24 @@
             }
         }
         
+        &#password {
+            padding-right: 50px;
+
+            & + .btn__primary {
+                position: absolute;
+                right: 11px;
+                top: 44px;
+
+                &.show {
+                    i {
+                        &::before {
+                            content: "\e92e";
+                        }
+                    }
+                }
+            }
+        }
+
         @at-root {
             textarea#{&} {
                 resize: none;
