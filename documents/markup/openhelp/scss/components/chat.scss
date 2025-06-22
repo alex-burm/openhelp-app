@@ -8,15 +8,26 @@
     height: 100%;
     width: 100%;
 
-    .empty {
-        margin: auto;
-    }
-    
-    &__loading {
+    & > div {
         display: flex;
         flex-direction: column;
         height: 100%;
         width: 100%;
+    }
+
+    .empty {
+        display: none;
+        margin: auto;
+    }
+    
+    &__loading {
+        .empty {
+            display: block;
+        }
+        
+        .chat__body {
+            display: none;
+        }
     }
 
     &__body {
