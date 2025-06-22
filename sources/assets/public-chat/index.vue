@@ -14,10 +14,10 @@ import { useChatStore } from '@public/stores/ChatStore.js'
 const chatStore = useChatStore()
 
 watch(() => chatStore.isLoading, async (isLoading) => {
-    if (!isLoading) {
+    if (!isLoading && chatStore.isStarted) {
         await nextTick()
-        const event = new CustomEvent('chat:ready')
-        window.dispatchEvent(event)
+
+        setTimeout(() => window.dispatchEvent(new CustomEvent('chat:ready')), 500)
     }
 })
 
@@ -31,28 +31,18 @@ watch(container, () => {
 
 <template>
     <template v-if="chatStore.isStarted">
-        <template v-if="chatStore.isLoading">
-            <Loading/>
-        </template>
+        <div :class="{ 'chat__loading': chatStore.isLoading }">
+            <Loading class="chat__loading" />
 
-        <template v-else>
-            <div v-if="customHeaderElement" ref="container" />
-            <div v-else-if="customHeaderHtml" v-html="customHeaderHtml" />
-            <DefaultHeader v-else />
+            <div class="chat__body">
+                <div v-if="customHeaderElement" ref="container" />
+                <div v-else-if="customHeaderHtml" v-html="customHeaderHtml" />
+                <DefaultHeader v-else />
 
-            <ChatItemList />
-            <ConnectionError />
-            <MessageInput />
-        </template>
-<!--        -->
-<!--        <template v-else>-->
-<!--            <div v-if="customHeaderHtml" v-html="customHeaderHtml" />-->
-<!--            <template v-else>-->
-<!--                <DefaultHeader />-->
-<!--            </template>-->
-<!--            <ChatItemList />-->
-<!--            <ConnectionError />-->
-<!--            <MessageInput/>-->
-<!--        </template>-->
+                <ChatItemList />
+                <ConnectionError />
+                <MessageInput />
+            </div>
+        </div>
     </template>
 </template>

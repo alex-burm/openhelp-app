@@ -22,6 +22,9 @@ export default class extends Controller {
     }
 
     async save() {
-        await this.component.action('save')
+        const ticketTitle = this.inputTarget.value.trim()
+        await this.component.action('save', {
+            ticketTitle
+        })
     }
 }

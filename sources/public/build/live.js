@@ -3694,9 +3694,11 @@ class qs extends k {
   }
   async open(e) {
     e.preventDefault();
-    const { ticketId: t } = e.currentTarget.dataset, s = await re(document.querySelector("#public-chat-header"));
+    const { ticketId: t, url: s } = e.currentTarget.dataset;
+    window.history.pushState({ path: s }, "", s);
+    const n = await re(document.querySelector("#public-chat-header"));
     this.component.action("details", { ticketId: t }).then(() => {
-      OpenHelpChat.subscribe(t), console.log("update header?"), s.set("ticketId", t), s.render();
+      OpenHelpChat.subscribe(t), n.set("ticketId", t), n.render();
     });
   }
 }
@@ -3776,7 +3778,10 @@ class Re extends k {
     this.debouncedSave();
   }
   async save() {
-    await this.component.action("save");
+    const e = this.inputTarget.value.trim();
+    await this.component.action("save", {
+      ticketTitle: e
+    });
   }
 }
 Y(Re, "targets", ["input"]);

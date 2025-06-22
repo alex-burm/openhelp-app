@@ -46,7 +46,16 @@
         {% endif %}
 
         window.addEventListener('chat:ready', () => {
-            handleDropdown(document.querySelector('.chat__header'))
+            console.log('chat:ready')
+            handleDropdown(document.querySelector('#public-chat-header'))
         })
     </script>
+
+    <style>
+        .chat__loading { display: none; }
+        .chat__body      { display: block; }
+
+        .chat--loading .chat__loading { display: block; }
+        .chat--loading .chat__body      { display: none; }
+    </style>
 {% endblock %}

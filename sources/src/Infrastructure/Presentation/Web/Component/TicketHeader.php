@@ -5,6 +5,7 @@ namespace App\Infrastructure\Presentation\Web\Component;
 use App\Application\Ticket\Dto\TicketSummaryCollectionDto;
 use App\Application\Ticket\ReadModel\RecentTicketViewRepository;
 use App\Application\Ticket\ReadModel\TicketSummaryView;
+use App\Application\Ticket\Service\TicketChangeTitleService;
 use App\Application\Ticket\Service\TicketSummaryService;
 use App\Domain\Ticket\Repository\TicketRepositoryInterface;
 use App\Domain\Ticket\ValueObject\TicketPriority;
@@ -40,63 +41,32 @@ class TicketHeader
         protected LoggerInterface $logger,
         protected TicketSummaryService $summaryService,
         protected TicketRepositoryInterface $ticketRepository,
+        protected TicketChangeTitleService $ticketChangeTitleService,
     ) {
-    }
-
-    #[PostMount]
-    public function postHydrate(): void
-    {
-        if (\is_null($this->item) &&\strlen($this->ticketId) > 0) {
-            $this->item = $this->summaryService->getSummary(Uuid::fromRfc4122($this->ticketId));
-
-            $this->ticketTitle = $this->item->ticketTitle;
-        }
     }
 
     #[PreReRender]
     public  function preReRender(): void
     {
         $this->ensureItem();
-
-        $this->logger->debug('TICKET-SAVE3 rerender ' . $this->ticketId);
-
-        $this->ticketTitle = $this->item->ticketTitle;
     }
 
     #[LiveAction]
     public function save(
-//        #[LiveArg] string $ticketTitle
+        #[LiveArg] string $ticketTitle
     ): void {
-        $this->logger->debug('TICKET-SAVE2 saving: ' . $this->ticketTitle, [
-            'id' => $this->ticketId,
-        ]);
-
-//        $ticket = $this->ticketRepository->findOneById(Uuid::fromRfc4122($this->ticketId));
-//        if ($this->ticketTitle !== $this->item->ticketTitle) {
-//
-//            $ticket->setTitle($this->ticketTitle);
-//
-//            $this->ticketRepository->save($ticket);
-//        }
-
+        $this->ticketChangeTitleService
+            ->process(Uuid::fromRfc4122($this->ticketId), $ticketTitle);
     }
-
-//    #[LiveListener('ticketDetails')]
-//    public function listen(
-//        #[LiveArg] string $ticketId
-//    ) {
-//        $this->logger->debug('TICKET-SAVE listening ' . $ticketId);
-//    }
-
 
     #[PostMount]
     #[PostHydrate]
     public function ensureItem(): void
     {
-        $this->logger->debug('TICKET-SAVE1 ' . $this->ticketId);
         if (\is_null($this->ticketId)) {
             return;
         }
         $this->item = $this->summaryService->getSummary(Uuid::fromRfc4122($this->ticketId));
+        $this->ticketTitle = $this->item->ticketTitle;
     }
 }

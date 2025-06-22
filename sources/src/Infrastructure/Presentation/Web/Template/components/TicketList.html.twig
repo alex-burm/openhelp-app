@@ -2,6 +2,7 @@
     <a href="javascript://"
        class="item {{ selected == item.ticketId ? 'active' }}"
        data-ticket-id="{{ item.ticketId }}"
+       data-url="{{ path('manager_ticket_index', {ticketId: item.ticketId}) }}"
        data-action="click->TicketList#open"
     >
         <div class="item__left">
@@ -37,6 +38,20 @@
     </div>
     {% if this.search is empty %}
         <div class="requests__box">
+            {#
+                <div class="empty">
+                    <div class="empty__inner">
+                        <img src="{{ asset('assets/img/no-search.svg') }}" alt="no requests">
+                        <span class="empty__text">
+                            There are no search results for this query.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="loader">
+                    <span class="loader__circle"></span>
+                </div>
+            #}
             <div class="tabs">
                 <a data-action="live#update"
                    data-model="status"

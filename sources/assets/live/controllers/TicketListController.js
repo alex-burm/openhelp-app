@@ -8,13 +8,14 @@ export default class extends Controller {
 
     async open (event) {
         event.preventDefault()
-        const { ticketId } = event.currentTarget.dataset
+        const { ticketId, url } = event.currentTarget.dataset
+
+        window.history.pushState({ path: url }, '', url)
 
         const header = await getComponent(document.querySelector('#public-chat-header'))
         this.component.action('details', { ticketId }).then(() => {
             OpenHelpChat.subscribe(ticketId)
 
-            console.log('update header?');
             header.set('ticketId', ticketId)
             header.render();
         })

@@ -10,18 +10,18 @@
                 type="text"
                 class="form__control"
                 value="{{ ticketTitle }}"
-                data-model="ticketTitle"
                 data-action="input->TicketHeader#onInput"
-                data-ticket-title-target="input"
+                data-TicketHeader-target="input"
             >
             <span class="item__text">{{ item.customerName|default('Customer') }}</span>
         </div>
     </div>
 
+    {% if item is not null %}
     <div class="chat__header-actions">
-        {{ component('RecentTicketStatus', { item, isSimpleView: true, key: 'status-' ~ item.ticketId }) }}
-        {{ component('RecentTicketPriority', { item, isSimpleView: true, key: 'priority-' ~ item.ticketId }) }}
-        {{ component('RecentTicketAssignee', { item, isSimpleView: true, key: 'agent-' ~ item.ticketId }) }}
+        {{ component('TicketStatus', { item, isSimpleView: true, key: 'status-' ~ item.ticketId }) }}
+        {{ component('TicketPriority', { item, isSimpleView: true, key: 'priority-' ~ item.ticketId }) }}
+        {{ component('TicketAssignee', { item, isSimpleView: true, key: 'agent-' ~ item.ticketId }) }}
 
         <div class="dropdown">
             <a href="#" class="btn__primary btn__dropdown">
@@ -52,4 +52,5 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>

@@ -4,39 +4,41 @@ namespace App\Infrastructure\Presentation\Web\Component;
 
 use App\Application\Ticket\ReadModel\TicketSummaryView;
 use App\Application\Ticket\Service\RecentTicketFilterService;
-use App\Application\Ticket\Service\TicketChangePriorityService;
+use App\Application\Ticket\Service\TicketChangeStatusService;
 use App\Application\Ticket\Service\TicketSummaryService;
-use App\Domain\Ticket\ValueObject\TicketPriority;
+use App\Domain\Ticket\ValueObject\TicketStatus as TicketStatusVO;
 use Symfony\Component\Uid\Uuid;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-class RecentTicketPriority
+class TicketStatus
 {
     use DefaultActionTrait;
 
     public TicketSummaryView $item;
 
+    #[LiveProp(writable: true)]
     public bool $isSimpleView = false;
 
     public function __construct(
         protected RecentTicketFilterService $recentTicketFilterService,
-        protected TicketChangePriorityService $ticketChangePriorityService,
-        protected TicketSummaryService $ticketSummaryService,
+        protected TicketChangeStatusService $ticketChangeStatusService,
+        protected TicketSummaryService      $ticketSummaryService,
     ) {
     }
 
     #[LiveAction]
-    public function setPriority(
+    public function setStatus(
         #[LiveArg] Uuid $ticketId,
-        #[LiveArg] TicketPriority $priority
+        #[LiveArg] TicketStatusVO $status
     ): void {
-        $this->ticketChangePriorityService->process($ticketId, $priority);
+        $this->ticketChangeStatusService->process($ticketId, $status);
 
-        // refresh summary for view
+        // update summary
         $this->item = $this->ticketSummaryService->getSummary($ticketId);
 
         // update recent
