@@ -65,28 +65,10 @@
             &:not(:first-child) {
                 margin-top: 16px;
             }
-
-            .btn__primary {
-                position: absolute;
-                right: 11px;
-                top: 44px;
-
-                &.show {
-                    i {
-                        &::before {
-                            content: "\e92e";
-                        }
-                    }
-                }
-            }
         }
 
         &__row-actions {
             margin-top: 16px;
-        }
-        
-        &__control#password {
-            padding-right: 50px;
         }
     }
 

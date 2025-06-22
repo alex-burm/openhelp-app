@@ -54,7 +54,7 @@ const addOrRemoveSearch = (method) => {
 }
 
 //Login
-document.querySelector('.login .form__row .btn__primary')?.addEventListener('click', function() {
+document.querySelector('#password + .btn__primary')?.addEventListener('click', function() {
     const input = document.querySelector('#password');
     
     if (input.getAttribute('type') === 'password') {

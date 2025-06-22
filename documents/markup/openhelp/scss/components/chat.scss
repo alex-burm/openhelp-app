@@ -12,12 +12,20 @@
         margin: auto;
     }
 
+    &__body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
     &__header {
         align-items: center;
         display: flex;
         padding: 16px 16px 16px 8px;
         background-color: var(--white);
         border-radius: 8px;
+        height: 80px;
 
         .item {
             flex: 1;
