@@ -11867,14 +11867,14 @@ const Jg = /* @__PURE__ */ Ni(Gg, [["render", Yg]]), Zg = { class: "chat__body" 
   setup(e) {
     const t = qt("customHeaderHtml", ""), n = qt("customHeaderElement", null), s = Ke(null), r = cs();
     return Yt(() => r.isLoading, async (i) => {
-      !i && r.isStarted && (await _n(), setTimeout(() => window.dispatchEvent(new CustomEvent("chat:ready")), 500));
+      !i && r.isStarted && (await _n(), window.dispatchEvent(new CustomEvent("chat:ready")));
     }), Yt(s, () => {
       s.value && (s.value.appendChild(n), console.log("Header moved into container"));
     }), (i, o) => ot(r).isStarted ? (fe(), ve("div", {
       key: 0,
       class: pn({ chat__loading: ot(r).isLoading })
     }, [
-      Ve(Jg, { class: "chat__loading" }),
+      Ve(Jg),
       ie("div", Zg, [
         ot(n) ? (fe(), ve("div", {
           key: 0,

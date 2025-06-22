@@ -17,7 +17,7 @@ watch(() => chatStore.isLoading, async (isLoading) => {
     if (!isLoading && chatStore.isStarted) {
         await nextTick()
 
-        setTimeout(() => window.dispatchEvent(new CustomEvent('chat:ready')), 500)
+        window.dispatchEvent(new CustomEvent('chat:ready'));
     }
 })
 
@@ -32,7 +32,7 @@ watch(container, () => {
 <template>
     <template v-if="chatStore.isStarted">
         <div :class="{ 'chat__loading': chatStore.isLoading }">
-            <Loading class="chat__loading" />
+            <Loading />
 
             <div class="chat__body">
                 <div v-if="customHeaderElement" ref="container" />

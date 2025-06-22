@@ -13,7 +13,7 @@
                 }) }}
             </div>
             <div class="requests__right">
-                <div id="app" class="hidden"></div>
+                <div id="app"></div>
             </div>
         </div>
     </section>
@@ -53,9 +53,9 @@
 
     <style>
         .chat__loading { display: none; }
-        .chat__body      { display: block; }
+        .chat__body      { display: flex; }
 
-        .chat--loading .chat__loading { display: block; }
+        .chat--loading .chat__loading { display: flex; }
         .chat--loading .chat__body      { display: none; }
     </style>
 {% endblock %}
