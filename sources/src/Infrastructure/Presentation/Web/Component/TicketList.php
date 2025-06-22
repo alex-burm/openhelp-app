@@ -12,8 +12,10 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\Attribute\PostHydrate;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 
 #[AsLiveComponent]
 class TicketList
@@ -54,5 +56,16 @@ class TicketList
 
         // save recent viewed
         $this->recentTicketRepository->saveRecent($ticketSummary);
+    }
+
+    #[PostMount]
+    public function ensureStatus(): void
+    {
+        if (false === \is_null($this->selected)) {
+            $ticket = $this->ticketRepository
+                ->findOneById(Uuid::fromRfc4122($this->selected));
+
+            $this->status = $ticket->getStatus()->value;
+        }
     }
 }

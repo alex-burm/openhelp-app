@@ -1,4 +1,4 @@
-<div class="chat__header" id="public-chat-header" {{ attributes }}>
+<div class="chat__header" id="public-chat-header" {{ attributes.defaults(stimulus_controller('TicketHeader')) }}>
     <div class="item">
         <div class="item__status">
             <div class="item__decoration">
@@ -9,125 +9,34 @@
             <input
                 type="text"
                 class="form__control"
-                name="name"
-                data-model="debounce(500)|name"
+                value="{{ ticketTitle }}"
+                data-model="ticketTitle"
+                data-action="input->TicketHeader#onInput"
+                data-ticket-title-target="input"
             >
-            <span class="item__text">Customer</span>
+            <span class="item__text">{{ item.customerName|default('Customer') }}</span>
         </div>
     </div>
+
     <div class="chat__header-actions">
-        <div class="dropdown dropdown--secondary">
-            <a href="#" class="btn__status btn__dropdown error">
-                <i class="icon-status-circle-sm"></i>
-                <span class="tooltip">Change status</span>
-            </a>
-            <div class="dropdown__menu">
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority error active">
-                        <i class="icon-high-priority"></i>
-                        <span class="btn__text">
-                            High
-                        </span>
-                    </a>
-                </div>
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority warning">
-                        <i class="icon-medium-priority"></i>
-                        <span class="btn__text">
-                            Medium
-                        </span>
-                    </a>
-                </div>
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority success">
-                        <i class="icon-low-priority"></i>
-                        <span class="btn__text">
-                            Low
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="dropdown dropdown--secondary">
-            <a href="#" class="btn__priority btn__dropdown error">
-                <i class="icon-high-priority"></i>
-                <span class="tooltip">
-                    Change priority
-                </span>
-            </a>
-            <div class="dropdown__menu">
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority error active">
-                        <i class="icon-high-priority"></i>
-                        <span class="btn__text">
-                            High
-                        </span>
-                    </a>
-                </div>
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority warning">
-                        <i class="icon-medium-priority"></i>
-                        <span class="btn__text">
-                                Medium
-                            </span>
-                    </a>
-                </div>
-                <div class="dropdown__item">
-                    <a href="#" class="btn__priority success">
-                        <i class="icon-low-priority"></i>
-                        <span class="btn__text">
-                                Low
-                            </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="avatar">
-            <span class="avatar__name">
-                Me
-            </span>
-            <i class="icon-profile-agent"></i>
-        </div>
-        <div class="dropdown dropdown--search">
-            <a href="#" class="btn__primary btn__dropdown">
-                <i class="icon-assign-agent"></i>
-                <span class="tooltip">
-                        Assign agent
-                    </span>
-            </a>
-            <div class="dropdown__menu">
-                <div class="dropdown__menu-top">
-                    <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
-                </div>
-                <div class="dropdown__menu-bot">
-                    <div class="dropdown__item">
-                        <a href="#" class="btn__primary">
-                            <i class="icon-agent"></i>
-                            <span class="btn__text">
-                                    Victor Black
-                                </span>
-                        </a>
-                    </div>
-                    <span class="dropdown__item-empty">
-                            There are no matching agents.
-                        </span>
-                </div>
-            </div>
-        </div>
+        {{ component('RecentTicketStatus', { item, isSimpleView: true, key: 'status-' ~ item.ticketId }) }}
+        {{ component('RecentTicketPriority', { item, isSimpleView: true, key: 'priority-' ~ item.ticketId }) }}
+        {{ component('RecentTicketAssignee', { item, isSimpleView: true, key: 'agent-' ~ item.ticketId }) }}
+
         <div class="dropdown">
             <a href="#" class="btn__primary btn__dropdown">
                 <i class="icon-dots"></i>
                 <span class="tooltip">
-                        More
-                    </span>
+                    More
+                </span>
             </a>
             <div class="dropdown__menu">
                 <div class="dropdown__item">
                     <a href="#" class="btn__primary">
                         <i class="icon-customer-details"></i>
                         <span class="btn__text">
-                                View customer details
-                            </span>
+                            View customer details
+                        </span>
                     </a>
                 </div>
                 <div class="dropdown__menu-bot">
@@ -135,8 +44,8 @@
                         <a href="#" class="btn__primary danger">
                             <i class="icon-trash"></i>
                             <span class="btn__text">
-                                    Delete request
-                                </span>
+                                Delete request
+                            </span>
                         </a>
                     </div>
                 </div>

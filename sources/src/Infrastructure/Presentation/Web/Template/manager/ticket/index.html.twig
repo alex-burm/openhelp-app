@@ -18,7 +18,9 @@
         </div>
     </section>
 
-    {{ component('TicketHeader') }}
+    {{ component('TicketHeader', {
+        ticketId: app.request.attributes.get('ticketId'),
+    }) }}
 
     <script src="{{ asset('build/public-chat.js') }}"></script>
     <script>

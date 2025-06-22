@@ -1,9 +1,15 @@
 <div class="dropdown dropdown--secondary" {{ attributes }}>
     <a href="#" class="btn__priority btn__dropdown {{ item.ticketPriorityBackground }}">
         <i class="{{ item.ticketPriorityIcon }}"></i>
-        <span class="btn__text">
-            {{ item.ticketPriorityLabel|capitalize }}
-        </span>
+        {% if isSimpleView %}
+            <span class="tooltip">
+                Change priority
+            </span>
+        {% else %}
+            <span class="btn__text">
+                {{ item.ticketPriorityLabel|capitalize }}
+            </span>
+        {% endif %}
     </a>
     <div class="dropdown__menu">
         <div class="dropdown__item">

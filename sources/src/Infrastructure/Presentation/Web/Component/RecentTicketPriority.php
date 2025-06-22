@@ -20,6 +20,8 @@ class RecentTicketPriority
 
     public TicketSummaryView $item;
 
+    public bool $isSimpleView = false;
+
     public function __construct(
         protected RecentTicketFilterService $recentTicketFilterService,
         protected TicketChangePriorityService $ticketChangePriorityService,

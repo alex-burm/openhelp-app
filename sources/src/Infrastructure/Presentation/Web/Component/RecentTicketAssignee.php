@@ -24,6 +24,8 @@ class RecentTicketAssignee
 
     public TicketSummaryView $item;
 
+    public bool $isSimpleView = false;
+
     public function __construct(
         protected TicketAssignAgentService $ticketAssignAgentService,
         protected RecentTicketFilterService $recentTicketFilterService,

@@ -5,5 +5,5 @@ defineProps({
 </script>
 
 <template>
-    <li class="system">{{ item.date }}</li>
+    <li class="date">{{ item.date }}</li>
 </template>

@@ -1,9 +1,15 @@
 <div class="dropdown dropdown--secondary" {{ attributes }}>
     <a href="#" class="btn__status btn__dropdown {{ item.ticketStatusBackground }}">
         <i class="icon-status-circle-sm"></i>
-        <span class="btn__text">
-            {{ item.ticketStatusLabel|capitalize }}
-        </span>
+        {% if isSimpleView %}
+            <span class="tooltip">
+                Change status
+            </span>
+        {% else %}
+            <span class="btn__text">
+                {{ item.ticketStatusLabel|capitalize }}
+            </span>
+        {% endif %}
     </a>
     <div class="dropdown__menu">
         <div class="dropdown__item">

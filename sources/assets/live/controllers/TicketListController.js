@@ -4,19 +4,19 @@ import { getComponent } from '@symfony/ux-live-component';
 export default class extends Controller {
     async initialize() {
         this.component = await getComponent(this.element);
-
-        // this.component.on('render:finished', (component) => {
-        // });
     }
 
-    open (event) {
+    async open (event) {
         event.preventDefault()
         const { ticketId } = event.currentTarget.dataset
 
-        this.component.action('details', { ticketId }).then((data) => {
+        const header = await getComponent(document.querySelector('#public-chat-header'))
+        this.component.action('details', { ticketId }).then(() => {
             OpenHelpChat.subscribe(ticketId)
 
-            console.log(this.component.getData('selected'))
+            console.log('update header?');
+            header.set('ticketId', ticketId)
+            header.render();
         })
     }
 }
