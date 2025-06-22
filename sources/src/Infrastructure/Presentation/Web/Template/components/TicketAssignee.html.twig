@@ -1,4 +1,4 @@
-<div {{ attributes }}>
+<div {{ attributes }} {{ item.assigneeId is empty ? 'class="dropdown dropdown--search"' }}>
     {% if item.assigneeId > 0 %}
         {% if isSimpleView %}
             <div class="avatar">
@@ -28,25 +28,23 @@
             </div>
         {% endif %}
     {% else %}
-        <diеv class="dropdown dropdown--search">
-            <a href="#" class="btn__primary btn__dropdown">
-                <i class="icon-assign-agent"></i>
-                {% if isSimpleView %}
-                    <span class="tooltip">
-                        Assign agent
-                    </span>
-                {% else %}
-                    <span class="btn__text">
-                        Assign agent
-                    </span>
-                {% endif %}
-            </a>
+        <a href="#" class="btn__primary btn__dropdown">
+            <i class="icon-assign-agent"></i>
+            {% if isSimpleView %}
+                <span class="tooltip">
+                    Assign agent
+                </span>
+            {% else %}
+                <span class="btn__text">
+                    Assign agent
+                </span>
+            {% endif %}
+        </a>
 
-            {{ component('UserAutocompleteComponent', {
-                parentElementQuery: '#' ~ attributes.all.id,
-                parentActionName: 'setUser',
-                parentActionParams: { ticketId: item.ticketId }|json_encode
-            }) }}
-        </diеv>
+        {{ component('UserAutocompleteComponent', {
+            parentElementQuery: '#' ~ attributes.all.id,
+            parentActionName: 'setUser',
+            parentActionParams: { ticketId: item.ticketId }|json_encode
+        }) }}
     {% endif %}
 </div>

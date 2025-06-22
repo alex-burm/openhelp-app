@@ -25,8 +25,10 @@
                     <div class="table__heading">
                         <a {{ live_action('setSortBy', {value: 'ticketStatus'}) }} class="{{ this.sortBy == 'ticketStatus' ? this.sortDirection|lower : '' }}">
                             Status
-                            <i class="icon-sort-up"></i>
-                            <i class="icon-sort-down"></i>
+                            <span class="table__sort">
+                                <i class="icon-sort-up"></i>
+                                <i class="icon-sort-down"></i>
+                            </span>
                         </a>
                     </div>
                 </th>
@@ -34,17 +36,21 @@
                     <div class="table__heading">
                         <a {{ live_action('setSortBy', {value: 'ticketPriority'}) }} class="{{ this.sortBy == 'ticketPriority' ? this.sortDirection|lower : '' }}">
                             Priority
-                            <i class="icon-sort-up"></i>
-                            <i class="icon-sort-down"></i>
+                            <span class="table__sort">
+                                <i class="icon-sort-up"></i>
+                                <i class="icon-sort-down"></i>
+                            </span>
                         </a>
                     </div>
                 </th>
                 <th class="table__col240">
                     <div class="table__heading">
-                        <a {{ live_action('setSortBy', {value: 'agentName'}) }} class="{{ this.sortBy == 'agentName' ? this.sortDirection|lower : '' }}">
+                        <a {{ live_action('setSortBy', {value: 'assigneeName'}) }} class="{{ this.sortBy == 'assigneeName' ? this.sortDirection|lower : '' }}">
                             Agent
-                            <i class="icon-sort-up"></i>
-                            <i class="icon-sort-down"></i>
+                            <span class="table__sort">
+                                <i class="icon-sort-up"></i>
+                                <i class="icon-sort-down"></i>
+                            </span>
                         </a>
                     </div>
                 </th>
@@ -76,13 +82,13 @@
                     </div>
                 </td>
                 <td>
-                    {{ component('TicketStatus', {item, key: 'status-' ~ item.ticketId}) }}
+                    {{ component('TicketStatus', {item, key: unique('status')}) }}
                 </td>
                 <td>
-                    {{ component('TicketPriority', {item, key: 'priority-' ~ item.ticketId}) }}
+                    {{ component('TicketPriority', {item, key: unique('priority')}) }}
                 </td>
                 <td>
-                    {{ component('TicketAssignee', {item, key: 'agent-' ~ item.ticketId}) }}
+                    {{ component('TicketAssignee', {item, key: unique('agent')}) }}
                 </td>
                 <td>
                     <div class="dropdown">
@@ -110,7 +116,7 @@
                             {% endif %}
                             <div class="dropdown__menu-bot">
                                 <div class="dropdown__item">
-                                    <a {{ live_action('removeItem', {ticketId: item.ticketId}) }} class="btn__primary">
+                                    <a {{ live_action('removeItem', {ticketId: item.ticketId}) }} class="btn__primary danger">
                                         <i class="icon-trash"></i>
                                         <span class="btn__text">
                                             Remove from recents

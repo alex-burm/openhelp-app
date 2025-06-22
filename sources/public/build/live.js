@@ -1,6 +1,6 @@
 var We = Object.defineProperty;
 var Je = (r, e, t) => e in r ? We(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t;
-var Y = (r, e, t) => Je(r, typeof e != "symbol" ? e + "" : e, t);
+var Z = (r, e, t) => Je(r, typeof e != "symbol" ? e + "" : e, t);
 class Xe {
   constructor(e, t, s) {
     this.eventTarget = e, this.eventName = t, this.eventOptions = s, this.unorderedBindings = /* @__PURE__ */ new Set();
@@ -143,7 +143,7 @@ function rt(r) {
 function oe(r) {
   return r.replace(/(?:[_-])([a-z0-9])/g, (e, t) => t.toUpperCase());
 }
-function ee(r) {
+function te(r) {
   return oe(r.replace(/--/g, "-").replace(/__/g, "_"));
 }
 function x(r) {
@@ -158,7 +158,7 @@ function nt(r) {
 function de(r) {
   return r != null;
 }
-function te(r, e) {
+function se(r, e) {
   return Object.prototype.hasOwnProperty.call(r, e);
 }
 const fe = ["meta", "ctrl", "alt", "shift"];
@@ -180,7 +180,7 @@ class it {
     if (this.keyFilterDissatisfied(e, t))
       return !0;
     const s = t.filter((n) => !fe.includes(n))[0];
-    return s ? (te(this.keyMappings, s) || W(`contains unknown key filter: ${this.keyFilter}`), this.keyMappings[s].toLowerCase() !== e.key.toLowerCase()) : !1;
+    return s ? (se(this.keyMappings, s) || W(`contains unknown key filter: ${this.keyFilter}`), this.keyMappings[s].toLowerCase() !== e.key.toLowerCase()) : !1;
   }
   shouldIgnoreMouseEvent(e) {
     if (!this.keyFilter)
@@ -1051,10 +1051,10 @@ class Ot {
     this.invokeControllerMethod(`${t}TargetDisconnected`, e);
   }
   outletConnected(e, t, s) {
-    this.invokeControllerMethod(`${ee(s)}OutletConnected`, e, t);
+    this.invokeControllerMethod(`${te(s)}OutletConnected`, e, t);
   }
   outletDisconnected(e, t, s) {
-    this.invokeControllerMethod(`${ee(s)}OutletDisconnected`, e, t);
+    this.invokeControllerMethod(`${te(s)}OutletDisconnected`, e, t);
   }
   invokeControllerMethod(e, ...t) {
     const s = this.controller;
@@ -1212,7 +1212,7 @@ class Bt {
     n || (n = /* @__PURE__ */ new Set(), this.warnedKeysByObject.set(e, n)), n.has(t) || (n.add(t), this.logger.warn(s, e));
   }
 }
-function se(r, e) {
+function re(r, e) {
   return `[${r}~="${e}"]`;
 }
 class Vt {
@@ -1251,7 +1251,7 @@ class Vt {
   }
   getSelectorForTargetName(e) {
     const t = this.schema.targetAttributeForScope(this.identifier);
-    return se(t, e);
+    return re(t, e);
   }
   findLegacyTarget(e) {
     const t = this.getLegacySelectorForTargetName(e);
@@ -1263,7 +1263,7 @@ class Vt {
   }
   getLegacySelectorForTargetName(e) {
     const t = `${this.identifier}.${e}`;
-    return se(this.schema.targetAttribute, t);
+    return re(this.schema.targetAttribute, t);
   }
   deprecate(e, t) {
     if (e) {
@@ -1339,7 +1339,7 @@ class ae {
     return Array.from(this.element.querySelectorAll(e));
   }
   get controllerSelector() {
-    return se(this.schema.controllerAttribute, this.identifier);
+    return re(this.schema.controllerAttribute, this.identifier);
   }
   get isDocumentScope() {
     return this.element === document.documentElement;
@@ -1559,7 +1559,7 @@ function be(r, e, t) {
     return s;
 }
 function Wt(r) {
-  const e = ee(r);
+  const e = te(r);
   return {
     [`${e}Outlet`]: {
       get() {
@@ -1720,7 +1720,7 @@ function es(r) {
   const e = J(r);
   if (e)
     return ve[e];
-  const t = te(r, "default"), s = te(r, "type"), n = r;
+  const t = se(r, "default"), s = se(r, "type"), n = r;
   if (t)
     return n.default;
   if (s) {
@@ -1875,8 +1875,8 @@ class is {
       const M = new FormData();
       M.append("data", JSON.stringify(w));
       for (const [_, z] of Object.entries(o)) {
-        const G = z.length;
-        for (let N = 0; N < G; ++N)
+        const Q = z.length;
+        for (let N = 0; N < Q; ++N)
           M.append(_, z[N]);
       }
       b.body = M;
@@ -1911,15 +1911,15 @@ class as {
 function V(r) {
   return r.innerHTML ? r.outerHTML.slice(0, r.outerHTML.indexOf(r.innerHTML)) : r.outerHTML;
 }
-let X = /* @__PURE__ */ new WeakMap(), j = /* @__PURE__ */ new Map();
+let G = /* @__PURE__ */ new WeakMap(), j = /* @__PURE__ */ new Map();
 const ls = (r) => {
-  X.set(r.element, r), j.set(r, r.name);
+  G.set(r.element, r), j.set(r, r.name);
 }, cs = (r) => {
-  X.delete(r.element), j.delete(r);
-}, re = (r) => new Promise((e, t) => {
+  G.delete(r.element), j.delete(r);
+}, X = (r) => new Promise((e, t) => {
   let s = 0;
   const n = 10, i = setInterval(() => {
-    const o = X.get(r);
+    const o = G.get(r);
     o && (clearInterval(i), e(o)), s++, s > n && (clearInterval(i), t(new Error(`Component not found for element ${V(r)}`)));
   }, 5);
 }), hs = (r, e, t) => {
@@ -1940,7 +1940,7 @@ const ls = (r) => {
 }, ds = (r) => {
   let e = r.element.parentElement;
   for (; e; ) {
-    const t = X.get(e);
+    const t = G.get(e);
     if (t)
       return t;
     e = e.parentElement;
@@ -2341,7 +2341,7 @@ function P(r, e = !0) {
 function q(r, e) {
   return e.element === r ? !0 : e.element.contains(r) ? r.closest('[data-controller~="live"]') === e.element : !1;
 }
-function Z(r) {
+function ee(r) {
   const e = r.cloneNode(!0);
   if (!(e instanceof HTMLElement))
     throw new Error("Could not clone element");
@@ -2438,7 +2438,7 @@ var Oe = /* @__PURE__ */ function() {
         g = _(g, v, c), i(v, m, c), C(c, m);
         continue;
       }
-      let E = G(a, l, m, g, c);
+      let E = Q(a, l, m, g, c);
       if (E) {
         g = _(g, E, c), i(E, m, c), C(c, m);
         continue;
@@ -2491,8 +2491,8 @@ var Oe = /* @__PURE__ */ function() {
     for (const A of a.children)
       S.set(A.outerHTML, A);
     for (const A of l.children) {
-      let O = S.has(A.outerHTML), B = c.head.shouldReAppend(A), Q = c.head.shouldPreserve(A);
-      O || Q ? B ? g.push(A) : (S.delete(A.outerHTML), m.push(A)) : E === "append" ? B && (g.push(A), v.push(A)) : c.head.shouldRemove(A) !== !1 && g.push(A);
+      let O = S.has(A.outerHTML), B = c.head.shouldReAppend(A), Y = c.head.shouldPreserve(A);
+      O || Y ? B ? g.push(A) : (S.delete(A.outerHTML), m.push(A)) : E === "append" ? B && (g.push(A), v.push(A)) : c.head.shouldRemove(A) !== !1 && g.push(A);
     }
     v.push(...S.values());
     let ue = [];
@@ -2500,12 +2500,12 @@ var Oe = /* @__PURE__ */ function() {
       let O = document.createRange().createContextualFragment(A.outerHTML).firstChild;
       if (c.callbacks.beforeNodeAdded(O) !== !1) {
         if (O.href || O.src) {
-          let B = null, Q = new Promise(function(ze) {
+          let B = null, Y = new Promise(function(ze) {
             B = ze;
           });
           O.addEventListener("load", function() {
             B();
-          }), ue.push(Q);
+          }), ue.push(Y);
         }
         l.appendChild(O), c.callbacks.afterNodeAdded(O), p.push(O);
       }
@@ -2561,7 +2561,7 @@ var Oe = /* @__PURE__ */ function() {
     }
     return v;
   }
-  function G(a, l, c, p, g) {
+  function Q(a, l, c, p, g) {
     let m = p, v = c.nextSibling, E = 0;
     for (; m != null; ) {
       if ($(g, m, a) > 0)
@@ -2688,7 +2688,7 @@ function ys(r, e, t, s, n) {
       throw new Error(`Original element with id ${h} not found`);
     if (i.push(h), !u)
       return null;
-    const b = Z(f);
+    const b = ee(f);
     return f.replaceWith(b), b;
   };
   e.querySelectorAll("[data-live-preserve]").forEach((h) => {
@@ -2726,9 +2726,9 @@ function ys(r, e, t, s, n) {
           t.includes(h) && ne(u, s(h)), h === document.activeElement && h !== document.body && P(h, !1) !== null && ne(u, s(h));
           const b = n.getChangedElement(h);
           if (b && b.applyToElement(u), h.nodeName.toUpperCase() !== "OPTION" && h.isEqualNode(u)) {
-            const y = Z(h);
+            const y = ee(h);
             ie(y);
-            const T = Z(u);
+            const T = ee(u);
             if (ie(T), y.isEqualNode(T))
               return !1;
           }
@@ -3690,13 +3690,13 @@ H.values = {
 H.backendFactory = (r) => new os(r.urlValue, r.requestMethodValue);
 class qs extends k {
   async initialize() {
-    this.component = await re(this.element);
+    this.component = await X(this.element);
   }
   async open(e) {
     e.preventDefault();
     const { ticketId: t, url: s } = e.currentTarget.dataset;
     window.history.pushState({ path: s }, "", s);
-    const n = await re(document.querySelector("#public-chat-header"));
+    const n = await X(document.querySelector("#public-chat-header"));
     this.component.action("details", { ticketId: t }).then(() => {
       OpenHelpChat.subscribe(t), n.set("ticketId", t), n.render();
     });
@@ -3758,8 +3758,13 @@ class Ve extends k {
     this.debouncedSearch(e);
   }
 }
-Y(Ve, "targets", ["input", "results"]);
+Z(Ve, "targets", ["input", "results"]);
 class Ks extends k {
+  async connect() {
+    this.component = await X(this.element), this.component.on("render:finished", () => {
+      handleDropdown(this.element);
+    });
+  }
   open(e) {
     ["A", "BUTTON", "INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName) || e.target.closest(".dropdown") || (document.location.href = e.currentTarget.dataset.url);
   }
@@ -3772,7 +3777,7 @@ function _s(r, e = 500) {
 }
 class Re extends k {
   async initialize() {
-    this.component = await re(this.element), this.debouncedSave = _s(this.save.bind(this), 500);
+    this.component = await X(this.element), this.debouncedSave = _s(this.save.bind(this), 500);
   }
   onInput() {
     this.debouncedSave();
@@ -3784,7 +3789,7 @@ class Re extends k {
     });
   }
 }
-Y(Re, "targets", ["input"]);
+Z(Re, "targets", ["input"]);
 const I = qt.start();
 I.register("live", H);
 I.register("TicketList", qs);
