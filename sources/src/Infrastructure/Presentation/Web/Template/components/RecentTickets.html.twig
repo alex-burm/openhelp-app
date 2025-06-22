@@ -23,25 +23,28 @@
                 </th>
                 <th class="table__col160">
                     <div class="table__heading">
-                        <a {{ live_action('setSortBy', {value: 'ticketStatus'}) }}>
+                        <a {{ live_action('setSortBy', {value: 'ticketStatus'}) }} class="{{ this.sortBy == 'ticketStatus' ? this.sortDirection|lower : '' }}">
                             Status
-                            <i class="icon-sort {{ this.sortBy == 'ticketStatus' ? this.sortDirection }}"></i>
+                            <i class="icon-sort-up"></i>
+                            <i class="icon-sort-down"></i>
                         </a>
                     </div>
                 </th>
                 <th class="table__col160">
                     <div class="table__heading">
-                        <a {{ live_action('setSortBy', {value: 'ticketPriority'}) }}>
+                        <a {{ live_action('setSortBy', {value: 'ticketPriority'}) }} class="{{ this.sortBy == 'ticketPriority' ? this.sortDirection|lower : '' }}">
                             Priority
-                            <i class="icon-sort {{ this.sortBy == 'ticketPriority' ? this.sortDirection }}"></i>
+                            <i class="icon-sort-up"></i>
+                            <i class="icon-sort-down"></i>
                         </a>
                     </div>
                 </th>
                 <th class="table__col240">
                     <div class="table__heading">
-                        <a {{ live_action('setSortBy', {value: 'agentName'}) }}>
+                        <a {{ live_action('setSortBy', {value: 'agentName'}) }} class="{{ this.sortBy == 'agentName' ? this.sortDirection|lower : '' }}">
                             Agent
-                            <i class="icon-sort {{ this.sortBy == 'agentName' ? this.sortDirection }}"></i>
+                            <i class="icon-sort-up"></i>
+                            <i class="icon-sort-down"></i>
                         </a>
                     </div>
                 </th>
