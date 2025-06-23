@@ -27,6 +27,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 'public-chat': 'assets/public-chat/index.js',
+                'live': 'assets/live/bootstrap.js'
             },
             output: {
                 entryFileNames: '[name].js',

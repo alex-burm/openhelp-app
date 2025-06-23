@@ -19,17 +19,19 @@ function init(config) {
     conn.init(config.connection)
 
     app.provide('customHeaderHtml', config?.customHeaderHtml)
+    app.provide('customHeaderElement', config?.customHeaderElement)
+
     app.mount(document.querySelector(config?.target || '#app'))
     document.querySelector(config?.target || '#app').classList.add('chat');
 }
 
-function switchChannel(channel)
+function subscribe(channel)
 {
     const conn = useConnectionStore()
-    conn.switchChannel(channel)
+    conn.subscribe(channel)
 }
 
 window.OpenHelpChat = {
     init,
-    switchChannel,
+    subscribe,
 }

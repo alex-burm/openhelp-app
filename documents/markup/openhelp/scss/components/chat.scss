@@ -8,8 +8,26 @@
     height: 100%;
     width: 100%;
 
+    & > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
     .empty {
+        display: none;
         margin: auto;
+    }
+    
+    &__loading {
+        .empty {
+            display: block;
+        }
+        
+        .chat__body {
+            display: none;
+        }
     }
 
     &__body {
@@ -18,7 +36,7 @@
         height: 100%;
         width: 100%;
     }
-
+    
     &__header {
         align-items: center;
         display: flex;

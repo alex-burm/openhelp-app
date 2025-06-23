@@ -40,29 +40,35 @@
         padding: 8px 0;
 
         a {
+            align-items: center;
             display: flex;
-            flex-direction: column;
-            margin-left: 4px;
+            gap: 0 4px;
 
             i {
+                color: var(--grey);
                 font-size: 12px;
                 width: 24px;
             }
 
             &.asc {
-                .icon-sort-down {
-                    color: var(--grey);
+                .icon-sort-up {
+                    color: var(--hard-grey);
                 }
             }
 
             &.desc {
-                .icon-sort-up {
-                    color: var(--grey);
+                .icon-sort-down {
+                    color: var(--hard-grey);
                 }
             }
         }
     }
 
+    &__sort {
+        display: flex;
+        flex-direction: column;
+    }
+    
     //Cols width
     &__col64 {
         min-width: 64px;

@@ -24,6 +24,12 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    redis_connection:
+        class: Redis
+        factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
+        arguments:
+            - '%env(REDIS_URL)%'
+
     App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
     App\Domain\User\Repository\PasswordResetTokenRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisPasswordResetTokenRepository'
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
@@ -42,6 +48,11 @@ services:
 #    App\Domain\Common\Encryptor\EncryptorInterface: '@App\Infrastructure\Common\Encryptor\Bidirectional\BidirectionalSodiumEncryptor'
     App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
+    App\Application\Ticket\ReadModel\RecentTicketViewRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository'
+
+    App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository:
+        arguments:
+            $redis: '@redis_connection'
 
     App\Application\Normalization\DtoNormalizerRegistry:
         arguments:
