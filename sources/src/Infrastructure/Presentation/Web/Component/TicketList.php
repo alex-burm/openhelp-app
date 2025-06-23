@@ -42,6 +42,9 @@ class TicketList
     #[ExposeInTemplate]
     public function getTickets(): TicketSummaryCollectionDto
     {
+        if (\strlen($this->search) > 0) {
+            return new TicketSummaryCollectionDto();
+        }
         return $this->cached ??= $this->ticketRepository->findByStatus(TicketStatus::from($this->status));
     }
 

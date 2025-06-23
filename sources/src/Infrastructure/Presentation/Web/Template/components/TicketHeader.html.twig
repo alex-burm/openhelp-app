@@ -5,7 +5,7 @@
                 <i class="icon-mail"></i>
             </div>
         </div>
-        <div class="item__inner">
+        <div class="item__inner" id="{{ unique('title') }}">
             <input
                 type="text"
                 class="form__control"
@@ -19,9 +19,9 @@
 
     {% if item is not null %}
     <div class="chat__header-actions">
-        {{ component('TicketStatus', { item, isSimpleView: true, key: 'status-' ~ item.ticketId }) }}
-        {{ component('TicketPriority', { item, isSimpleView: true, key: 'priority-' ~ item.ticketId }) }}
-        {{ component('TicketAssignee', { item, isSimpleView: true, key: 'agent-' ~ item.ticketId }) }}
+        {{ component('TicketStatus', { item, isSimpleView: true, key: unique('status') }) }}
+        {{ component('TicketPriority', { item, isSimpleView: true, key: unique('priority') }) }}
+        {{ component('TicketAssignee', { item, isSimpleView: true, key: unique('agent') }) }}
 
         <div class="dropdown">
             <a href="#" class="btn__primary btn__dropdown">

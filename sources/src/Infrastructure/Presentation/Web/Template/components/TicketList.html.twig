@@ -17,7 +17,7 @@
         <div class="item__right"><i class="{{ item.ticketPriorityIcon }}"></i></div>
     </a>
 {% endmacro %}
-<div {{ attributes.defaults(stimulus_controller('TicketList')) }}>
+<div {{ attributes.defaults(stimulus_controller('TicketList')) }}">
     <div class="form__row">
         <i class="icon-search"></i>
         <input type="text"
@@ -36,80 +36,56 @@
             <i class="icon-cross"></i>
         </button>
     </div>
-    {% if this.search is empty %}
-        <div class="requests__box">
-            {#
-                <div class="empty">
-                    <div class="empty__inner">
-                        <img src="{{ asset('assets/img/no-search.svg') }}" alt="no requests">
-                        <span class="empty__text">
-                            There are no search results for this query.
-                        </span>
-                    </div>
-                </div>
+    <div class="requests__box">
+        <div class="loader hidden" data-loading="model(search)|removeClass(hidden)">
+            <span class="loader__circle"></span>
+        </div>
 
-                <div class="loader">
-                    <span class="loader__circle"></span>
+        {% if this.search is empty %}
+        <div class="tabs" data-loading="model(search)|addClass(hidden)">
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value ? 'active' }}"
+            >
+                <span class="tabs__circle error"></span>
+                New
+            </a>
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value ? 'active' }}"
+            >
+                <span class="tabs__circle warning"></span>
+                In progress
+{#                <span class="badge">3</span>#}
+            </a>
+            <a data-action="live#update"
+               data-model="status"
+               data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value }}"
+               class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value ? 'active' }}"
+            >
+                <span class="tabs__circle success"></span>
+                Resolved
+            </a>
+        </div>
+        {% endif %}
+
+        {% if this.search is not empty and this.tickets is empty %}
+            <div class="empty" data-loading="model(search)|addClass(hidden)">
+                <div class="empty__inner">
+                    <img src="{{ asset('assets/img/no-search.svg') }}" alt="no requests">
+                    <span class="empty__text">
+                        There are no search results for this query.
+                    </span>
                 </div>
-            #}
-            <div class="tabs">
-                <a data-action="live#update"
-                   data-model="status"
-                   data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value }}"
-                   class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value ? 'active' }}"
-                >
-                    <span class="tabs__circle error"></span>
-                    New
-                </a>
-                <a data-action="live#update"
-                   data-model="status"
-                   data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value }}"
-                   class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value ? 'active' }}"
-                >
-                    <span class="tabs__circle warning"></span>
-                    In progress
-    {#                <span class="badge">3</span>#}
-                </a>
-                <a data-action="live#update"
-                   data-model="status"
-                   data-value="{{ constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value }}"
-                   class="tabs__link {{ this.status == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value ? 'active' }}"
-                >
-                    <span class="tabs__circle success"></span>
-                    Resolved
-                </a>
             </div>
-            <div class="requests__items">
+        {% else %}
+            <div class="requests__items" data-loading="model(search)|addClass(hidden)">
                 {% for item in this.tickets %}
                     {{ _self.renderTicketItem(item, this.selected) }}
                 {% endfor %}
             </div>
-        </div>
-    {% else %}
-        <div class="results">
-            {% if this.tickets is empty %}
-                <div class="empty">
-                    <div class="empty__inner">
-                        <img src="{{ asset('assets/img/no-search.svg') }}" alt="no requests">
-                        <span class="empty__text">
-                            There are no search results for this query.
-                        </span>
-                    </div>
-                </div>
-            {% else %}
-                {#
-                <h2 class="results__title">
-                    3 results
-                </h2>
-                #}
-                <div class="results__items">
-                    <div class="results__item">
-                    {% for item in this.tickets %}
-                        {{ _self.renderTicketItem(item, this.selected) }}
-                    {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
