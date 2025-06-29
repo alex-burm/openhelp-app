@@ -1,4 +1,4 @@
-{% extends 'public/layout.html.twig' %}
+{% extends 'public/layout/layout.html.twig' %}
 
 {% block title %}Recover Access to Your Account{% endblock %}
 
@@ -39,7 +39,6 @@
             <div class="form__group {{ form.password.first.vars.errors|length > 0 ? 'error' }}">
                 <label class="form__label">New password</label>
                 {{ form_widget(form.password.first, {attr: {
-                    class: 'form__control',
                     placeholder: 'Enter your new password',
                 }}) }}
                 {% if form.password.first.vars.errors|length > 0 %}
@@ -56,7 +55,6 @@
             <div class="form__group {{ form.password.second.vars.errors|length > 0 ? 'error' }}">
                 <label class="form__label">Confirm New Password</label>
                 {{ form_widget(form.password.second, {attr: {
-                    class: 'form__control',
                     placeholder: 'Confirm your new password',
                 }}) }}
             </div>
@@ -75,7 +73,7 @@
 {% block javascripts %}
     <script>
         document.querySelector('#change_password_form_password_first').addEventListener('input', e => {
-            fetch('{{ path('forgot-password-estimate') }}', {
+            fetch('{{ path('security-password-estimate') }}', {
                 method: 'POST',
                 body: JSON.stringify({password: e.target.value})
             }).then(result => {

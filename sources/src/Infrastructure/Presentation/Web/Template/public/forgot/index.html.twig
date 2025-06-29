@@ -1,4 +1,4 @@
-{% extends 'public/layout.html.twig' %}
+{% extends 'public/layout/layout.html.twig' %}
 
 {% block title %}Recover Access to Your Account{% endblock %}
 
@@ -37,10 +37,9 @@
         }}) }}
             <div class="form__row">
                 <div class="form__group {{ form.email.vars.errors|length > 0 ? 'error' }}">
-                    <label class="form__label" for="mail">E-mail</label>
-                    {{ form_widget(form.email, {attr: {
-                        class: 'form__control'
-                    }}) }}
+                    {{ form_label(form.email, 'E-mail') }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
                 </div>
             </div>
             <div class="login__actions">

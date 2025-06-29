@@ -16,7 +16,7 @@ class CurrentUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->user->getLogin();
+        return $this->user->getEmail();
     }
 
     public function getRoles(): array

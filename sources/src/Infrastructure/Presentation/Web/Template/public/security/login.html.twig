@@ -1,4 +1,4 @@
-{% extends 'public/layout.html.twig' %}
+{% extends 'public/layout/layout.html.twig' %}
 
 {% block title %}Login to Your Account{% endblock %}
 
@@ -31,9 +31,8 @@
         <form action="{{ path('login') }}" class="login__form" method="post">
             <div class="form__row">
                 <div class="form__group {{ error ? 'error' }}">
-                    <label class="form__label" for="mail">E-mail or username</label>
+                    <label class="form__label" for="mail">E-mail</label>
                     <input id="mail" type="text" name="_username" value="{{ lastUsername }}" class="form__control">
-
                 </div>
             </div>
             <div class="form__row">

@@ -1,0 +1,41 @@
+{% extends 'public/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <div class="progress__wrapper">
+            <span class="progress__text">
+                Step 1 of 2
+            </span>
+            <div class="progress">
+                <span class="progress__bar" style="width: 50%;"></span>
+            </div>
+        </div>
+        <div class="login__logo">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+        </div>
+        <h2 class="login__title">
+            Name your workspace
+        </h2>
+        <p class="login__subtitle">
+            Don’t worry, you can always change this name later.
+        </p>
+        {{ form_start(form, {attr: {
+            class: 'login__form',
+        }}) }}
+        {{ form_errors(form) }}
+        <div class="form__row">
+            <div class="form__group">
+                {{ form_widget(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+        <div class="login__actions">
+            <button type="submit" class="btn__primary btn__primary--xl btn__primary--blue">
+                <span class="btn__text">
+                    Continue
+                </span>
+            </button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

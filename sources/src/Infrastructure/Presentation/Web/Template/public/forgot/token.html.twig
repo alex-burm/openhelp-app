@@ -1,4 +1,4 @@
-{% extends 'public/layout.html.twig' %}
+{% extends 'public/layout/layout.html.twig' %}
 
 {% block title %}Recover Access to Your Account{% endblock %}
 
@@ -26,9 +26,7 @@
         <div class="form__row">
             <div class="form__group {{ hasTokenError is not empty ? 'error' }}">
                 <label class="form__label" for="mail">Reset Token</label>
-                {{ form_widget(form.token, {attr: {
-                    class: 'form__control'
-                }}) }}
+                {{ form_widget(form.token) }}
                 {% if hasTokenError is not empty %}
                     <div class="state">
                         <div class="state__item error">

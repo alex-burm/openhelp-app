@@ -1,0 +1,83 @@
+{% extends 'public/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <div class="login__logo">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+        </div>
+        <h2 class="login__title">
+            Welcome!
+        </h2>
+        <p class="login__subtitle">
+            Set up the main information and let's move on.
+        </p>
+        {{ form_start(form, {attr: {
+            class: 'login__form',
+        }}) }}
+        {{ form_errors(form) }}
+            <div class="form__row">
+                <div class="form__group {{ form.name.vars.errors|length > 0 ? 'error' }}">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group {{ form.password.vars.errors|length > 0 ? 'error' }}">
+                    {{ form_label(form.password) }}
+                    {{ form_widget(form.password) }}
+                    {{ form_errors(form.password) }}
+                    <div class="password-strength rounded"></div>
+                </div>
+            </div>
+            <div class="login__actions">
+                <button type="submit" class="btn__primary btn__primary--xl btn__primary--blue">
+                    <span class="btn__text">
+                        Confirm
+                    </span>
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.querySelector('#registration_user_form_password').addEventListener('input', e => {
+            fetch('{{ path('security-password-estimate') }}', {
+                method: 'POST',
+                body: JSON.stringify({password: e.target.value})
+            }).then(result => {
+                return result.json();
+            }).then(json => {
+                updatePasswordStrength(json.value)
+                console.log(json);
+            })
+            //
+        })
+
+        // Password strength validation
+        const passwordInput = document.getElementById('newPassword');
+        const strengthIndicator = document.querySelector('.password-strength');
+
+        function updatePasswordStrength(strength) {
+            strengthIndicator.className = 'password-strength rounded';
+            if (strength <= 1) strengthIndicator.classList.add('password-strength-weak');
+            else if (strength === 2) strengthIndicator.classList.add('password-strength-fair');
+            else if (strength === 3) strengthIndicator.classList.add('password-strength-good');
+            else strengthIndicator.classList.add('password-strength-strong');
+            return strength;
+        }
+    </script>
+    <style>
+        .password-strength {
+            height: 4px;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+        .password-strength-weak { width: 25%; background-color: #ef4444; }
+        .password-strength-fair { width: 50%; background-color: #f59e0b; }
+        .password-strength-good { width: 75%; background-color: #3b82f6; }
+        .password-strength-strong { width: 100%; background-color: #10b981; }
+    </style>
+{% endblock %}
