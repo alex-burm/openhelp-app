@@ -14,6 +14,7 @@
             Nice to see you again! Log in to continue working on your request.
         </p>
 
+        {#
         {% if app.session.flashBag.peekAll|length %}
             <div class="state">
                 {% for type,messages in app.session.flashBag.all() %}
@@ -25,6 +26,7 @@
                 {% endfor %}
             </div>
         {% endif %}
+        #}
 
         <form action="{{ path('login') }}" class="login__form" method="post">
             <div class="form__row">
