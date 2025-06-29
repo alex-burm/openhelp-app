@@ -35,12 +35,13 @@ trait DoctrineRepositoryTrait
 
     private function _save(object $domainObject): void
     {
-        if (\is_null($domainObject->getId())) {
-            $doctrineObject = $this->mapper->toDoctrine($domainObject);
-        } else {
-            $reference = $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
-            $doctrineObject = $this->mapper->toDoctrine($domainObject, $reference);
-        }
+        $doctrineObject = $this->mapper->toDoctrine($domainObject);
+//        if (\is_null($domainObject->getId())) {
+//            $doctrineObject = $this->mapper->toDoctrine($domainObject);
+//        } else {
+//            $reference = $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
+//            $doctrineObject = $this->mapper->toDoctrine($domainObject, $reference);
+//        }
 
         $this->entityManager->persist($doctrineObject);
         $this->entityManager->flush();

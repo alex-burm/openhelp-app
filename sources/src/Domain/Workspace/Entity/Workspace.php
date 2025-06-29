@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Workspace\Entity;
 
 class Workspace

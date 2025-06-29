@@ -8,7 +8,7 @@ api:
 manager:
     resource: ../src/Infrastructure/Presentation/Web/Controller/Manager
     type: attribute
-    prefix: /manager
+    prefix: /{workspace}/manager
 
 customer:
     resource: ../src/Infrastructure/Presentation/Web/Controller/Customer

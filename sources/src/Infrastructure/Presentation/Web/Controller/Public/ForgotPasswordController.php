@@ -123,10 +123,7 @@ class ForgotPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->get('password')->getData();
             $resetService->changePassword(new PasswordChangeRequestDto($email, $password));
-
-            $request->getSession()->remove('reset_password_email');
-            $this->addFlash('success', 'Password successfully changed.');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('forgot-password-success');
         }
 
         return $this->render('public/forgot/change.html.twig', [
@@ -134,17 +131,16 @@ class ForgotPasswordController extends AbstractController
         ]);
     }
 
-    #[Route('/estimate-strength', name: 'forgot-password-estimate', methods: ['POST'])]
-    public function estimateStrength(Request $request): JsonResponse
-    {
+    #[Route('/forgot-password/success', name: 'forgot-password-success')]
+    public function success(Request $request): Response {
         $email = $request->getSession()->get('reset_password_email');
         if (null === $email) {
             throw $this->createNotFoundException();
         }
-        return new JsonResponse([
-            'value' => PasswordStrengthValidator::estimateStrength(
-                $request->getPayload()->get('password', '')
-            )
+
+        $request->getSession()->remove('reset_password_email');
+        return $this->render('public/forgot/success.html.twig', [
+            'email' => $email,
         ]);
     }
 

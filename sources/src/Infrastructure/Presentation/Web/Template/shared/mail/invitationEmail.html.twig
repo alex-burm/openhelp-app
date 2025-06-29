@@ -1,0 +1,14 @@
+{% set link = absolute_url(path('invite_user', { key, signature })) %}
+<p>Hi there,</p>
+<p>Someone on OpenHelp has invited you to join their workspace.</p>
+<p>To set up your account and start collaborating, just click the button below:</p>
+<p>
+    <a href="{{ link }}" style="display: inline-block; padding: 10px 15px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;">
+        Accept invitation
+    </a>
+</p>
+
+<p>If the button doesn’t work, copy and paste this link into your browser:</p>
+<a href="{{ link }}">{{ link }}</a>
+
+<p>If you weren’t expecting this invitation, feel free to ignore this email—no account will be created unless you complete the sign-up.</p>

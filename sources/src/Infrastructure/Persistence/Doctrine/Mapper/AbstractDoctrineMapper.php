@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Mapper;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -11,7 +12,8 @@ readonly abstract class AbstractDoctrineMapper
     const DOCTRINE_CLASS_NAME = null;
 
     public function __construct(
-        protected SerializerInterface $serializer
+        protected SerializerInterface $serializer,
+        protected EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -20,12 +22,17 @@ readonly abstract class AbstractDoctrineMapper
         //AbstractObjectNormalizer::SKIP_NULL_VALUES => true
         $normalizedData = \array_filter($this->serializer->normalize($domainObject), fn ($x) => null !== $x);
 
-        return $this->serializer->denormalize(
+        $doctrineObject = $this->serializer->denormalize(
             $normalizedData,
             static::DOCTRINE_CLASS_NAME,
             null,
             [AbstractNormalizer::OBJECT_TO_POPULATE => $entity]
         );
+
+        if (false === \is_null($domainObject->getId())) {
+            return $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
+        }
+        return $doctrineObject;
     }
 
     public function fromDoctrine(object $doctrineObject): object
