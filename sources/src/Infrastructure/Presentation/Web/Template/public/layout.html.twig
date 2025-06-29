@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
 
-        {% block javascripts %}
+        <link rel="stylesheet" href="{{ asset('css/variables.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+
+        {% block stylesheets %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="wrapper">
+            <svg style="position: absolute; top: 0; left: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14300)">
+                    <circle cx="-140" cy="20" r="300" fill="#E0EDFF"/>
+                </g>
+                <defs>
+                    <filter id="filter0_f_2656_14300" x="-760" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14300"/>
+                    </filter>
+                </defs>
+            </svg>
+            <svg style="position: absolute; top: 0; right: 0; pointer-events: none;" width="480" height="640" viewBox="0 0 480 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_f_2656_14299)">
+                    <circle cx="620" cy="20" r="300" fill="#E0EDFF"/>
+                </g>
+                <defs>
+                    <filter id="filter0_f_2656_14299" x="0" y="-600" width="1240" height="1240" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="160" result="effect1_foregroundBlur_2656_14299"/>
+                    </filter>
+                </defs>
+            </svg>
+            {% block body %}{% endblock %}
+
+        </div>
+        {% block javascripts %}
+        {% endblock %}
     </body>
 </html>
