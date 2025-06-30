@@ -1,0 +1,46 @@
+<div class="dropdown dropdown--secondary" {{ attributes }}>
+    <a href="#" class="btn__status btn__dropdown {{ item.ticketStatusBackground }}">
+        <i class="icon-status-circle-sm"></i>
+        {% if isSimpleView %}
+            <span class="tooltip">
+                Change status
+            </span>
+        {% else %}
+            <span class="btn__text">
+                {{ item.ticketStatusLabel|capitalize }}
+            </span>
+        {% endif %}
+    </a>
+    <div class="dropdown__menu">
+        <div class="dropdown__item">
+            <a {{ live_action('setStatus', {ticketId: item.ticketId, status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW')}) }}
+                class="btn__status error {{ item.ticketStatus == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::NEW').value ? 'active' }}"
+            >
+                <i class="icon-status-circle-sm"></i>
+                <span class="btn__text">
+                    New
+                </span>
+            </a>
+        </div>
+        <div class="dropdown__item">
+            <a {{ live_action('setStatus', {ticketId: item.ticketId, status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS')}) }}
+                class="btn__status warning {{ item.ticketStatus == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::IN_PROGRESS').value ? 'active' }}"
+            >
+                <i class="icon-status-circle-sm"></i>
+                <span class="btn__text">
+                    In progress
+                </span>
+            </a>
+        </div>
+        <div class="dropdown__item">
+            <a {{ live_action('setStatus', {ticketId: item.ticketId, status: constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED')}) }}
+                class="btn__status success {{ item.ticketStatus == constant('App\\Domain\\Ticket\\ValueObject\\TicketStatus::RESOLVED').value ? 'active' }}"
+            >
+                <i class="icon-status-circle-sm"></i>
+                <span class="btn__text">
+                    Resolved
+                </span>
+            </a>
+        </div>
+    </div>
+</div>

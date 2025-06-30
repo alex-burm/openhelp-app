@@ -12,4 +12,9 @@ enum TicketChannel: int
     {
         return \lcfirst(\str_replace('_', '', \ucwords(\strtolower($this->name), '_')));
     }
+
+    public function getLabel(): string
+    {
+        return \lcfirst(\str_replace('_', ' ', \strtolower($this->name)));
+    }
 }

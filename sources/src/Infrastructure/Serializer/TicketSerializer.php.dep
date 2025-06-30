@@ -27,6 +27,8 @@ class TicketSerializer implements NormalizerInterface, DenormalizerInterface
             'status' => $data->getStatus()->value,
             'channel' => $data->getChannel()->value,
             'priority' => $data->getPriority()->value,
+            'assignee' => $data->getAssigneeId(),
+            'customer' => $data->getCustomerId(),
         ];
     }
 
@@ -40,7 +42,10 @@ class TicketSerializer implements NormalizerInterface, DenormalizerInterface
         $data['status'] = TicketStatus::from($data['status']);
         $data['channel'] = TicketChannel::from($data['channel']);
         $data['priority'] = TicketPriority::from($data['priority']);
+//        $data['assigneeId'] = $data['assignee'];
 
+        unset($data['assignee']);
+        unset($data['customer']);
         return new Ticket(...$data);
     }
 

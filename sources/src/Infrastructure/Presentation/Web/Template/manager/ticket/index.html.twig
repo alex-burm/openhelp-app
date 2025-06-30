@@ -8,54 +8,9 @@
     <section class="requests">
         <div class="requests__inner">
             <div class="requests__left">
-                <div class="form__row">
-                    <i class="icon-search"></i>
-                    <input type="text" class="form__control form__control--xl"
-                           placeholder="Search inside the requests...">
-                    <button type="button" class="btn__clear-search">
-                        <i class="icon-cross"></i>
-                    </button>
-                </div>
-                <div class="requests__box">
-                    <div class="tabs">
-                        <a href="#" class="tabs__link">
-                            <span class="tabs__circle error"></span>
-                            New
-                        </a>
-                        <a href="#" class="tabs__link">
-                            <span class="tabs__circle warning"></span>
-                            In progress
-                            <span class="badge">3</span>
-                        </a>
-                        <a href="#" class="tabs__link active">
-                            <span class="tabs__circle success"></span>
-                            Resolved
-                        </a>
-                    </div>
-                    <div class="requests__items">
-                        {% for item in ticketsWithUser %}
-                            <a href="javascript://" class="item" data-ticket-id="{{ item.ticketId }}"
-                               onclick="return switchChannel(this)">
-                                <div class="item__left">
-                                    <div class="item__decoration">
-                                        <i class="icon-mail"></i>
-                                    </div>
-                                </div>
-                                <div class="item__inner">
-                                <span class="item__heading">
-                                    {{ item.ticketTitle }}
-                                </span>
-                                    <span class="item__text">
-                                    Sophia Nunez • Yesterday
-                                </span>
-                                </div>
-                                <div class="item__right">
-                                    <i class="{{ item.ticketPriorityIcon }}"></i>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {{ component('TicketList', {
+                    selected: app.request.attributes.get('ticketId'),
+                }) }}
             </div>
             <div class="requests__right">
                 <div id="app"></div>
@@ -63,161 +18,18 @@
         </div>
     </section>
 
-    <script type="application/x-chat-header" id="public-chat-header">
-        <div class="chat__header">
-            <div class="item">
-                <div class="item__status">
-                    <div class="item__decoration">
-                        <i class="icon-mail"></i>
-                    </div>
-                </div>
-                <div class="item__inner">
-                    <input type="text" class="form__control" value="Topic name">
-                    <span class="item__text">
-                        Victor Black
-                    </span>
-                </div>
-            </div>
-            <div class="chat__header-actions">
-                <div class="dropdown dropdown--secondary">
-                    <a href="#" class="btn__status btn__dropdown error">
-                        <i class="icon-status-circle-sm"></i>
-                        <span class="tooltip">
-                            Change priority
-                        </span>
-                    </a>
-                    <div class="dropdown__menu">
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority error active">
-                                <i class="icon-high-priority"></i>
-                                <span class="btn__text">
-                                    High
-                                </span>
-                            </a>
-                        </div>
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority warning">
-                                <i class="icon-medium-priority"></i>
-                                <span class="btn__text">
-                                    Medium
-                                </span>
-                            </a>
-                        </div>
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority success">
-                                <i class="icon-low-priority"></i>
-                                <span class="btn__text">
-                                    Low
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdown dropdown--secondary">
-                    <a href="#" class="btn__priority btn__dropdown error">
-                        <i class="icon-high-priority"></i>
-                        <span class="tooltip">
-                            Change priority
-                        </span>
-                    </a>
-                    <div class="dropdown__menu">
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority error active">
-                                <i class="icon-high-priority"></i>
-                                <span class="btn__text">
-                                    High
-                                </span>
-                            </a>
-                        </div>
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority warning">
-                                <i class="icon-medium-priority"></i>
-                                <span class="btn__text">
-                                    Medium
-                                </span>
-                            </a>
-                        </div>
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__priority success">
-                                <i class="icon-low-priority"></i>
-                                <span class="btn__text">
-                                    Low
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="avatar">
-                    <span class="avatar__name">
-                        Me
-                    </span>
-                    <i class="icon-profile-agent"></i>
-                </div>
-                <div class="dropdown dropdown--search">
-                    <a href="#" class="btn__primary btn__dropdown">
-                        <i class="icon-assign-agent"></i>
-                        <span class="tooltip">
-                            Assign agent
-                        </span>
-                    </a>
-                    <div class="dropdown__menu">
-                        <div class="dropdown__menu-top">
-                            <input type="text" class="form__control form__control--sm" placeholder="Type agent name...">
-                        </div>
-                        <div class="dropdown__menu-bot">
-                            <div class="dropdown__item">
-                                <a href="#" class="btn__primary">
-                                    <i class="icon-agent"></i>
-                                    <span class="btn__text">
-                                        Victor Black
-                                    </span>
-                                </a>
-                            </div>
-                            <span class="dropdown__item-empty">
-                                There are no matching agents.
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#" class="btn__primary btn__dropdown">
-                        <i class="icon-dots"></i>
-                        <span class="tooltip">
-                            More
-                        </span>
-                    </a>
-                    <div class="dropdown__menu">
-                        <div class="dropdown__item">
-                            <a href="#" class="btn__primary">
-                                <i class="icon-customer-details"></i>
-                                <span class="btn__text">
-                                    View customer details
-                                </span>
-                            </a>
-                        </div>
-                        <div class="dropdown__menu-bot">
-                            <div class="dropdown__item">
-                                <a href="#" class="btn__primary danger">
-                                    <i class="icon-trash"></i>
-                                    <span class="btn__text">
-                                        Delete request
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
+    {{ component('TicketHeader', {
+        ticketId: app.request.attributes.get('ticketId'),
+    }) }}
 
     <script src="{{ asset('build/public-chat.js') }}"></script>
     <script>
         OpenHelpChat.init({
-            customHeaderHtml: document.getElementById('public-chat-header').innerHTML,
+            // customHeaderHtml: '',
+            customHeaderElement: document.getElementById('public-chat-header'),
             user: {
-                name: 'Alex',
-                email: 'user@example.com',
+                name: '{{ app.user.getName() }}',
+                email: '{{ app.user.getEmail() }}',
             },
 
             connection: {
@@ -229,13 +41,13 @@
             },
         });
 
-        window.addEventListener('chat:ready', () => {
-            handleDropdown(document.querySelector('.chat__header'))
-        })
+        {% if app.request.attributes.get('ticketId') is not empty %}
+            OpenHelpChat.subscribe("{{ app.request.attributes.get('ticketId') }}");
+        {% endif %}
 
-        const switchChannel = (el) => {
-            OpenHelpChat.switchChannel(el.dataset.ticketId)
-            return false;
-        }
+        window.addEventListener('chat:ready', () => {
+            console.log('chat:ready')
+            handleDropdown(document.querySelector('#public-chat-header'))
+        })
     </script>
 {% endblock %}

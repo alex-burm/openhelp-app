@@ -1,0 +1,50 @@
+<div {{ attributes }} {{ item.assigneeId is empty ? 'class="dropdown dropdown--search"' }}>
+    {% if item.assigneeId > 0 %}
+        {% if isSimpleView %}
+            <div class="avatar">
+                <span class="avatar__name">
+                    Me
+                </span>
+                <i class="icon-profile-agent"></i>
+            </div>
+        {% else %}
+            <div class="item">
+                <div class="item__left">
+                    <div class="avatar">
+                        <span class="avatar__name">
+                            Me
+                        </span>
+                        <i class="icon-profile-agent"></i>
+                    </div>
+                </div>
+                <div class="item__inner">
+                    <span class="item__heading">
+                        {{ item.assigneeName }}
+                    </span>
+                    <span class="item__text">
+                        Agent
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <a href="#" class="btn__primary btn__dropdown">
+            <i class="icon-assign-agent"></i>
+            {% if isSimpleView %}
+                <span class="tooltip">
+                    Assign agent
+                </span>
+            {% else %}
+                <span class="btn__text">
+                    Assign agent
+                </span>
+            {% endif %}
+        </a>
+
+        {{ component('UserAutocompleteComponent', {
+            parentElementQuery: '#' ~ attributes.all.id,
+            parentActionName: 'setUser',
+            parentActionParams: { ticketId: item.ticketId }|json_encode
+        }) }}
+    {% endif %}
+</div>

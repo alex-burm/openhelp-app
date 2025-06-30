@@ -1,20 +1,24 @@
 const modal = document.querySelector('.modal');
 
+const dropdownListener = e => {
+    e.preventDefault();
+
+    const el = e.currentTarget;
+
+    if (el.parentElement.classList.contains('show')) {
+        el.parentElement.classList.remove('show');
+        el.classList.remove('active');
+
+    } else {
+        closeDropdown();
+        el.parentElement.classList.add('show');
+        el.classList.add('active')
+    }
+}
 const handleDropdown = element => {
     element.querySelectorAll('.btn__dropdown').forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            if (this.parentElement.classList.contains('show')) {
-                this.parentElement.classList.remove('show');
-                this.classList.remove('active');
-
-            } else {
-                closeDropdown();
-                this.parentElement.classList.add('show');
-                this.classList.add('active')
-            }
-        });
+        button.removeEventListener('click', dropdownListener);
+        button.addEventListener('click', dropdownListener);
     });
 }
 

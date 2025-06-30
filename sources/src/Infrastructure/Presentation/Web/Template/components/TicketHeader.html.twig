@@ -1,0 +1,56 @@
+<div class="chat__header" id="public-chat-header" {{ attributes.defaults(stimulus_controller('TicketHeader')) }}>
+    <div class="item">
+        <div class="item__status">
+            <div class="item__decoration">
+                <i class="icon-mail"></i>
+            </div>
+        </div>
+        <div class="item__inner" id="{{ unique('title') }}">
+            <input
+                type="text"
+                class="form__control"
+                value="{{ ticketTitle }}"
+                data-action="input->TicketHeader#onInput"
+                data-TicketHeader-target="input"
+            >
+            <span class="item__text">{{ item.customerName|default('Customer') }}</span>
+        </div>
+    </div>
+
+    {% if item is not null %}
+    <div class="chat__header-actions">
+        {{ component('TicketStatus', { item, isSimpleView: true, key: unique('status') }) }}
+        {{ component('TicketPriority', { item, isSimpleView: true, key: unique('priority') }) }}
+        {{ component('TicketAssignee', { item, isSimpleView: true, key: unique('agent') }) }}
+
+        <div class="dropdown">
+            <a href="#" class="btn__primary btn__dropdown">
+                <i class="icon-dots"></i>
+                <span class="tooltip">
+                    More
+                </span>
+            </a>
+            <div class="dropdown__menu">
+                <div class="dropdown__item">
+                    <a href="#" class="btn__primary">
+                        <i class="icon-customer-details"></i>
+                        <span class="btn__text">
+                            View customer details
+                        </span>
+                    </a>
+                </div>
+                <div class="dropdown__menu-bot">
+                    <div class="dropdown__item">
+                        <a href="#" class="btn__primary danger">
+                            <i class="icon-trash"></i>
+                            <span class="btn__text">
+                                Delete request
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
