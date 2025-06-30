@@ -1,7 +1,5 @@
 {% extends 'public/layout/layout.html.twig' %}
 
-{% form_theme form _self %}
-
 {% block body %}
     <div class="login">
         <div class="login__logo">
@@ -44,20 +42,3 @@
         {{ form_end(form) }}
     </div>
 {% endblock %}
-
-{% block _register_email_form_email_errors %}
-    {% if errors|length > 0 -%}
-        {%- for error in errors -%}
-            <div class="state__item error">
-                <span class="state__text">{{ error.message }}</span>
-            </div>
-        {%- endfor -%}
-    {% endif %}
-{% endblock %}
-
-{% block _register_email_form_email_label -%}
-    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form__label')|trim}) -%}
-    <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
-    {{- block('form_label_content') -}}
-    </{{ element|default('label') }}>
-{%- endblock _register_email_form_email_label %}

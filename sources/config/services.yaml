@@ -49,7 +49,7 @@ services:
     App\Domain\Mail\Incoming\Service\MailFetcherInterface: '@App\Infrastructure\Mail\Imap\ImapMailFetcher'
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
     App\Application\Ticket\ReadModel\RecentTicketViewRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository'
-    App\Domain\Signature\SignerInterface: '@App\Infrastructure\Security\Signature\HmacSha256SignerInterface'
+    App\Domain\Signature\SignerInterface: '@App\Infrastructure\Security\Signature\HmacSha256Signer'
 
     App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository:
         arguments:

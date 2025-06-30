@@ -4,7 +4,7 @@ namespace App\Infrastructure\Security\Signature;
 
 use App\Domain\Signature\SignerInterface;
 
-final class HmacSha256SignerInterface implements SignerInterface
+final class HmacSha256Signer implements SignerInterface
 {
     public function __construct(
         private ?string $secret = null
