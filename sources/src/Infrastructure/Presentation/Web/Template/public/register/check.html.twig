@@ -1,0 +1,36 @@
+{% extends 'public/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <a href="{{ path('register') }}" class="btn__primary btn__back">
+            <i class="icon-short-arrow-left"></i>
+            <span class="btn__text">
+                Back
+            </span>
+        </a>
+        <div class="login__logo">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+        </div>
+        <h2 class="login__title">
+            Check your inbox
+        </h2>
+        <p class="login__subtitle">
+            We will send a verification link to your email, <b>{{ email }}.</b>
+        </p>
+        <p class="login__subtitle">
+            You can close this window after you receive the link.
+        </p>
+        <div class="login__bot">
+            <p class="login__bot-text">
+                Didn’t receive verification link?
+            </p>
+            <a href="{{ resendUrl }}" class="btn__primary">
+                <span class="btn__text">
+                    Send again
+                </span>
+                <i class="icon-send-again"></i>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

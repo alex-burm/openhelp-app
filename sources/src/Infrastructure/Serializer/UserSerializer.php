@@ -35,7 +35,6 @@ class UserSerializer implements NormalizerInterface, DenormalizerInterface
 
         return new User(
             id: $data['id'],
-            login: $data['login'] ?? 'user' . \hrtime(true),
             password: $data['password'] ?? '',
             name: $data['name'],
             email: $data['email'] ?? null,

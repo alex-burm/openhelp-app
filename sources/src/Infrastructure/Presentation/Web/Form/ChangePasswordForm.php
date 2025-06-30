@@ -21,7 +21,7 @@ class ChangePasswordForm extends AbstractType
             'second_options' => ['label' => 'Confirm password', 'always_empty' => true],
             'constraints' => [
                 new NotBlank(),
-                new PasswordStrength(minScore: PasswordStrength::STRENGTH_STRONG),
+                new PasswordStrength(minScore: PasswordStrength::STRENGTH_MEDIUM),
             ]
         ]);
         /**

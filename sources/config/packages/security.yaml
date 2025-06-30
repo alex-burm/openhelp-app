@@ -19,9 +19,9 @@ security:
             login_throttling:
                 limiter: App\Infrastructure\Persistence\Redis\LoginRateLimiterStorage
 
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800
+#            remember_me:
+#                secret: '%kernel.secret%'
+#                lifetime: 604800
 
             logout:
                 path: /logout

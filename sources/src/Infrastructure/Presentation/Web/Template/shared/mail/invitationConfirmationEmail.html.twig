@@ -1,0 +1,15 @@
+{% set link = absolute_url(path('invite_user', {key, signature })) %}
+<p>Hi there,</p>
+<p>Thanks for joining us! To finish setting up your account, please confirm that this email address is really yours.</p>
+
+<p>You can click the button below:</p>
+<p>
+    <a href="{{ link }}" style="display: inline-block; padding: 10px 15px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;">
+        Confirm my email
+    </a>
+</p>
+
+<p>If the button doesn’t work, copy and paste this link into your browser:</p>
+<a href="{{ link }}">{{ link }}</a>
+
+<p>If you didn’t create an account, just ignore this message.</p>
