@@ -94,6 +94,12 @@
         width: 240px;
     }
 
+    &__col320 {
+        min-width: 320px;
+        max-width: 320px;
+        width: 320px;
+    }
+
     //Item
     .item {
         padding: 16px 24px 16px 0;

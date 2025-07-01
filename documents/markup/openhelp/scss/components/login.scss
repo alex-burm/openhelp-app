@@ -109,11 +109,14 @@
 
         &.success {
             color: var(--hard-grey);
-            text-decoration: line-through;
 
             .state__icon {
                 background-color: var(--green);
             }
+        }
+
+        &.strike {
+            text-decoration: line-through;
         }
     }
 
