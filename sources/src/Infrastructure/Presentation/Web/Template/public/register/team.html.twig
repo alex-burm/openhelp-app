@@ -41,7 +41,7 @@
             {% endfor %}
 
             <div class="form__row-actions">
-                <a href="{{ path('invite_register') }}" class="btn__primary">
+                <a href="{{ path('invite_register') }}" class="btn__primary" onclick="return onCopy(this)">
                     <i class="icon-link"></i>
                     <span class="btn__text">
                         Copy invitation link
@@ -52,7 +52,7 @@
             <div class="login__actions">
                 <button type="submit" class="btn__primary btn__primary--xl btn__primary--blue">
                     <span class="btn__text">
-                        Continue
+                        Send invitations
                     </span>
                 </button>
                 <a href="{{ path('register_success') }}" class="btn__primary">
@@ -63,4 +63,21 @@
             </div>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const onCopy = (el) => {
+            navigator.clipboard.writeText(el.href).then(() => {
+                el.querySelector('.btn__text').textContent = 'Copied to clipboard';
+                setTimeout(() => {
+                    el.querySelector('.btn__text').textContent = 'Copy invitation link';
+                }, 5000);
+            });
+
+            return false;
+        }
+
+
+    </script>
 {% endblock %}
