@@ -2,7 +2,7 @@
 
 namespace App\Domain\Workspace\Entity;
 
-class NullWorkspace extends Workspace
+final class NullWorkspace extends Workspace
 {
     public function __construct()
     {
