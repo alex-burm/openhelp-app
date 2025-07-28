@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordForm extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('password', RepeatedType::class, [
             'required' => false,

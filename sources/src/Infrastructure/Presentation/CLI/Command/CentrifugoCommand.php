@@ -20,7 +20,7 @@ class CentrifugoCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addOption('token', 't', InputOption::VALUE_NONE, 'Generate token');
         $this->addOption('message', 'm', InputOption::VALUE_REQUIRED, 'Send test message');

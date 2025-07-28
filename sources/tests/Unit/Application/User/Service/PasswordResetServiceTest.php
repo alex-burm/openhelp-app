@@ -47,7 +47,7 @@ final class PasswordResetServiceTest extends TestCase
         $this->userRepositoryStub->method('findOneByEmail')->willReturn(
             new User(
                 id: 1,
-                login: 'test',
+                name: 'test',
                 password: 'test',
                 email: 'test@test.com',
             )
@@ -72,7 +72,7 @@ final class PasswordResetServiceTest extends TestCase
         $this->userRepositoryStub->method('findOneByEmail')->willReturn(
             new User(
                 id: 1,
-                login: 'test',
+                name: 'test',
                 password: 'test',
                 email: 'test@test.com',
             )
@@ -81,6 +81,15 @@ final class PasswordResetServiceTest extends TestCase
         $result = $this->sut->changePassword(new PasswordChangeRequestDto(email: 'test@test.com', password: 'test'));
 
         self::assertInstanceOf(expected: PasswordChangeRequestedEvent::class, actual: $result);
+    }
+
+    public function testChangePasswordNonexistentUser(): void
+    {
+        $this->userRepositoryStub->method('findOneByEmail')->willReturn(null);
+
+        $result = $this->sut->changePassword(new PasswordChangeRequestDto(email: 'nonexistent@test.com', password: 'new-password'));
+
+        self::assertNull($result);
     }
 
     public function testValidateNonexistentToken(): void
