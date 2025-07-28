@@ -29,7 +29,7 @@ class EncryptorCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addOption('workspace', 'w', InputOption::VALUE_REQUIRED, 'Workspace id');
         $this->addOption('encrypt', null, InputOption::VALUE_OPTIONAL, 'Encrypt text');
