@@ -35,6 +35,7 @@ services:
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
     App\Domain\Ticket\Repository\TicketRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineTicketRepository'
+    App\Domain\Article\Repository\ArticleRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineArticleRepository'
     App\Domain\Messaging\Repository\MessageRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineMessageRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\Settings\Repository\SettingsRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository'

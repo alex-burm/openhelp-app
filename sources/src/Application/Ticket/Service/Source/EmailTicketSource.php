@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Ticket\Service;
+namespace App\Application\Ticket\Service\Source;
 
 use App\Application\Ticket\Dto\TicketDraftDto;
 use App\Domain\Mail\Incoming\Service\MailFetcherInterface;

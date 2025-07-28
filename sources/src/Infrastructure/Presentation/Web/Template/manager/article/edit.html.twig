@@ -1,0 +1,151 @@
+{% extends 'manager/base.html.twig' %}
+
+{% block header %}Articles{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="layout">
+            <header class="header header--secondary">
+                {#
+                <div class="header__left">
+                    <div class="form__row">
+                        <div class="form__group">
+                            <input type="text" class="form__control form__control--m" value="Untitled article">
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <div class="form__select">
+                            <select class="form__control" required="">
+                                <option value="" selected="">Category name</option>
+                                <option>Test</option>
+                                <option>Test 2</option>
+                            </select>
+                            <i class="icon-dropdown"></i>
+                        </div>
+                    </div>
+                </div>
+                #}
+                <div class="header__right">
+                    <div class="switch__wrapper">
+                        Publish
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="switch__mode"></span>
+                        </label>
+                    </div>
+                    <a href="#" class="btn__primary btn__primary--xl">
+                        <span class="btn__text">
+                            Close
+                        </span>
+                    </a>
+                </div>
+            </header>
+            <div class="builder">
+                <div class="builder__title autoresizable">
+                    <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Untitled article"></textarea>
+                </div>
+                <div id="editor" style="margin-left: -50px;"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/editorjs/header.js') }}"></script>
+    <script src="{{ asset('js/editorjs/image.js') }}"></script>
+    <script src="{{ asset('js/editorjs/delimiter.js') }}"></script>
+    <script src="{{ asset('js/editorjs/list.js') }}"></script>
+    <script src="{{ asset('js/editorjs/quote.js') }}"></script>
+    <script src="{{ asset('js/editorjs/code.js') }}"></script>
+    <script src="{{ asset('js/editorjs/embed.js') }}"></script>
+    <script src="{{ asset('js/editorjs/table.js') }}"></script>
+    <script src="{{ asset('js/editorjs/link.js') }}"></script>
+    <script src="{{ asset('js/editorjs/marker.js') }}"></script>
+    <script src="{{ asset('js/editorjs/inline-code.js') }}"></script>
+    <script src="{{ asset('js/editorjs/raw.js') }}"></script>
+    <script src="{{ asset('js/editorjs/main.js') }}"></script>
+
+    <script>
+        const editor = new EditorJS({
+            holder: 'editor',
+            autofocus: true,
+            placeholder: 'Type text here...',
+
+            tools: {
+                paragraph: {
+                    inlineToolbar: true,
+                    config: {
+                        preserveBlank: true,
+                        placeholder: 'Type text here...'
+                    }
+                },
+                header: {
+                    class: Header,
+                    inlineToolbar: ['marker', 'link'],
+                    config: {
+                        placeholder: 'Header'
+                    },
+                },
+                image: {
+                    class: ImageTool,
+                    config: {
+                        endpoints: {
+                            byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+                            byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+                        }
+                    }
+                },
+
+                list: {
+                    class: EditorjsList,
+                    inlineToolbar: true,
+                },
+
+                quote: {
+                    class: Quote,
+                    inlineToolbar: true,
+                    config: {
+                        quotePlaceholder: 'Enter a quote',
+                        captionPlaceholder: 'Quote\'s author',
+                    },
+                },
+
+                marker: {
+                    class:  Marker,
+                },
+
+                code: {
+                    class:  CodeTool,
+                },
+
+                delimiter: Delimiter,
+
+                inlineCode: {
+                    class: InlineCode,
+                },
+
+                linkTool: LinkTool,
+
+                raw: RawTool,
+                embed: Embed,
+
+                table: {
+                    class: Table,
+                    inlineToolbar: true,
+                },
+            },
+            onChange: async (api, event) => {
+                fetch('{{ path('manager_article_edit', {id: app.request.attributes.get('id')}) }}', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        content: JSON.stringify(await api.saver.save()),
+                        _token: '{{ csrf_token }}'
+                    }),
+                });
+
+                console.log('onChange triggered', )
+            }
+        });
+    </script>
+{% endblock %}
