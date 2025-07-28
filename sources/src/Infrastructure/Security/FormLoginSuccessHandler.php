@@ -23,12 +23,13 @@ class FormLoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         $domainUser = $currentUser->getDomainUser();
         $doctrineUser = $this->doctrineUserMapper->toDoctrine($domainUser);
 
-        $this->router->getContext()->setParameter('workspace', $doctrineUser->getWorkspace()->getCode());
+        $code = $doctrineUser->getWorkspace()->getCode();
+        $request->getSession()->set('workspace', $code);
 
         return new RedirectResponse(match (true) {
-            $currentUser->isManager() => $this->router->generate('manager_default_index'),
+            $currentUser->isManager() => $this->router->generate('manager_default_index', ['workspace' => $code]),
             $currentUser->isCustomer() => throw new \Exception('not implemented yet'),
-            default => $this->router->generate('home')
+            default => $this->router->generate('home', ['workspace' => $code])
         });
     }
 }

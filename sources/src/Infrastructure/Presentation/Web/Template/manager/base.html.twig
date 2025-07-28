@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ asset('css/variables.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+        <link rel="icon" href="{{ asset('favicon.png') }}" />
+
+        {% block stylesheets %}
+        {% endblock %}
+        <style>
+            .hidden {display:none;visibility: hidden}
+        </style>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/live.js') }}" type="module"></script>
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>
