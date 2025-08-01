@@ -6,11 +6,12 @@ use App\Domain\User\Entity\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class DoctrineUserRepository implements UserRepositoryInterface
+class DoctrineUserRepository extends EntityRepository implements UserRepositoryInterface, ServiceEntityRepositoryInterface
 {
     use DoctrineRepositoryTrait;
 
@@ -20,6 +21,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
         protected EntityManagerInterface $entityManager,
         protected DoctrineUserMapper     $mapper,
     ) {
+        parent::__construct($this->entityManager, new ClassMetadata(self::DOCTRINE_CLASS_NAME));
     }
 
     public function delete(User $user): void
@@ -35,39 +37,6 @@ class DoctrineUserRepository implements UserRepositoryInterface
     public function findOneById(int $id): ?User
     {
         return $this->_findOneById($id);
-    }
-
-    public function findOneByUsername(string $username): ?User
-    {
-        $qb = $this->entityManager->createQueryBuilder()
-            ->select('u')
-            ->from(DoctrineUser::class, 'u')
-            ->where('u.login = :username')
-            ->orWhere('u.email = :username')
-            ->setParameter(':username', $username);
-
-        $doctrineObject = $qb
-            ->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult();
-
-        return $this->getOneOrNothing($doctrineObject);
-    }
-
-    public function findOneByLogin(string $login): ?User
-    {
-        $qb = $this->entityManager->createQueryBuilder()
-            ->select('u')
-            ->from(DoctrineUser::class, 'u')
-            ->where('u.login = :login')
-            ->setParameter(':login', $login);
-
-        $doctrineObject = $qb
-            ->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult();
-
-        return $this->getOneOrNothing($doctrineObject);
     }
 
     public function findOneByEmail(string $email): ?User

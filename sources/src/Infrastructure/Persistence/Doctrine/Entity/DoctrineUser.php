@@ -18,9 +18,6 @@ class DoctrineUser implements WorkspaceAwareEntity
     protected ?int $id = null;
 
     #[ORM\Column(type: 'string', nullable: false)]
-    protected string $login = '';
-
-    #[ORM\Column(type: 'string', nullable: false)]
     protected string $password = '';
 
     #[ORM\Column(type: 'string', nullable: false)]
@@ -58,16 +55,6 @@ class DoctrineUser implements WorkspaceAwareEntity
     public function setId(?int $id): void
     {
         $this->id = $id;
-    }
-
-    public function getLogin(): string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): void
-    {
-        $this->login = $login;
     }
 
     public function getPassword(): string

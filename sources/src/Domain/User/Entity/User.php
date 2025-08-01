@@ -10,11 +10,11 @@ class User
 
     public function __construct(
         protected ?int $id = null,
-        protected string $login = '',
         protected string $password = '',
         protected string $name = '',
         protected ?string $email = null,
         protected ?RoleCollection $roles = null,
+        protected ?int $workspaceId = null
     )
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -28,16 +28,6 @@ class User
     public function setId(?int $id): void
     {
         $this->id = $id;
-    }
-
-    public function getLogin(): string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): void
-    {
-        $this->login = $login;
     }
 
     public function getPassword(): string
@@ -88,5 +78,15 @@ class User
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getWorkspaceId(): ?int
+    {
+        return $this->workspaceId;
+    }
+
+    public function setWorkspaceId(?int $workspaceId): void
+    {
+        $this->workspaceId = $workspaceId;
     }
 }

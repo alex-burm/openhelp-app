@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordForm extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('password', RepeatedType::class, [
             'required' => false,
@@ -21,7 +21,7 @@ class ChangePasswordForm extends AbstractType
             'second_options' => ['label' => 'Confirm password', 'always_empty' => true],
             'constraints' => [
                 new NotBlank(),
-                new PasswordStrength(minScore: PasswordStrength::STRENGTH_STRONG),
+                new PasswordStrength(minScore: PasswordStrength::STRENGTH_MEDIUM),
             ]
         ]);
         /**

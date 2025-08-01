@@ -1,0 +1,83 @@
+{% extends 'public/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <div class="progress__wrapper">
+                <span class="progress__text">
+                    Step 2 of 2
+                </span>
+            <div class="progress">
+                <span class="progress__bar" style="width: 100%;"></span>
+            </div>
+        </div>
+        <div class="login__logo">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+        </div>
+        <h2 class="login__title">
+            Invite your teammates
+        </h2>
+        <p class="login__subtitle">
+            Collaborate and get started with your team.
+        </p>
+        {{ form_start(form, {attr: {
+            class: 'login__form',
+        }}) }}
+            {{ form_errors(form) }}
+
+            {% set placeholders = [
+                'sonia@example.com',
+                'max@example.com',
+                'joe@example.com']
+            %}
+
+            {% for emailField in form.emails %}
+                <div class="form__row">
+                    <div class="form__group">
+                        {{ form_widget(emailField, {attr: {
+                            placeholder: placeholders[loop.index0] ?? 'Enter email address',
+                        }}) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="form__row-actions">
+                <a href="{{ path('invite_register') }}" class="btn__primary" onclick="return onCopy(this)">
+                    <i class="icon-link"></i>
+                    <span class="btn__text">
+                        Copy invitation link
+                    </span>
+                </a>
+            </div>
+
+            <div class="login__actions">
+                <button type="submit" class="btn__primary btn__primary--xl btn__primary--blue">
+                    <span class="btn__text">
+                        Send invitations
+                    </span>
+                </button>
+                <a href="{{ path('register_success') }}" class="btn__primary">
+                    <span class="btn__text">
+                        Skip
+                    </span>
+                </a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const onCopy = (el) => {
+            navigator.clipboard.writeText(el.href).then(() => {
+                el.querySelector('.btn__text').textContent = 'Copied to clipboard';
+                setTimeout(() => {
+                    el.querySelector('.btn__text').textContent = 'Copy invitation link';
+                }, 5000);
+            });
+
+            return false;
+        }
+
+
+    </script>
+{% endblock %}

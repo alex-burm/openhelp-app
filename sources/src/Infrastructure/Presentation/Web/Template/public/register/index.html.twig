@@ -1,0 +1,44 @@
+{% extends 'public/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <div class="login__logo">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+        </div>
+        <h2 class="login__title">
+            Register your account
+        </h2>
+        <p class="login__subtitle">
+            Register to set up your workspace and begin working on your request.
+        </p>
+        {{ form_start(form, {attr: {
+            class: 'login__form',
+        }}) }}
+        {{ form_errors(form) }}
+        <div class="form__row">
+            <div class="form__group {{ form.email.vars.errors|length > 0 ? 'error' }}">
+                {{ form_label(form.email, 'E-mail') }}
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+        <div class="login__actions">
+            <button type="submit" class="btn__primary btn__primary--xl btn__primary--blue">
+                <span class="btn__text">
+                    Continue
+                </span>
+            </button>
+        </div>
+        <div class="login__bot">
+            <p class="login__bot-text">
+                Already have account?
+            </p>
+            <a href="{{ path('login') }}" class="btn__primary">
+                <span class="btn__text">
+                    Login
+                </span>
+            </a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
