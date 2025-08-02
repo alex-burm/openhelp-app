@@ -42,7 +42,7 @@
             </header>
             <div class="builder">
                 <div class="builder__title autoresizable">
-                    <textarea rows="1" name="text" id="text" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Untitled article"></textarea>
+                    <textarea rows="1" name="title" id="title" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Untitled article">{{ article.title }}</textarea>
                 </div>
                 <div id="editor" style="margin-left: -50px;"></div>
             </div>
@@ -67,6 +67,7 @@
 
     <script>
         const editor = new EditorJS({
+            data: {{ article.content|raw }},
             holder: 'editor',
             autofocus: true,
             placeholder: 'Type text here...',
@@ -139,6 +140,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({
+                        title: document.getElementById('title').value,
                         content: JSON.stringify(await api.saver.save()),
                         _token: '{{ csrf_token }}'
                     }),

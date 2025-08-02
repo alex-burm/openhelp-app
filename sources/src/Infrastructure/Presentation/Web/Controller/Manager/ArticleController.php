@@ -4,6 +4,7 @@ namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
 use App\Application\Article\Dto\ArticleSaveDto;
 use App\Application\Article\Service\ArticleCreateOrGetService;
+use App\Application\Article\Service\ArticleGetEditingService;
 use App\Application\Article\Service\ArticleSaveService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,35 +23,44 @@ class ArticleController extends AbstractController
         ArticleCreateOrGetService $createService,
         ?Uuid $id = null,
     ): Response {
-        $article = $createService($id);
+        $createService($id);
 
-        return $this->redirectToRoute('manager_article_edit', ['id' => $article->getId()]);
+        return $this->redirectToRoute('manager_article_edit', ['id' => $id]);
     }
 
     #[Route('/edit/{id}', name: 'manager_article_edit')]
     public function edit(
         Request $request,
         ArticleSaveService $saveService,
+        ArticleGetEditingService $editingService,
         CsrfTokenManagerInterface $csrfTokenService,
     ): Response {
         $id = $request->attributes->get('id');
 
         $csrfTokenKey = 'editor_autosave_' . $id;
         if ($request->isMethod(Request::METHOD_POST)) {
+            $payload = $request->getPayload();
             $isValidToken = $csrfTokenService->isTokenValid(
-                new CsrfToken($csrfTokenKey, $request->request->get('_token'))
+                new CsrfToken($csrfTokenKey, $payload->get('_token')),
             );
 
             if (false === $isValidToken) {
                 return new JsonResponse(['error' => 'Invalid CSRF token'], 400);
             }
 
-            $saveService(new ArticleSaveDto(...$request->request->all()));
+            $saveService(new ArticleSaveDto(
+                id: $id,
+                title: $payload->get('title'),
+                content: $payload->get('content'),
+            ));
+
+            return $this->json(true);
         }
 
-
+        $articleDto = $editingService($id);
         return $this->render('manager/article/edit.html.twig', [
             'csrf_token' => $csrfTokenService->getToken($csrfTokenKey)->getValue(),
+            'article' => $articleDto,
         ]);
     }
 

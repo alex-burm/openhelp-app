@@ -6,6 +6,7 @@ use App\Domain\Article\Repository\ArticleRepositoryInterface;
 use App\Domain\Article\Entity\Article;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineArticle;
 use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineArticleMapper;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -33,6 +34,17 @@ class DoctrineArticleRepository implements ArticleRepositoryInterface
 
     public function findOneById(Uuid $id): ?Article
     {
-        return $this->_findOneById($id);
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('r')
+            ->from(static::DOCTRINE_CLASS_NAME, 'r')
+            ->where('r.id = :id')
+            ->setParameter(':id', $id->toBinary(), ParameterType::BINARY);
+
+        $doctrineObject = $qb
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        return $this->getOneOrNothing($doctrineObject);
     }
 }

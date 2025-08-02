@@ -2,13 +2,13 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
-use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository;
+use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: DoctrineSettingsRepository::class)]
+#[ORM\Entity(repositoryClass: DoctrineArticleRepository::class)]
 #[ORM\Table(name: 'article')]
 class DoctrineArticle implements WorkspaceAwareEntity
 {

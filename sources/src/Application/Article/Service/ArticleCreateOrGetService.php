@@ -15,7 +15,7 @@ class ArticleCreateOrGetService
     ) {
     }
 
-    public function __invoke(?Uuid $id = null): Article
+    public function __invoke(?Uuid $id = null): Uuid
     {
         if (\is_null($id)) {
             $article = new Article();
@@ -27,6 +27,6 @@ class ArticleCreateOrGetService
         if (\is_null($article)) {
             throw new \LogicException('Article not found');
         }
-        return $article;
+        return $article->getId();
     }
 }

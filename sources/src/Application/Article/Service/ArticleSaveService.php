@@ -3,9 +3,9 @@
 namespace App\Application\Article\Service;
 
 use App\Application\Article\Dto\ArticleSaveDto;
+use App\Domain\Article\Event\ArticleUpdated;
 use App\Domain\Article\Repository\ArticleRepositoryInterface;
 use App\Domain\Common\Event\EventDispatcherInterface;
-use App\Domain\Entity\Article;
 use Symfony\Component\Uid\Uuid;
 
 class ArticleSaveService
@@ -16,12 +16,13 @@ class ArticleSaveService
     ) {
     }
 
-    public function __invoke(ArticleSaveDto $dto): Article
+    public function __invoke(ArticleSaveDto $dto): ArticleUpdated
     {
-        $article = $this->repository->findOneById(Uuid::fromString($dto->id));
-        dd($article);
-//        $article->updateContent($command->content);
-//        $this->repository->save($article);
-//        $this->events->dispatch(new ArticleUpdated($article->getId()));
+        $article = $this->repository->findOneById(Uuid::fromRfc4122($dto->id));
+        $article->setTitle($dto->title);
+        $article->setContent($dto->content);
+
+        $this->repository->save($article);
+        return $this->eventDispatcher->dispatch(new ArticleUpdated($article));
     }
 }

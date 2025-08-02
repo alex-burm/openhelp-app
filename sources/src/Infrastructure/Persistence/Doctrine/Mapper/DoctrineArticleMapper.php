@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Mapper;
 
-use App\Domain\Entity\Article;
+use App\Domain\Article\Entity\Article;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineArticle;
 
 readonly final class DoctrineArticleMapper extends AbstractDoctrineMapper

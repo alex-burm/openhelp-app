@@ -26,7 +26,7 @@ docker-franken-bash:
 	@docker exec -it help_franken bash
 
 docker-franken-test-coverage:
-	@docker exec -it -e XDEBUG_MODE=coverage help_franken ./bin/phpunit --coverage-html public/coverage
+	@docker exec -it -e XDEBUG_MODE=coverage help_franken ./bin/phpunit --coverage-html var/coverage
 
 docker-franken-test:
 	@docker exec -it help_franken ./bin/phpunit --testdox
