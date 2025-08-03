@@ -1,0 +1,3 @@
+{% for block in blocks  %}
+    {% include 'shared/editor/' ~ block.type ~ '.html.twig' %}
+{% endfor %}

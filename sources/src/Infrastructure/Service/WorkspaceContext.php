@@ -55,14 +55,14 @@ class WorkspaceContext
             throw new \RuntimeException('No active request found.');
         }
 
-        $spaceId = $request->getSession()->get('workspace');
-        if (\is_null($spaceId)) {
+        $code = $request->getSession()->get('workspace');
+        if (\is_null($code)) {
             throw new \RuntimeException('No workspace found in session.');
         }
 
-        $workspace = $this->workspaceRepository->findOneById($spaceId);
+        $workspace = $this->workspaceRepository->findOneByCode($code);
         if (\is_null($workspace)) {
-            throw new \RuntimeException(\sprintf('Workspace not found for id: %d', $spaceId));
+            throw new \RuntimeException(\sprintf('Workspace not found for "code": %d', $code));
         }
 
         $this->workspace = $workspace;

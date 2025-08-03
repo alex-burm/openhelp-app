@@ -22,17 +22,23 @@ readonly abstract class AbstractDoctrineMapper
         //AbstractObjectNormalizer::SKIP_NULL_VALUES => true
         $normalizedData = \array_filter($this->serializer->normalize($domainObject), fn ($x) => null !== $x);
 
-        $doctrineObject = $this->serializer->denormalize(
+        if (false === \is_null($domainObject->getId())) {
+            $doctrineObject = $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
+
+            return $this->serializer->denormalize(
+                $normalizedData,
+                static::DOCTRINE_CLASS_NAME,
+                null,
+                [AbstractNormalizer::OBJECT_TO_POPULATE => $doctrineObject]
+            );
+        }
+
+        return $this->serializer->denormalize(
             $normalizedData,
             static::DOCTRINE_CLASS_NAME,
             null,
             [AbstractNormalizer::OBJECT_TO_POPULATE => $entity]
         );
-
-        if (false === \is_null($domainObject->getId())) {
-            return $this->entityManager->getReference(static::DOCTRINE_CLASS_NAME, $domainObject->getId());
-        }
-        return $doctrineObject;
     }
 
     public function fromDoctrine(object $doctrineObject): object

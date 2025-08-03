@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    uploads_path: '%kernel.project_dir%/public/uploads'
 
 services:
     # default configuration for services in *this* file
@@ -35,6 +36,7 @@ services:
     App\Domain\User\Service\PasswordHasher: '@App\Infrastructure\Security\PasswordHasherService'
     App\Domain\User\Service\CurrentUserProviderInterface: '@App\Infrastructure\Security\CurrentUserProvider'
     App\Domain\Ticket\Repository\TicketRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineTicketRepository'
+    App\Domain\Article\Repository\ArticleRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineArticleRepository'
     App\Domain\Messaging\Repository\MessageRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineMessageRepository'
     App\Domain\Workspace\Repository\WorkspaceRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineWorkspaceRepository'
     App\Domain\Settings\Repository\SettingsRepositoryInterface: '@App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSettingsRepository'
@@ -50,6 +52,10 @@ services:
     App\Application\User\Service\PasswordResetServiceInterface: '@App\Application\User\Service\PasswordResetService'
     App\Application\Ticket\ReadModel\RecentTicketViewRepository: '@App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository'
     App\Domain\Signature\SignerInterface: '@App\Infrastructure\Security\Signature\HmacSha256Signer'
+
+    App\Infrastructure\Service\FileUploaderService:
+        arguments:
+            $uploadsPath: '%uploads_path%'
 
     App\Infrastructure\Persistence\Redis\Repository\RedisRecentTicketViewRepository:
         arguments:
