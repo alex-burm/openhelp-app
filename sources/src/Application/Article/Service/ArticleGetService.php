@@ -6,7 +6,7 @@ use App\Application\Article\Dto\ArticleViewDto;
 use App\Domain\Article\Repository\ArticleRepositoryInterface;
 use Symfony\Component\Uid\Uuid;
 
-class ArticleGetEditingService
+class ArticleGetService
 {
     public function __construct(
         protected ArticleRepositoryInterface $repository,
@@ -20,9 +20,10 @@ class ArticleGetEditingService
             throw new \LogicException('Article not found');
         }
         return new ArticleViewDto(
-            id: $article->getId(),
+            id: $article->getId()->toRfc4122(),
             title: $article->getTitle(),
             content: $article->getContent(),
+            isPublished: $article->getStatus()->isPublished(),
         );
     }
 }

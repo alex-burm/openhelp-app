@@ -25,6 +25,7 @@ final class Version20250728113304 extends AbstractMigration
               `space_id` int unsigned NOT NULL,
               `title` TEXT NOT NULL,
               `content` LONGTEXT NOT NULL,
+              `status` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT \'0 - draft, 1 - published\',
               `created_at` datetime NOT NULL,
               `updated_at` datetime NOT NULL,
               PRIMARY KEY (`id`),

@@ -5,9 +5,10 @@ namespace App\Application\Article\Dto;
 class ArticleViewDto
 {
     public function __construct(
-        public ?string $id = null,
-        public ?string $title = null,
-        public ?string $content = null,
+        public string $id,
+        public string $title,
+        public string $content,
+        public bool $isPublished,
     ) {
     }
 }

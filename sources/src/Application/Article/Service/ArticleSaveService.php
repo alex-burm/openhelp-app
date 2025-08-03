@@ -16,13 +16,13 @@ class ArticleSaveService
     ) {
     }
 
-    public function __invoke(ArticleSaveDto $dto): ArticleUpdated
+    public function __invoke(ArticleSaveDto $dto): void
     {
         $article = $this->repository->findOneById(Uuid::fromRfc4122($dto->id));
         $article->setTitle($dto->title);
         $article->setContent($dto->content);
 
         $this->repository->save($article);
-        return $this->eventDispatcher->dispatch(new ArticleUpdated($article));
+        $this->eventDispatcher->dispatch(new ArticleUpdated($article));
     }
 }

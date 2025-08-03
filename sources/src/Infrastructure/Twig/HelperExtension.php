@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Twig;
 
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class HelperExtension extends AbstractExtension
@@ -11,6 +12,13 @@ class HelperExtension extends AbstractExtension
     {
         return [
             new TwigFunction('unique', \uniqid(...))
+        ];
+    }
+
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter('json_decode', \json_decode(...))
         ];
     }
 }

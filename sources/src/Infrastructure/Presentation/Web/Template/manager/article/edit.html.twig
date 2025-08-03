@@ -26,10 +26,11 @@
                 </div>
                 #}
                 <div class="header__right">
+
                     <div class="switch__wrapper">
                         Publish
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" name="published" id="published" value="{{ article.isPublished ? '1' : '0' }}" {{ article.isPublished ? 'checked' }}>
                             <span class="switch__mode"></span>
                         </label>
                     </div>
@@ -67,8 +68,8 @@
 
     <script>
         const editor = new EditorJS({
-            data: {{ article.content|raw }},
             holder: 'editor',
+            data: {{ article.content|raw }},
             autofocus: true,
             placeholder: 'Type text here...',
 
@@ -90,9 +91,28 @@
                 image: {
                     class: ImageTool,
                     config: {
-                        endpoints: {
-                            byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-                            byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+                        uploader: {
+                            uploadByFile: (file) => {
+                                return new Promise((resolve, reject) => {
+                                    const formData = new FormData();
+                                    formData.append('file', file);
+
+                                    fetch('{{ path('manager_default_upload_file') }}', {
+                                        method: 'POST',
+                                        body: formData,
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        resolve({
+                                            success: 1,
+                                            file: {
+                                                url: data.url,
+                                            }
+                                        });
+                                    })
+                                    .catch(error => reject(error));
+                                });
+                            },
                         }
                     }
                 },
@@ -145,9 +165,19 @@
                         _token: '{{ csrf_token }}'
                     }),
                 });
-
-                console.log('onChange triggered', )
             }
+        });
+
+        document.getElementById('published').addEventListener('change', function() {
+            console.log(this.checked)
+            fetch('{{ path('manager_article_status', {id: article.id}) }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    publish: this.checked ? '1' : '0',
+                    _token: '{{ csrf_token }}'
+                }),
+            });
         });
     </script>
 {% endblock %}

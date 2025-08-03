@@ -2,12 +2,10 @@
 
 namespace App\Application\Article\Dto;
 
-class ArticleSaveDto
+class ArticleTogglePublicationDto
 {
     public function __construct(
         public string $id,
-        public string $title,
-        public string $content,
-    ) {
-    }
+        public bool $publish,
+    ) {}
 }

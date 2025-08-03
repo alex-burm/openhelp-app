@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Serializer;
 
 use App\Domain\Article\Entity\Article;
+use App\Domain\Article\ValueObject\ArticleStatus;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
@@ -21,6 +22,7 @@ class ArticleSerializer implements NormalizerInterface, DenormalizerInterface
             'id' => $data->getId(),
             'title' => $data->getTitle(),
             'content' => $data->getContent(),
+            'status' => (int)$data->getStatus()->isPublished(),
         ];
     }
 
@@ -31,6 +33,7 @@ class ArticleSerializer implements NormalizerInterface, DenormalizerInterface
         }
 
         $data['id'] = Uuid::fromRfc4122($data['id'] ?? null);
+        $data['status'] = $data['status'] ?? false ? ArticleStatus::PUBLISHED : ArticleStatus::DRAFT;
         return new Article(...$data);
     }
 

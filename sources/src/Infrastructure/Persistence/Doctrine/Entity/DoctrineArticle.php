@@ -26,6 +26,9 @@ class DoctrineArticle implements WorkspaceAwareEntity
     #[ORM\Column(type: 'string', nullable: false)]
     protected ?string $content = '';
 
+    #[ORM\Column(type: 'integer', nullable: false)]
+    protected int $status = 0;
+
     #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
@@ -68,6 +71,16 @@ class DoctrineArticle implements WorkspaceAwareEntity
     public function setContent(?string $content): void
     {
         $this->content = $content;
+    }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

@@ -2,12 +2,12 @@
 
 namespace App\Application\Article\Dto;
 
-class ArticleSaveDto
+use App\Domain\Article\Entity\Article;
+
+class ArticleStatusDto
 {
     public function __construct(
         public string $id,
-        public string $title,
-        public string $content,
-    ) {
-    }
+        public bool $published,
+    ) {}
 }

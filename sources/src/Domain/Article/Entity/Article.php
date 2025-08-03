@@ -2,6 +2,7 @@
 
 namespace App\Domain\Article\Entity;
 
+use App\Domain\Article\ValueObject\ArticleStatus;
 use Symfony\Component\Uid\Uuid;
 
 class Article
@@ -14,6 +15,7 @@ class Article
         protected ?Uuid $id = null,
         protected ?string $title = null,
         protected ?string $content = null,
+        protected ArticleStatus $status = ArticleStatus::DRAFT,
     ) {
         $this->createdAt = new \DateTimeImmutable();
     }
@@ -56,5 +58,31 @@ class Article
     public function setContent(?string $content): void
     {
         $this->content = $content;
+    }
+
+    public function getStatus(): ArticleStatus
+    {
+        return $this->status;
+    }
+
+    public function publish(): void
+    {
+        if ($this->status->isPublished()) {
+            return;
+        }
+        $this->status = ArticleStatus::PUBLISHED;
+    }
+
+    public function unpublish(): void
+    {
+        if (false === $this->status->isPublished()) {
+            return;
+        }
+        $this->status = ArticleStatus::DRAFT;
+    }
+
+    public function toggleStatus(): void
+    {
+        $this->status = $this->status->toggle();
     }
 }

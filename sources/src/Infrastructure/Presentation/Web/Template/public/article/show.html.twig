@@ -1,0 +1,26 @@
+{% extends 'manager/base.html.twig' %}
+
+{% block header %}{{ article.title }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="layout">
+            <header class="header header--secondary">
+                <div class="header__right">
+                    <a href="#" class="btn__primary btn__primary--xl">
+                        <span class="btn__text">
+                            Close
+                        </span>
+                    </a>
+                </div>
+            </header>
+            <div class="builder">
+                <h1 class="builder__title">
+                    {{ article.title|default('Untitled article') }}
+                </h1>
+
+                {% include 'shared/editor/blocks.html.twig' with { blocks: article.content|json_decode(true).blocks } %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

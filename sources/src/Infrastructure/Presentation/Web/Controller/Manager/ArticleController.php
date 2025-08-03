@@ -3,11 +3,12 @@
 namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
 use App\Application\Article\Dto\ArticleSaveDto;
+use App\Application\Article\Dto\ArticleTogglePublicationDto;
 use App\Application\Article\Service\ArticleCreateOrGetService;
-use App\Application\Article\Service\ArticleGetEditingService;
+use App\Application\Article\Service\ArticleGetService;
 use App\Application\Article\Service\ArticleSaveService;
+use App\Application\Article\Service\ArticleTogglePublicationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,9 +31,9 @@ class ArticleController extends AbstractController
 
     #[Route('/edit/{id}', name: 'manager_article_edit')]
     public function edit(
-        Request $request,
-        ArticleSaveService $saveService,
-        ArticleGetEditingService $editingService,
+        Request                   $request,
+        ArticleSaveService        $saveService,
+        ArticleGetService         $editingService,
         CsrfTokenManagerInterface $csrfTokenService,
     ): Response {
         $id = $request->attributes->get('id');
@@ -45,7 +46,10 @@ class ArticleController extends AbstractController
             );
 
             if (false === $isValidToken) {
-                return new JsonResponse(['error' => 'Invalid CSRF token'], 400);
+                return $this->json(
+                    ['error' => 'Invalid CSRF token'],
+                    Response::HTTP_BAD_REQUEST,
+                );
             }
 
             $saveService(new ArticleSaveDto(
@@ -64,12 +68,34 @@ class ArticleController extends AbstractController
         ]);
     }
 
-//    #[Route('/status/{id}', name: 'manager_article_status')]
-//    public function status(
-//        Request $request,
-//        ArticleSaveService $saveService,
-//    ): Response {
-//
-//        return $this->render('manager/article/edit.html.twig');
-//    }
+    #[Route('/status/{id}', name: 'manager_article_status', methods: ['POST'])]
+    public function status(
+        Request $request,
+        ArticleTogglePublicationService $publicationService,
+        CsrfTokenManagerInterface $csrfTokenService,
+    ): Response {
+        $id = $request->attributes->get('id');
+
+        $csrfTokenKey = 'editor_autosave_' . $id;
+        $payload = $request->getPayload();
+        $isValidToken = $csrfTokenService->isTokenValid(
+            new CsrfToken($csrfTokenKey, $payload->get('_token')),
+        );
+
+        if (false === $isValidToken) {
+            return $this->json(
+                ['error' => 'Invalid CSRF token'],
+                Response::HTTP_BAD_REQUEST,
+            );
+        }
+
+        $statusDto = $publicationService(new ArticleTogglePublicationDto(
+            id: $id,
+            publish: $request->request->getBoolean('publish'),
+        ));
+
+        return $this->json([
+            'published' => $statusDto->published
+        ]);
+    }
 }
