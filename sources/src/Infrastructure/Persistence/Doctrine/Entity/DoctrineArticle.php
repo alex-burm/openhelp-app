@@ -10,6 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineArticleRepository::class)]
 #[ORM\Table(name: 'article')]
+#[ORM\HasLifecycleCallbacks]
 class DoctrineArticle implements WorkspaceAwareEntity
 {
     use WorkspaceTrait;
@@ -101,5 +102,11 @@ class DoctrineArticle implements WorkspaceAwareEntity
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

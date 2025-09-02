@@ -8,18 +8,30 @@ RUN apt-get update && apt-get install -y \
     zip \
     libzip-dev \
     gettext-base \
-    libc-client-dev \
     libkrb5-dev \
-    && docker-php-ext-install zip \
+    libssl-dev \
+    libicu-dev \
+    build-essential \
     && apt-get clean
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install intl
 RUN docker-php-ext-enable pdo_mysql
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install redis && docker-php-ext-enable redis
-RUN pecl install imap && docker-php-ext-enable imap
 RUN pecl install apcu && docker-php-ext-enable apcu
+
+RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/bullseye.list
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libkrb5-dev \
+    libc-client-dev \
+    libssl-dev
+
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
+RUN docker-php-ext-install imap
 
 COPY frankenphp.ini /etc/frankenphp.ini
 

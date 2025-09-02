@@ -1,0 +1,124 @@
+{% macro sortAttrs(field, criteria) %}
+    {% set direction = criteria.sortBy == field and criteria.sortOrder == 'asc' ? 'desc' : 'asc' %}
+    {% set url = path('manager_article_index', { title: criteria.title, sort_by: field, sort_order: direction }) %}
+    href="{{ url }}" class="{{ criteria.sortBy == field ? direction : '' }}"
+{% endmacro %}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            <div class="table__heading">
+                <a {{ _self.sortAttrs('title', criteria) }}>
+                    Article
+                    <span class="table__sort">
+                        <i class="icon-sort-up"></i>
+                        <i class="icon-sort-down"></i>
+                    </span>
+                </a>
+            </div>
+        </th>
+        <th class="table__col160">
+            <div class="table__heading">
+                <a {{ _self.sortAttrs('status', criteria) }}>
+                    Status
+                    <span class="table__sort">
+                        <i class="icon-sort-up"></i>
+                        <i class="icon-sort-down"></i>
+                    </span>
+                </a>
+            </div>
+        </th>
+        <th class="table__col160">
+            <div class="table__heading">
+                <a {{ _self.sortAttrs('updatedAt', criteria) }}>
+                    Last edited
+                    <span class="table__sort">
+                        <i class="icon-sort-up"></i>
+                        <i class="icon-sort-down"></i>
+                    </span>
+                </a>
+            </div>
+        </th>
+        {#
+        <th class="table__col120">
+            <div class="table__heading">
+                <a href="#" class="asc">
+                    Views
+                    <span class="table__sort">
+                        <i class="icon-sort-up"></i>
+                        <i class="icon-sort-down"></i>
+                    </span>
+                </a>
+            </div>
+        </th>
+        #}
+        <th class="table__col64"></th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for item in list %}
+            <tr data-href="{{ path('manager_article_process', {id: item.id}) }}" onclick="return goTo(event)">
+                <td>
+                    <div class="item">
+                        <div class="item__inner">
+                            <span class="item__heading">
+                                {{ item.title }}
+                            </span>
+                            {#
+                            <span class="item__text">
+                                Category name
+                            </span>
+                            #}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="published__tag {{ item.status.isPublished ? '' : 'disabled' }}">
+                        <i class="icon-world"></i>
+                        {{ item.status.isPublished ? 'Published' : 'Draft' }}
+                    </span>
+                </td>
+                <td>
+                    <span class="item__content">
+                        {{ item.updatedAt|format_datetime(pattern="dd MMM, YYYY") }}
+                    </span>
+                </td>
+                {#
+                <td>
+                    <span class="item__content">
+                        1,225
+                    </span>
+                </td>
+                #}
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn__primary btn__dropdown">
+                            <i class="icon-dots"></i>
+                        </button>
+                        <div class="dropdown__menu">
+                            <div class="dropdown__item">
+                                <a href="{{ path('manager_article_process', {id: item.id}) }}" class="btn__primary">
+                                    <i class="icon-open"></i>
+                                    <span class="btn__text">
+                                        Open article
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__menu-bot">
+                                <div class="dropdown__item">
+                                    <a href="#" class="btn__primary danger" onclick="return deleteArticle('{{ item.id }}')">
+                                        <i class="icon-trash"></i>
+                                        <span class="btn__text">
+                                            Delete
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

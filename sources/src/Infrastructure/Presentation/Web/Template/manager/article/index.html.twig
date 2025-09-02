@@ -1,0 +1,101 @@
+{% extends 'manager/layout.html.twig' %}
+
+{% block menu %}article{% endblock %}
+
+{% block header %}Article{% endblock %}
+
+{% block content %}
+    <div class="filter">
+        <div class="filter__left">
+            <div class="form__row">
+                <i class="icon-search"></i>
+                <input type="text" class="form__control form__control--xl" id="title" placeholder="Search inside knowledge base...">
+                <button type="button" class="btn__clear-search" onclick="this.previousElementSibling.value = ''; this.previousElementSibling.dispatchEvent(new Event('input'))">
+                    <i class="icon-cross"></i>
+                </button>
+            </div>
+        </div>
+        <a href="{{ path('manager_article_process') }}" class="btn__primary btn__primary--xl">
+            <i class="icon-plus"></i>
+            <span class="btn__text">
+                Add article
+            </span>
+        </a>
+    </div>
+    <section class="base" id="result">
+        {% if list is empty %}
+            <div class="empty">
+                <div class="empty__inner">
+                    <img src="{{ asset('assets/img/no-articles.svg') }}" alt="no requests">
+                    <span class="empty__text">
+                        There are no articles in the knowledge base.
+                    </span>
+                    <div class="empty__actions">
+                        <a href="{{ path('manager_article_process') }}" class="btn__primary btn__primary--xl btn__primary--blue">
+                            <i class="icon-plus"></i>
+                            Add article
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% include 'manager/article/partials/table.html.twig' %}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const titleEl = document.getElementById('title');
+        const resultEl = document.getElementById('result');
+        let debounceHandler;
+
+        titleEl.addEventListener('input', e => {
+            clearTimeout(debounceHandler);
+            debounceHandler = setTimeout(() => searchArticle(), 500);
+        })
+
+        const searchArticle = () => {
+            fetch('{{ path('manager_article_index') }}?title=' + titleEl.value.trim(), {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            })
+            .then(response => response.text())
+            .then(r => {
+                resultEl.innerHTML = r;
+                handleTableAction();
+            });
+        }
+
+        const deleteArticle = id => {
+            if (false === confirm('Are you sure?')) {
+                return false;
+            }
+
+            fetch('{{ path('manager_article_delete', {id: 'placeholder'}) }}'.replace('placeholder', id), {
+                method: 'DELETE',
+                headers: {
+                    'X-Csrf-Token': '{{ csrf_token('article_delete') }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(() => searchArticle());
+        }
+
+        const handleTableAction = () => {
+            resultEl.querySelectorAll('tbody tr').forEach(tr => {
+                tr.addEventListener('click', e => {
+                    if (e.target.closest('a, button')) {
+                        return;
+                    }
+                    document.location.href = tr.dataset.href;
+                })
+            })
+        }
+
+        handleTableAction();
+    </script>
+{% endblock %}

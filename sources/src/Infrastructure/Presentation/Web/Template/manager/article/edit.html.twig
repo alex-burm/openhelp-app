@@ -34,7 +34,7 @@
                             <span class="switch__mode"></span>
                         </label>
                     </div>
-                    <a href="#" class="btn__primary btn__primary--xl">
+                    <a href="{{ path('manager_article_index') }}" class="btn__primary btn__primary--xl">
                         <span class="btn__text">
                             Close
                         </span>
@@ -69,7 +69,7 @@
     <script>
         const editor = new EditorJS({
             holder: 'editor',
-            data: {{ article.content|raw }},
+            data: {{ article.content|default('{}')|raw }},
             autofocus: true,
             placeholder: 'Type text here...',
 
@@ -155,26 +155,33 @@
                     inlineToolbar: true,
                 },
             },
-            onChange: async (api, event) => {
-                fetch('{{ path('manager_article_edit', {id: app.request.attributes.get('id')}) }}', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({
-                        title: document.getElementById('title').value,
-                        content: JSON.stringify(await api.saver.save()),
-                        _token: '{{ csrf_token }}'
-                    }),
-                });
-            }
+            onChange: () => saveArticle(),
         });
 
-        document.getElementById('published').addEventListener('change', function() {
-            console.log(this.checked)
+        const saveArticle = async () => {
+            fetch('{{ path('manager_article_edit', {id: app.request.attributes.get('id')}) }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    title: document.getElementById('title').value,
+                    content: JSON.stringify(await editor.saver.save()),
+                    _token: '{{ csrf_token }}'
+                }),
+            });
+        }
+
+        let debounceHandler;
+        document.getElementById('title').addEventListener('input', () => {
+            clearTimeout(debounceHandler);
+            debounceHandler = setTimeout(() => saveArticle(), 500);
+        })
+
+        document.getElementById('published').addEventListener('change', e => {
             fetch('{{ path('manager_article_status', {id: article.id}) }}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
-                    publish: this.checked ? '1' : '0',
+                    publish: e.target.checked ? '1' : '0',
                     _token: '{{ csrf_token }}'
                 }),
             });
