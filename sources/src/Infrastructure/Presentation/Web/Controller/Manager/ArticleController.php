@@ -2,10 +2,13 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
+use App\Application\Article\Dto\ArticleListCriteriaDto;
 use App\Application\Article\Dto\ArticleSaveDto;
 use App\Application\Article\Dto\ArticleTogglePublicationDto;
 use App\Application\Article\Service\ArticleCreateOrGetService;
+use App\Application\Article\Service\ArticleDeleteService;
 use App\Application\Article\Service\ArticleGetService;
+use App\Application\Article\Service\ArticleListService;
 use App\Application\Article\Service\ArticleSaveService;
 use App\Application\Article\Service\ArticleTogglePublicationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +22,41 @@ use Symfony\Component\Uid\Uuid;
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
-    #[Route('/process/{id}', name: 'manager_article_process', defaults: ['id' => null])]
+    #[Route('/', name: 'manager_article_index')]
     public function index(
+        Request $request,
+        ArticleListService $listService,
+    ): Response {
+        $criteria = new ArticleListCriteriaDto(
+            title: $request->query->get('title'),
+            sortBy: $request->query->get('sort_by'),
+            sortOrder: $request->query->get('sort_order', 'asc'),
+            limit: \min($request->query->getInt('limit', 100), 500),
+            offset: $request->query->getInt('offset'),
+        );
+
+        $result = $listService($criteria);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('manager/article/partials/table.html.twig', [
+                'list' => $result->items,
+                'criteria' => $criteria,
+            ]);
+        }
+
+        return $this->render('manager/article/index.html.twig', [
+            'list' => $result->items,
+            'totalCount' => $result->totalCount,
+            'criteria' => $criteria,
+        ]);
+    }
+
+    #[Route('/process/{id}', name: 'manager_article_process', defaults: ['id' => null])]
+    public function process(
         ArticleCreateOrGetService $createService,
         ?Uuid $id = null,
     ): Response {
-        $createService($id);
+        $id = $createService($id);
 
         return $this->redirectToRoute('manager_article_edit', ['id' => $id]);
     }
@@ -97,5 +129,32 @@ class ArticleController extends AbstractController
         return $this->json([
             'published' => $statusDto->published
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'manager_article_delete', methods: ['DELETE'])]
+    public function delete(
+        Request $request,
+        ArticleDeleteService $deleteService,
+        CsrfTokenManagerInterface $csrfTokenService,
+    ): Response {
+        $id = Uuid::fromString($request->attributes->get('id'));
+
+        $token = $request->headers->get('X-CSRF-TOKEN');
+
+        $isValidToken = $csrfTokenService->isTokenValid(
+            new CsrfToken('article_delete', $token),
+        );
+
+        if (false === $isValidToken) {
+            return $this->json(
+                ['error' => 'Invalid CSRF token'],
+                Response::HTTP_BAD_REQUEST,
+            );
+        }
+
+        if (false === $deleteService($id)) {
+            throw $this->createNotFoundException('Article not found');
+        }
+        return $this->json(['success' => true]);
     }
 }
