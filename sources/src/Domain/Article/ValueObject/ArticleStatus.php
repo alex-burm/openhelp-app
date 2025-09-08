@@ -2,10 +2,10 @@
 
 namespace App\Domain\Article\ValueObject;
 
-enum ArticleStatus: string
+enum ArticleStatus: int
 {
-    case DRAFT      = 'draft';
-    case PUBLISHED  = 'published';
+    case DRAFT      = 0;
+    case PUBLISHED  = 1;
 
     public function isPublished(): bool
     {

@@ -1,0 +1,66 @@
+{% extends 'manager/layout.html.twig' %}
+
+{% block menu %}category{% endblock %}
+
+{% block header %}Categories{% endblock %}
+
+{% block content %}
+    {% if list is empty %}
+        {% include 'manager/category/partials/empty.html.twig' %}
+    {% else %}
+        {% include 'manager/category/partials/list.html.twig' %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const resultEl = document.querySelector('.main');
+        const getCategoryList = () => {
+            fetch('{{ path('manager_category_index') }}', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            })
+                .then(response => response.text())
+                .then(r => {
+                    resultEl.innerHTML = r;
+                });
+        }
+
+        const onDeleteCategory = (form, token) => {
+            fetch(form.action, {
+                method: 'DELETE',
+                headers: {
+                    'X-Csrf-Token': token,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(() => {
+                    getCategoryList();
+                    closeModal();
+                })
+            return false;
+        }
+
+        const onSubmitCategory = form => {
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                redirect: 'manual',
+            })
+                .then(async response => {
+                    if ('opaqueredirect' === response.type) {
+                        getCategoryList();
+                        closeModal();
+                        return;
+                    }
+
+                    document.querySelector('.modal__inner').innerHTML = await response.text();
+                });
+            return false;
+        }
+    </script>
+{% endblock %}

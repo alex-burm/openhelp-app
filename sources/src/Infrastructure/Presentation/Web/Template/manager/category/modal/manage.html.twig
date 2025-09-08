@@ -1,0 +1,25 @@
+{{ form_start(form, { attr: {
+    action: path('manager_category_manage', { id: category.id }),
+    class: 'modal__body',
+    id: 'category_form',
+    onsubmit: 'return onSubmitCategory(this)'
+}}) }}
+    <div class="modal__form">
+        <div class="form__row">
+            <div class="form__group">
+                {{ form_label(form.name, 'Category name', {class: 'form__label'}) }}
+                {{ form_widget(form.name, {attr: {class: 'form__control', placeholder: 'e.g. Credentials'}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}
+<div class="modal__actions">
+    <button type="submit" form="category_form" class="btn__primary btn__primary--xl btn__primary--blue">
+        {% if category.id is empty %}
+            Add category
+        {% else %}
+            Save
+        {% endif %}
+    </button>
+</div>

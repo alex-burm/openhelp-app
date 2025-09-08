@@ -38,11 +38,11 @@
                     <i class="icon-knowledge-base"></i>
                     Knowledge base
                 </a>
-                <a class="nav__link" {{ 'agent' == menu ? 'active'}} href="#">
+                <a class="nav__link {{ 'agent' == menu ? 'active'}}" href="#">
                     <i class="icon-agent"></i>
                     Agents
                 </a>
-                <a class="nav__link" {{ 'settings' == menu ? 'active'}} href="#">
+                <a class="nav__link {{ 'category' == menu ? 'active'}}" href="{{ path('manager_category_index') }}">
                     <i class="icon-settings"></i>
                     Settings
                 </a>

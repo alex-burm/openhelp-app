@@ -56,7 +56,9 @@ class DoctrineArticleRepository implements ArticleRepositoryInterface
     {
         $qb = $this->entityManager->createQueryBuilder()
             ->select('r')
-            ->from(static::DOCTRINE_CLASS_NAME, 'r');
+            ->from(static::DOCTRINE_CLASS_NAME, 'r')
+            ->leftJoin('r.category', 'c');
+
 
         $this->applyCriteriaFilters($qb, $criteria);
 
@@ -88,7 +90,8 @@ class DoctrineArticleRepository implements ArticleRepositoryInterface
             return new ArticleListItemDto(
                 id: $doctrineArticle->getId()->toRfc4122(),
                 title: $doctrineArticle->getTitle() ?: 'Untitled article',
-                status: ArticleStatus::from($doctrineArticle->getStatus() === 1 ? 'published' : 'draft'),
+                status: ArticleStatus::from($doctrineArticle->getStatus()),
+                categoryName: $doctrineArticle->getCategory()?->getName(),
                 updatedAt: $doctrineArticle->getUpdatedAt(),
             );
         }, $doctrineArticles);

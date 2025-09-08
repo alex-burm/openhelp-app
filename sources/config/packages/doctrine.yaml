@@ -24,6 +24,10 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
+        filters:
+            workspaceFilter:
+                class: App\Infrastructure\Persistence\Doctrine\Filter\WorkspaceFilter
+                enabled: true
 
 when@test:
     doctrine:

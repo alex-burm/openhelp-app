@@ -38,6 +38,9 @@ class DoctrineArticle implements WorkspaceAwareEntity
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: DoctrineCategory::class)]
+    protected ?DoctrineCategory $category = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -108,5 +111,15 @@ class DoctrineArticle implements WorkspaceAwareEntity
     public function preUpdate(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getCategory(): ?DoctrineCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?DoctrineCategory $category): void
+    {
+        $this->category = $category;
     }
 }

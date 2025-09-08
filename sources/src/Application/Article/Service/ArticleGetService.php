@@ -23,6 +23,7 @@ class ArticleGetService
             id: $article->getId()->toRfc4122(),
             title: $article->getTitle(),
             content: $article->getContent(),
+            categoryId: $article->getCategoryId(),
             isPublished: $article->getStatus()->isPublished(),
         );
     }
