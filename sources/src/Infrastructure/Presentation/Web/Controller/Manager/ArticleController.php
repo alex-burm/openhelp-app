@@ -2,15 +2,19 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
+use App\Application\Article\Dto\ArticleCategoryUpdateDto;
 use App\Application\Article\Dto\ArticleListCriteriaDto;
 use App\Application\Article\Dto\ArticleSaveDto;
 use App\Application\Article\Dto\ArticleTogglePublicationDto;
+use App\Application\Article\Service\ArticleCategoryUpdateService;
 use App\Application\Article\Service\ArticleCreateOrGetService;
 use App\Application\Article\Service\ArticleDeleteService;
 use App\Application\Article\Service\ArticleGetService;
 use App\Application\Article\Service\ArticleListService;
 use App\Application\Article\Service\ArticleSaveService;
 use App\Application\Article\Service\ArticleTogglePublicationService;
+use App\Application\Category\Dto\CategoryGetService;
+use App\Application\Category\Service\CategoryListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,6 +70,7 @@ class ArticleController extends AbstractController
         Request                   $request,
         ArticleSaveService        $saveService,
         ArticleGetService         $editingService,
+        CategoryListService       $categoryListService,
         CsrfTokenManagerInterface $csrfTokenService,
     ): Response {
         $id = $request->attributes->get('id');
@@ -97,6 +102,7 @@ class ArticleController extends AbstractController
         return $this->render('manager/article/edit.html.twig', [
             'csrf_token' => $csrfTokenService->getToken($csrfTokenKey)->getValue(),
             'article' => $articleDto,
+            'categories' => $categoryListService(),
         ]);
     }
 
@@ -131,13 +137,44 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    #[Route('/category/{id}', name: 'manager_article_category', methods: ['POST'])]
+    public function category(
+        Request $request,
+        ArticleCategoryUpdateService $categoryUpdateService,
+        CsrfTokenManagerInterface $csrfTokenService,
+    ): Response {
+        $id = $request->attributes->get('id');
+
+        $csrfTokenKey = 'editor_autosave_' . $id;
+        $payload = $request->getPayload();
+        $isValidToken = $csrfTokenService->isTokenValid(
+            new CsrfToken($csrfTokenKey, $payload->get('_token')),
+        );
+
+        if (false === $isValidToken) {
+            return $this->json(
+                ['error' => 'Invalid CSRF token'],
+                Response::HTTP_BAD_REQUEST,
+            );
+        }
+
+        $categoryDto = $categoryUpdateService(new ArticleCategoryUpdateDto(
+            id: $id,
+            categoryId: $request->request->getString('categoryId'),
+        ));
+
+        return $this->json([
+            'categoryId' => $categoryDto->categoryId
+        ]);
+    }
+
     #[Route('/delete/{id}', name: 'manager_article_delete', methods: ['DELETE'])]
     public function delete(
         Request $request,
         ArticleDeleteService $deleteService,
         CsrfTokenManagerInterface $csrfTokenService,
     ): Response {
-        $id = Uuid::fromString($request->attributes->get('id'));
+        $id = $request->attributes->get('id');
 
         $token = $request->headers->get('X-CSRF-TOKEN');
 
@@ -152,7 +189,7 @@ class ArticleController extends AbstractController
             );
         }
 
-        if (false === $deleteService($id)) {
+        if (false === $deleteService(Uuid::fromString($id))) {
             throw $this->createNotFoundException('Article not found');
         }
         return $this->json(['success' => true]);

@@ -58,18 +58,18 @@
     </thead>
     <tbody>
         {% for item in list %}
-            <tr data-href="{{ path('manager_article_process', {id: item.id}) }}" onclick="return goTo(event)">
+            <tr data-href="{{ path('manager_article_process', {id: item.id}) }}">
                 <td>
                     <div class="item">
                         <div class="item__inner">
                             <span class="item__heading">
                                 {{ item.title }}
                             </span>
-                            {#
+                            {% if item.categoryName|length > 0 %}
                             <span class="item__text">
-                                Category name
+                                {{ item.categoryName }}
                             </span>
-                            #}
+                            {% endif %}
                         </div>
                     </div>
                 </td>

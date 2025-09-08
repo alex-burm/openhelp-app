@@ -3,6 +3,7 @@
 namespace App\Domain\Article\Entity;
 
 use App\Domain\Article\ValueObject\ArticleStatus;
+use App\Domain\Category\Entity\Category;
 use Symfony\Component\Uid\Uuid;
 
 class Article
@@ -15,6 +16,7 @@ class Article
         protected ?Uuid $id = null,
         protected ?string $title = null,
         protected ?string $content = null,
+        protected ?Uuid $categoryId = null,
         protected ArticleStatus $status = ArticleStatus::DRAFT,
     ) {
         $this->createdAt = new \DateTimeImmutable();
@@ -58,6 +60,16 @@ class Article
     public function setContent(?string $content): void
     {
         $this->content = $content;
+    }
+
+    public function getCategoryId(): ?Uuid
+    {
+        return $this->categoryId;
+    }
+
+    public function setCategoryId(?Uuid $categoryId): void
+    {
+        $this->categoryId = $categoryId;
     }
 
     public function getStatus(): ArticleStatus

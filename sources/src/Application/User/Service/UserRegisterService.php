@@ -2,6 +2,7 @@
 
 namespace App\Application\User\Service;
 
+use App\Application\Category\Service\CreateDefaultCategoriesService;
 use App\Application\User\Dto\UserWithWorkspaceRegisterDto;
 use App\Domain\Common\Event\EventDispatcherInterface;
 use App\Domain\Mail\Outgoing\Service\MailHandlerInterface;
@@ -19,12 +20,13 @@ use App\Infrastructure\Service\WorkspaceContext;
 class UserRegisterService
 {
     public function __construct(
-        protected WorkspaceContext             $workspaceContext,
-        protected UserRepositoryInterface      $userRepository,
-        protected WorkspaceRepositoryInterface $workspaceRepository,
-        protected PasswordHasher               $passwordHasher,
-        protected MailHandlerInterface         $mailHandler,
-        protected EventDispatcherInterface     $eventDispatcher,
+        protected WorkspaceContext               $workspaceContext,
+        protected UserRepositoryInterface        $userRepository,
+        protected WorkspaceRepositoryInterface   $workspaceRepository,
+        protected PasswordHasher                 $passwordHasher,
+        protected MailHandlerInterface           $mailHandler,
+        protected EventDispatcherInterface       $eventDispatcher,
+        protected CreateDefaultCategoriesService $defaultCategoriesService,
     ) {
     }
 
@@ -51,6 +53,8 @@ class UserRegisterService
         // Set workspace owner
         $workspace->setOwnerId($user->getId());
         $this->workspaceRepository->save($workspace);
+
+        $defaultCategoriesService();
 
         $this->mailHandler->handle(WelcomeMailType::create($user));
 

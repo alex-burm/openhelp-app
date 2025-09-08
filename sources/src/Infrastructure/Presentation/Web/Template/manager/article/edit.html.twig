@@ -6,27 +6,28 @@
     <div class="wrapper">
         <div class="layout">
             <header class="header header--secondary">
-                {#
                 <div class="header__left">
+                    {#
                     <div class="form__row">
                         <div class="form__group">
                             <input type="text" class="form__control form__control--m" value="Untitled article">
                         </div>
                     </div>
+                    #}
                     <div class="form__row">
                         <div class="form__select">
-                            <select class="form__control" required="">
-                                <option value="" selected="">Category name</option>
-                                <option>Test</option>
-                                <option>Test 2</option>
+                            <select class="form__control" name="category" required="" id="category">
+                                <option value="">Select category</option>
+                                {% for item in categories %}
+                                <option value="{{ item.id }}" {{ item.id == article.categoryId ? 'selected' : '' }}>{{ item.name }}</option>
+                                {% endfor %}
                             </select>
                             <i class="icon-dropdown"></i>
                         </div>
                     </div>
                 </div>
-                #}
-                <div class="header__right">
 
+                <div class="header__right">
                     <div class="switch__wrapper">
                         Publish
                         <label class="switch">
@@ -182,6 +183,17 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
                     publish: e.target.checked ? '1' : '0',
+                    _token: '{{ csrf_token }}'
+                }),
+            });
+        });
+
+        document.getElementById('category').addEventListener('change', e => {
+            fetch('{{ path('manager_article_category', {id: article.id}) }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    categoryId: e.target.value,
                     _token: '{{ csrf_token }}'
                 }),
             });

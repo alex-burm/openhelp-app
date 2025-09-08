@@ -1,0 +1,34 @@
+<div class="cards cards--secondary">
+    <div class="cards__above">
+        <h2 class="cards__title">
+            Knowledge base categories
+        </h2>
+        <a href="{{ path('manager_category_manage') }}" class="btn__primary" onclick="return openModal(this.href)">
+            <i class="icon-plus"></i>
+            <span class="btn__text">Add</span>
+        </a>
+    </div>
+    <div class="cards__items">
+        {% for item in list %}
+            <div class="card card--third">
+                <div class="card__inner">
+                    <div class="card__inner-top">
+                        <h2 class="card__text">
+                            {{ item.name }}
+                        </h2>
+                        <span class="card__under">{{ '{0}no articles inside|{1}1 artice inside|]1,Inf[ %count% articles inside'|trans({'%count%': item.articleCount}) }}</span>
+                    </div>
+                    <div class="card__actions">
+                        <a href="{{ path('manager_category_manage', {id: item.id}) }}" class="btn__primary btn__primary--xl" onclick="return openModal(this.href)">
+                            <i class="icon-edit-secondary"></i>
+                            <span class="btn__text">Edit</span>
+                        </a>
+                        <a href="{{ path('manager_category_delete', {id: item.id}) }}" onclick="return openModal(this.href)" class="btn__primary btn__primary--xl">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -19,6 +19,10 @@ class ArticleSaveService
     public function __invoke(ArticleSaveDto $dto): void
     {
         $article = $this->repository->findOneById(Uuid::fromRfc4122($dto->id));
+        if (\is_null($article)) {
+            throw new \LogicException('Article not found');
+        }
+
         $article->setTitle($dto->title);
         $article->setContent($dto->content);
 

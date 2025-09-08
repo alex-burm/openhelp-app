@@ -1,0 +1,32 @@
+<div class="modal__top">
+    <div class="modal__top-inner">
+        <button type="button" class="btn__primary modal__close">
+            <i class="icon-cross"></i>
+        </button>
+    </div>
+</div>
+<div class="empty">
+    <form action="{{ path('manager_category_delete', {id: category.id}) }}"
+          method="POST"
+          class="empty__inner"
+          onsubmit="return onDeleteCategory(this, '{{ csrf_token('category_delete-' ~ category.id) }}')"
+    >
+        <img src="{{ asset('assets/img/delete.svg') }}" alt="no requests">
+        <h2 class="empty__title">
+            Are you sure you want to delete the “{{ category.name }}” category?
+        </h2>
+        <span class="empty__text">
+            All articles will be unassigned and will have no category.
+        </span>
+        <div class="empty__actions">
+            <button type="button" class="btn__primary btn__primary--xl modal__close">
+                <span class="btn__text">
+                    Cancel
+                </span>
+            </button>
+            <button type="submit" class="btn__primary btn__primary--xl btn__primary--danger">
+                Yes, delete
+            </button>
+        </div>
+    </form>
+</div>

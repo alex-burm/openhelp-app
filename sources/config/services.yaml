@@ -67,10 +67,6 @@ services:
                 - '@App\Application\Normalization\MessageViewNormalizer'
                 - '@App\Application\Normalization\MessageCollectionNormalizer'
 
-    App\Infrastructure\Persistence\Doctrine\Listener\WorkspaceListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
     App\Infrastructure\Persistence\Redis\LoginRateLimiterStorage:
         arguments:
             $rateLimiterFactory: '@limiter.login_attempts'

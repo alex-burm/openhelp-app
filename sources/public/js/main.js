@@ -1,5 +1,3 @@
-const modal = document.querySelector('.modal');
-
 const dropdownListener = e => {
     e.preventDefault();
 
@@ -29,8 +27,8 @@ window.addEventListener('click', function (e) {
         closeDropdown();
     }
 
-    if (e.target.closest('.modal__close, .modal__overlay')) {
-        modal.classList.remove('modal--visible');
+    if (e.target.closest('.modal__close, .modal__overlay') || e.target.classList.contains('.modal--close')) {
+        closeModal();
     }
 });
 
@@ -59,4 +57,28 @@ const addOrRemoveSearch = (method) => {
     search.classList[method]('show');
     overlay.classList[method]('show');
     layout.classList[method]('no__scroll');
+}
+
+const openModal = (url) => {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.classList.add('modal--visible');
+    modal.innerHTML = `
+        <div class="modal__overlay"></div>
+        <div class="modal__inner"></div>
+    `;
+    document.querySelector('body').appendChild(modal);
+    fetch(url, {}).then(result => {
+        return result.text();
+    }).then(html => {
+        modal.querySelector('.modal__inner').innerHTML = html;
+    });
+
+    return false;
+}
+
+const closeModal = () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(el => el.classList.remove('modal--visible'));
+    setTimeout(() => modals.forEach(el => el.remove()), 500);
 }

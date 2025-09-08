@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Public;
 
+use App\Application\Category\Service\CreateDefaultCategoriesService;
 use App\Application\User\Dto\InviteUsersDto;
 use App\Application\User\Dto\UserWithWorkspaceRegisterDto;
 use App\Application\User\Service\RegistrationEmailConfirmationService;

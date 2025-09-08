@@ -4,17 +4,18 @@ namespace App\Infrastructure\Persistence\Doctrine\Listener;
 
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineWorkspace;
 use App\Infrastructure\Persistence\Doctrine\Entity\WorkspaceAwareEntity;
-use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineWorkspaceMapper;
 use App\Infrastructure\Service\WorkspaceContext;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Events;
 
-class WorkspaceListener
+#[AsDoctrineListener(event: Events::prePersist)]
+class WorkspaceEntityListener
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
         protected WorkspaceContext $workspaceContext,
-        protected DoctrineWorkspaceMapper $workspaceMapper,
     ) {
     }
 

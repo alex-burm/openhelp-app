@@ -10,6 +10,7 @@ class ArticleListItemDto
         public string $id,
         public string $title,
         public ArticleStatus $status,
+        public ?string $categoryName,
         public \DateTimeImmutable $updatedAt,
     ) {
     }
