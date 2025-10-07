@@ -100,6 +100,17 @@ services:
         tags:
             - { name: monolog.processor }
 
+    Elastic\Elasticsearch\Client:
+        factory: ['App\Infrastructure\Persistence\Elastic\ElasticClientFactory', 'create']
+
+    App\Infrastructure\Persistence\Elastic\SearchProvider\SuggestSearchProvider:
+        tags:
+            - { name: app.search_provider }
+
+    App\Application\Search\SearchProviderLocator:
+        arguments:
+            $providers: !tagged_iterator 'app.search_provider'
+
 when@test:
     services:
         # default configuration for services in *this* file

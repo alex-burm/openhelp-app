@@ -39,26 +39,6 @@ const closeDropdown = () => {
     });
 }
 
-//Global search
-const headerSearch = document.querySelector('.header__form .form__control');
-const search = document.querySelector('.search');
-const overlay = document.querySelector('.overlay');
-const layout = document.querySelector('.layout');
-
-headerSearch?.addEventListener('focus', () => {
-    addOrRemoveSearch('add');
-})
-
-headerSearch?.addEventListener('blur', () => {
-    addOrRemoveSearch('remove');
-})
-
-const addOrRemoveSearch = (method) => {
-    search.classList[method]('show');
-    overlay.classList[method]('show');
-    layout.classList[method]('no__scroll');
-}
-
 const openModal = (url) => {
     const modal = document.createElement('div');
     modal.classList.add('modal');

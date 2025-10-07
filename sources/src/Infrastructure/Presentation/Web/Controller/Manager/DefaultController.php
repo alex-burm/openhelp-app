@@ -2,11 +2,11 @@
 
 namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
+use App\Application\Search\Dto\SearchQuery;
+use App\Application\Search\Service\AdminSuggestSearchService;
+use App\Domain\Search\ValueObject\SearchIndex;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,5 +45,12 @@ class DefaultController extends AbstractController
         return $this->json([
             'url' => $filePath
         ]);
+    }
+
+    #[Route('/search', name: 'manager_default_search', methods: ['GET'])]
+    public function search(Request $request, AdminSuggestSearchService $searchService): Response
+    {
+        $result = $searchService($request->query->get('q'));
+        return $this->json($result);
     }
 }
