@@ -62,3 +62,27 @@ const closeModal = () => {
     modals.forEach(el => el.classList.remove('modal--visible'));
     setTimeout(() => modals.forEach(el => el.remove()), 500);
 }
+
+const openModal = (url) => {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.classList.add('modal--visible');
+    modal.innerHTML = `
+        <div class="modal__overlay"></div>
+        <div class="modal__inner"></div>
+    `;
+    document.querySelector('body').appendChild(modal);
+    fetch(url, {}).then(result => {
+        return result.text();
+    }).then(html => {
+        modal.querySelector('.modal__inner').innerHTML = html;
+    });
+
+    return false;
+}
+
+const closeModal = () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(el => el.classList.remove('modal--visible'));
+    setTimeout(() => modals.forEach(el => el.remove()), 500);
+}
