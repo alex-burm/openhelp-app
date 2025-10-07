@@ -16,7 +16,7 @@
             .hidden {display:none;visibility: hidden}
         </style>
     </head>
-    <body>
+    <body data-space-id="{{ workspaceContext.currentWorkspace.id }}">
     <div class="wrapper">
         <div class="overlay"></div>
         {% set menu = block('menu') is defined ? block('menu') : 'dashboard' %}
@@ -64,120 +64,25 @@
                     <h1 class="header__title">{{ block('header') }}</h1>
                 {% endif %}
                 <div class="header__right">
-                    <form action="#" class="header__form">
+                    <form action="#" class="header__form"
+                        {{ stimulus_controller('GlobalSearch', {
+                            url: path('manager_default_search'),
+                            minLength: 2
+                        }) }}
+                    >
                         <div class="form__row">
                             <i class="icon-search"></i>
-                            <input type="text" class="form__control form__control--xl" placeholder="Search for anything in the system...">
-                            <button type="button" class="btn__clear-search">
+                            <input type="text"
+                                   class="form__control form__control--xl"
+                                   placeholder="Search for anything in the system..."
+                                   {{ stimulus_target('GlobalSearch', 'input') }}
+                                   autocomplete="off"
+                            >
+                            <button type="button" class="btn__clear-search" {{ stimulus_target('GlobalSearch', 'clearButton') }}>
                                 <i class="icon-cross"></i>
                             </button>
                         </div>
-                        <div class="search">
-                            <!-- <div class="loader">
-                                <span class="loader__circle"></span>
-                            </div> -->
-                            <!-- <div class="empty">
-                                <div class="empty__inner">
-                                    <img src="../assets/img/no-search.svg" alt="no requests">
-                                    <span class="empty__text">
-                                        There are no search results for this query.
-                                    </span>
-                                </div>
-                            </div> -->
-                            <div class="search__box">
-                                <div class="search__top">
-                                    <h2 class="search__title">
-                                        Customers
-                                    </h2>
-                                    <span class="search__result">
-                                        1 result
-                                    </span>
-                                </div>
-                                <a href="#" class="item">
-                                    <div class="item__left">
-                                        <div class="avatar">
-                                            <span class="avatar__name">
-                                                HW
-                                            </span>
-                                            <i class="icon-profile-customer"></i>
-                                        </div>
-                                    </div>
-                                    <div class="item__inner">
-                                        <span class="item__heading">
-                                            Hello Wilson
-                                        </span>
-                                        <span class="item__text">
-                                            hellowilson@gmail.com
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="search__box">
-                                <div class="search__top">
-                                    <h2 class="search__title">
-                                        Requests
-                                    </h2>
-                                    <span class="search__result">
-                                        3 results
-                                    </span>
-                                </div>
-                                <a href="#" class="item">
-                                    <div class="item__left">
-                                        <div class="item__decoration">
-                                            <i class="icon-chat"></i>
-                                        </div>
-                                    </div>
-                                    <div class="item__inner">
-                                        <span class="item__heading">
-                                            Hello, I just wanted to clarify few
-                                        </span>
-                                        <span class="item__text">
-                                            Gerd Muller • 50m ago
-                                        </span>
-                                    </div>
-                                    <div class="item__right">
-                                        <i class="icon-medium-priority"></i>
-                                    </div>
-                                </a>
-                                <a href="#" class="item">
-                                    <div class="item__left">
-                                        <div class="item__decoration">
-                                            <i class="icon-form"></i>
-                                        </div>
-                                    </div>
-                                    <div class="item__inner">
-                                        <span class="item__heading">
-                                            Hello! It seems that I found a lot
-                                        </span>
-                                        <span class="item__text">
-                                            Marta Fix • 44m ago
-                                        </span>
-                                    </div>
-                                    <div class="item__right">
-                                        <i class="icon-low-priority"></i>
-                                    </div>
-                                </a>
-                                <a href="#" class="item">
-                                    <div class="item__left">
-                                        <div class="item__decoration">
-                                            <i class="icon-mail"></i>
-                                        </div>
-                                    </div>
-                                    <div class="item__inner">
-                                        <span class="item__heading">
-                                            Hello, I don’t know what to do in
-                                        </span>
-                                        <span class="item__text">
-                                            John Jones • 1h ago
-                                        </span>
-                                    </div>
-                                    <div class="item__right">
-                                        <i class="icon-high-priority"></i>
-                                        <i class="icon-agent"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        <div class="search" {{ stimulus_target('GlobalSearch', 'results') }}></div>
                     </form>
                     <div class="avatar">
                         <span class="avatar__name">

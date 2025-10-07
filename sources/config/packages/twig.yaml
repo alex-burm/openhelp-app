@@ -3,6 +3,7 @@ twig:
     default_path: '%kernel.project_dir%/src/Infrastructure/Presentation/Web/Template'
     globals:
         socketUrl: '%env(SOCKET_URL)%'
+        workspaceContext: '@App\Infrastructure\Service\WorkspaceContext'
     form_themes:
         - 'shared/form/theme.html.twig'
 when@test:

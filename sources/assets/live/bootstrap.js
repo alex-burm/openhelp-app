@@ -4,6 +4,7 @@ import TicketListController from './controllers/TicketListController.js'
 import UserAutocompleteController from './controllers/UserAutocompleteController.js'
 import RecentTicketsController from "./controllers/RecentTicketsController";
 import TicketHeaderController from "./controllers/TicketHeaderController";
+import GlobalSearchController from "./controllers/GlobalSearchController";
 
 const application = Application.start()
 application.register('live', LiveController)
@@ -11,6 +12,7 @@ application.register('TicketList', TicketListController)
 application.register('TicketHeader', TicketHeaderController)
 application.register('RecentTickets', RecentTicketsController)
 application.register('UserAutocomplete', UserAutocompleteController)
+application.register('GlobalSearch', GlobalSearchController)
 
 application.debug = true;
 window.Stimulus = application

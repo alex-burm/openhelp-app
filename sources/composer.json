@@ -15,6 +15,7 @@
         "doctrine/doctrine-bundle": "^2.15",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.5",
+        "elasticsearch/elasticsearch": "^9.1",
         "firebase/php-jwt": "^6.11.1",
         "knplabs/knp-time-bundle": "^2.4",
         "phpdocumentor/reflection-docblock": "^5.6.2",

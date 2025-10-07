@@ -39,24 +39,28 @@ const closeDropdown = () => {
     });
 }
 
-//Global search
-const headerSearch = document.querySelector('.header__form .form__control');
-const search = document.querySelector('.search');
-const overlay = document.querySelector('.overlay');
-const layout = document.querySelector('.layout');
+const openModal = (url) => {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.classList.add('modal--visible');
+    modal.innerHTML = `
+        <div class="modal__overlay"></div>
+        <div class="modal__inner"></div>
+    `;
+    document.querySelector('body').appendChild(modal);
+    fetch(url, {}).then(result => {
+        return result.text();
+    }).then(html => {
+        modal.querySelector('.modal__inner').innerHTML = html;
+    });
 
-headerSearch?.addEventListener('focus', () => {
-    addOrRemoveSearch('add');
-})
+    return false;
+}
 
-headerSearch?.addEventListener('blur', () => {
-    addOrRemoveSearch('remove');
-})
-
-const addOrRemoveSearch = (method) => {
-    search.classList[method]('show');
-    overlay.classList[method]('show');
-    layout.classList[method]('no__scroll');
+const closeModal = () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(el => el.classList.remove('modal--visible'));
+    setTimeout(() => modals.forEach(el => el.remove()), 500);
 }
 
 const openModal = (url) => {

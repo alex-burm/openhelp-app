@@ -66,6 +66,26 @@ services:
     command: centrifugo -c /centrifugo/config.json
     networks:
       - help_network
+
+  elasticsearch:
+    image: elasticsearch:9.1.3
+    container_name: help_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - ../../data/elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - help_network
+    ports:
+      - "8019:9200"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
 networks:
   help_network:
     driver: bridge
