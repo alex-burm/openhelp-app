@@ -4,9 +4,11 @@ namespace App\Infrastructure\Persistence\Elastic\SearchProvider;
 
 use App\Application\Search\Dto\SuggestItem;
 use App\Application\Search\SearchProviderInterface;
+use App\Domain\Search\Entity\SearchResponse;
 use App\Domain\Search\Entity\SearchResultCollection;
 use App\Domain\Search\Entity\SearchResultItem;
 use App\Domain\Search\ValueObject\SearchIndex;
+use App\Domain\Search\ValueObject\SearchMeta;
 use App\Domain\Search\ValueObject\SearchProviderType;
 use App\Infrastructure\Service\WorkspaceContext;
 use Elastic\Elasticsearch\Client;
@@ -104,7 +106,7 @@ class SuggestSearchProvider implements SearchProviderInterface
         ]);
     }
 
-    public function search(string $query, array $filters = [], int $limit = 10): SearchResultCollection
+    public function search(string $query, array $filters = [], int $limit = 10): SearchResponse
     {
         $completion = [
             'field' => 'suggest',
@@ -141,6 +143,16 @@ class SuggestSearchProvider implements SearchProviderInterface
                 meta: $source['meta'],
             ));
         }
-        return $items;
+
+        $meta = new SearchMeta(
+            total: $resp['hits']['total']['value'] ?? 0,
+            limit: $limit,
+            offset: 0,
+        );
+
+        return new SearchResponse(
+            results: $items,
+            meta: $meta
+        );
     }
 }

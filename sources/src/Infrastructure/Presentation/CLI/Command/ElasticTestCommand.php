@@ -3,6 +3,7 @@
 
 namespace App\Infrastructure\Presentation\CLI\Command;
 
+use App\Application\Search\Dto\FullTextItem;
 use App\Application\Search\Dto\SuggestItem;
 use App\Application\Search\SearchProviderLocator;
 use App\Domain\Search\ValueObject\SearchEntityType;
@@ -22,6 +23,8 @@ use Symfony\Component\Uid\Uuid;
 #[AsCommand('app:elastic')]
 class ElasticTestCommand extends Command
 {
+    const PROVIDER_TYPE = SearchProviderType::SUGGEST;
+
     public function __construct(
         protected LoggerInterface $logger,
         protected WorkspaceRepositoryInterface $workspaceRepository,
@@ -40,7 +43,7 @@ class ElasticTestCommand extends Command
         $this->logger->info('Elastic create index...');
 
         $this->locator
-            ->lookup(SearchProviderType::SUGGEST)
+            ->lookup($this->getProviderType())
             ->withIndex(SearchIndex::MANAGER_GLOBAL)
             ->reset();
 
@@ -56,6 +59,19 @@ class ElasticTestCommand extends Command
         return Command::SUCCESS;
     }
 
+    protected function getProviderType(): SearchProviderType
+    {
+        return SearchProviderType::FULLTEXT;
+    }
+
+    protected function getIndexDtoClassName(): string
+    {
+        return match ($this->getProviderType()) {
+            SearchProviderType::SUGGEST => SuggestItem::class,
+            SearchProviderType::FULLTEXT => FullTextItem::class,
+        };
+    }
+
     protected function processing($workspaces): void
     {
         $filter = $this->entityManager->getFilters()->enable('workspaceFilter');
@@ -65,20 +81,21 @@ class ElasticTestCommand extends Command
             $this->logger->info(\sprintf('Indexing workspace: %s', $workspace->getName()));
 
             $filter->setParameter('space_id', $workspace->getId());
-            $this->addUsersToSuggest($workspace);
-            $this->addArticlesToSuggest($workspace);
+            $this->addUsers($workspace);
+            $this->addArticles($workspace);
         }
     }
 
-    protected function addUsersToSuggest(Workspace $workspace): void
+    protected function addUsers(Workspace $workspace): void
     {
         $provider = $this->locator
-            ->lookup(SearchProviderType::SUGGEST)
+            ->lookup($this->getProviderType())
             ->withIndex(SearchIndex::MANAGER_GLOBAL);
 
         $users = $this->getAllItems('user', $workspace);
+        $dtoClassName = $this->getIndexDtoClassName();
         foreach ($users as $user) {
-            $provider->index(new SuggestItem(
+            $provider->index(new $dtoClassName(
                 id: $user['id'],
                 title: $user['name'],
                 inputs: \array_filter(\array_merge(
@@ -103,15 +120,16 @@ class ElasticTestCommand extends Command
             ->fetchAllAssociative();
     }
 
-    protected function addArticlesToSuggest(Workspace $workspace): void
+    protected function addArticles(Workspace $workspace): void
     {
         $provider = $this->locator
-            ->lookup(SearchProviderType::SUGGEST)
+            ->lookup($this->getProviderType())
             ->withIndex(SearchIndex::MANAGER_GLOBAL);
 
         $articles = $this->getAllItems('article', $workspace);
+        $dtoClassName = $this->getIndexDtoClassName();
         foreach ($articles as $article) {
-            $provider->index(new SuggestItem(
+            $provider->index(new $dtoClassName(
                 id: Uuid::fromBinary($article['id'])->toRfc4122(),
                 title: $article['title'],
                 inputs: \array_filter(\array_merge(

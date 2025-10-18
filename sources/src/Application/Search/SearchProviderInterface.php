@@ -2,7 +2,7 @@
 
 namespace App\Application\Search;
 
-use App\Domain\Search\Entity\SearchResultCollection;
+use App\Domain\Search\Entity\SearchResponse;
 use App\Domain\Search\ValueObject\SearchIndex;
 use App\Domain\Search\ValueObject\SearchProviderType;
 
@@ -14,7 +14,7 @@ interface SearchProviderInterface
 
     public function reset(): void;
 
-    public function search(string $query, array $filters = [], int $limit = 10): SearchResultCollection;
+    public function search(string $query, array $filters = [], int $limit = 10): SearchResponse;
 
     public function getType(): SearchProviderType;
 

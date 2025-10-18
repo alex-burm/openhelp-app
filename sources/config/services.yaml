@@ -107,6 +107,10 @@ services:
         tags:
             - { name: app.search_provider }
 
+    App\Infrastructure\Persistence\Elastic\SearchProvider\FullTextSearchProvider:
+        tags:
+            - { name: app.search_provider }
+
     App\Application\Search\SearchProviderLocator:
         arguments:
             $providers: !tagged_iterator 'app.search_provider'
