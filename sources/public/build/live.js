@@ -3812,7 +3812,7 @@ class oe extends O {
       if (!t.ok)
         throw new Error(`HTTP error! status: ${t.status}`);
       const s = await t.json();
-      this.displayResults(s);
+      this.displayResults((s == null ? void 0 : s.results) || []);
     } catch (t) {
       console.error("Search error:", t), this.displayError();
     }
