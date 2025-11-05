@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Search\Entity;
+namespace App\Domain\Search\ValueObject;
 
 readonly class SearchResultItem
 {

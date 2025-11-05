@@ -4,12 +4,12 @@ namespace App\Infrastructure\Persistence\Elastic\SearchProvider;
 
 use App\Application\Search\Dto\SuggestItem;
 use App\Application\Search\SearchProviderInterface;
-use App\Domain\Search\Entity\SearchResponse;
-use App\Domain\Search\Entity\SearchResultCollection;
-use App\Domain\Search\Entity\SearchResultItem;
+use App\Domain\Search\Aggregate\SearchResponse;
 use App\Domain\Search\ValueObject\SearchIndex;
 use App\Domain\Search\ValueObject\SearchMeta;
 use App\Domain\Search\ValueObject\SearchProviderType;
+use App\Domain\Search\ValueObject\SearchResultCollection;
+use App\Domain\Search\ValueObject\SearchResultItem;
 use App\Infrastructure\Service\WorkspaceContext;
 use Elastic\Elasticsearch\Client;
 

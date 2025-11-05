@@ -18,7 +18,22 @@ class HelperExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('json_decode', \json_decode(...))
+            new TwigFilter('json_decode', \json_decode(...)),
+            new TwigFilter('highlight', [$this, 'highlight'], ['is_safe' => ['html']]),
         ];
+    }
+
+    public function highlight(string $text, string $keyword, string $replacement): string
+    {
+        if (\strlen($keyword) === 0) {
+            return $text;
+        }
+
+        $words = \array_filter(\explode(' ', $keyword));
+        foreach ($words as $word) {
+            $pattern = '/' . \preg_quote($word, '/') . '/i';
+            $text = \preg_replace($pattern, $replacement, $text);
+        }
+        return $text;
     }
 }

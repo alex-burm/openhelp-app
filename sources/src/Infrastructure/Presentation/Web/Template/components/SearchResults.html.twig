@@ -1,0 +1,54 @@
+<!-- <div class="loader">
+            <span class="loader__circle"></span>
+        </div> -->
+
+<div class="categories">
+    <div class="categories__nav">
+        <h2 class="categories__title">
+            Categories
+        </h2>
+        <ul class="categories__list">
+            {% for item in this.categories %}
+            <li class="categories__list-item">
+                <a href="#" class="categories__link">{{ item.count }}</a>
+                {{ item.name }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="categories__content">
+        <div class="categories__top">
+            <h2 class="categories__title">
+                Search results
+            </h2>
+            <span class="categories__results">
+                {{ this.total }} results
+            </span>
+        </div>
+        <div class="cards cards--secondary">
+            <div class="cards__items">
+                {% for item in this.items %}
+                <a class="card card--secondary" href="#">
+                    <div class="card__inner">
+                        <div class="card__inner-top">
+                            <h2 class="card__text">
+                                {{ item.title|highlight(this.search, '<span class="highlight">$0</span>') }}
+                            </h2>
+                            {% if item.category is not empty %}
+                                <span class="card__sub">{{ item.category }}</span>
+                            {% endif %}
+                        </div>
+                        {% if item.description is not empty %}
+                        <ul class="card__list">
+                            {% for line in item.description %}
+                                <li class="card__list-item">{{ line }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

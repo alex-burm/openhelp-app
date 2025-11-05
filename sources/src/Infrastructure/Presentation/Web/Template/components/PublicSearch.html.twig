@@ -1,0 +1,31 @@
+<section class="global" {{ attributes.defaults(stimulus_controller('PublicSearch', { debounce: 300 })) }}>
+    <div class="global__top">
+        <h1 class="global__title">
+            How can we help you?
+        </h1>
+        <div class="form__row">
+            <i class="icon-search"></i>
+            <input type="text" class="form__control form__control--xl" placeholder="Search for your question..."
+                   data-model="search"
+                   autocomplete="off"
+            >
+            {% if this.search %}
+                <button type="button" class="btn__clear-search" title="Clear"
+                    {{ stimulus_action('live', 'action', 'click', { action: 'clear' }) }}
+                >
+                    <i class="icon-cross"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="loader hidden" data-loading="model(search)|removeClass(hidden)">
+        <span class="loader__circle"></span>
+    </div>
+
+    {% if this.search is empty %}
+        {{ component('PopularArticles') }}
+    {% else %}
+        {{ component('SearchResults', { search }) }}
+    {% endif %}
+</section>
