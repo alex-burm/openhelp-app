@@ -66,6 +66,7 @@
             .then(response => response.text())
             .then(r => {
                 resultEl.innerHTML = r;
+                handleDropdown(resultEl);
                 handleTableAction();
             });
         }
@@ -85,6 +86,22 @@
             .then(() => searchArticle());
         }
 
+        const togglePopular = (id, isPopular) => {
+            fetch('{{ path('manager_article_popular', {id: 'placeholder'}) }}'.replace('placeholder', id), {
+                method: 'POST',
+                headers: {
+                    'X-Csrf-Token': '{{ csrf_token('article_popular') }}',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    popular: isPopular ? '0' : '1'
+                })
+            })
+            .then(() => searchArticle());
+
+            return false;
+        }
+
         const handleTableAction = () => {
             resultEl.querySelectorAll('tbody tr').forEach(tr => {
                 tr.addEventListener('click', e => {
@@ -94,6 +111,7 @@
                     document.location.href = tr.dataset.href;
                 })
             })
+            handleDropdown(resultEl);
         }
 
         handleTableAction();

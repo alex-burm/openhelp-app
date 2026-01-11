@@ -36,6 +36,7 @@ readonly final class DoctrineArticleMapper
         $entity->setTitle($domainObject->getTitle() ?? '');
         $entity->setContent($domainObject->getContent() ?? '');
         $entity->setStatus($domainObject->getStatus()->value);
+        $entity->setPopular($domainObject->isPopular());
         $entity->setCreatedAt($domainObject->getCreatedAt());
         $entity->setUpdatedAt($entity->getUpdatedAt() ?? $domainObject->getCreatedAt());
 
@@ -50,6 +51,7 @@ readonly final class DoctrineArticleMapper
             $doctrineObject->getContent(),
             $doctrineObject->getCategory()?->getId(),
             ArticleStatus::from($doctrineObject->getStatus()),
+            $doctrineObject->isPopular(),
         );
 
         $ticket->setCreatedAt($doctrineObject->getCreatedAt());

@@ -12,6 +12,7 @@ class ArticleListItemDto
         public ArticleStatus $status,
         public ?string $categoryName,
         public \DateTimeImmutable $updatedAt,
+        public bool $isPopular,
     ) {
     }
 }

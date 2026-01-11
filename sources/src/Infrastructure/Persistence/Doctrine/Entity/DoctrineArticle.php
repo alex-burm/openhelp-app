@@ -30,6 +30,9 @@ class DoctrineArticle implements WorkspaceAwareEntity
     #[ORM\Column(type: 'integer', nullable: false)]
     protected int $status = 0;
 
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
+    protected bool $popular = false;
+
     #[Ignore]
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected \DateTimeImmutable $createdAt;
@@ -85,6 +88,16 @@ class DoctrineArticle implements WorkspaceAwareEntity
     public function setStatus(int $status): void
     {
         $this->status = $status;
+    }
+
+    public function isPopular(): bool
+    {
+        return $this->popular;
+    }
+
+    public function setPopular(bool $popular): void
+    {
+        $this->popular = $popular;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

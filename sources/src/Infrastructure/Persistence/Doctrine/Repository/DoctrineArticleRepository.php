@@ -93,6 +93,7 @@ class DoctrineArticleRepository implements ArticleRepositoryInterface
                 status: ArticleStatus::from($doctrineArticle->getStatus()),
                 categoryName: $doctrineArticle->getCategory()?->getName(),
                 updatedAt: $doctrineArticle->getUpdatedAt(),
+                isPopular: $doctrineArticle->isPopular(),
             );
         }, $doctrineArticles);
 

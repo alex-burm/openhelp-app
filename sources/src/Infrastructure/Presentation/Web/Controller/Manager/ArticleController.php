@@ -4,6 +4,7 @@ namespace App\Infrastructure\Presentation\Web\Controller\Manager;
 
 use App\Application\Article\Dto\ArticleCategoryUpdateDto;
 use App\Application\Article\Dto\ArticleListCriteriaDto;
+use App\Application\Article\Dto\ArticleTogglePopularDto;
 use App\Application\Article\Dto\ArticleSaveDto;
 use App\Application\Article\Dto\ArticleTogglePublicationDto;
 use App\Application\Article\Service\ArticleCategoryUpdateService;
@@ -12,6 +13,7 @@ use App\Application\Article\Service\ArticleDeleteService;
 use App\Application\Article\Service\ArticleGetService;
 use App\Application\Article\Service\ArticleListService;
 use App\Application\Article\Service\ArticleSaveService;
+use App\Application\Article\Service\ArticleTogglePopularService;
 use App\Application\Article\Service\ArticleTogglePublicationService;
 use App\Application\Category\Dto\CategoryGetService;
 use App\Application\Category\Service\CategoryListService;
@@ -134,6 +136,36 @@ class ArticleController extends AbstractController
 
         return $this->json([
             'published' => $statusDto->published
+        ]);
+    }
+
+    #[Route('/popular/{id}', name: 'manager_article_popular', methods: ['POST'])]
+    public function popular(
+        Request $request,
+        ArticleTogglePopularService $popularService,
+        CsrfTokenManagerInterface $csrfTokenService,
+    ): Response {
+        $id = $request->attributes->get('id');
+
+        $token = $request->headers->get('X-CSRF-TOKEN');
+        $isValidToken = $csrfTokenService->isTokenValid(
+            new CsrfToken('article_popular', $token),
+        );
+
+        if (false === $isValidToken) {
+            return $this->json(
+                ['error' => 'Invalid CSRF token'],
+                Response::HTTP_BAD_REQUEST,
+            );
+        }
+
+        $statusDto = $popularService(new ArticleTogglePopularDto(
+            id: $id,
+            popular: $request->request->getBoolean('popular'),
+        ));
+
+        return $this->json([
+            'popular' => $statusDto->popular,
         ]);
     }
 
