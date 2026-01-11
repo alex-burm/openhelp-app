@@ -16,4 +16,6 @@ interface ArticleRepositoryInterface
     public function delete(Article $article): void;
 
     public function findByCriteria(ArticleListCriteriaDto $criteria): ArticleListResultDto;
+
+    public function findPopular(int $limit = 4): array;
 }

@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 use App\Application\Article\Dto\ArticleListCriteriaDto;
 use App\Application\Article\Dto\ArticleListItemDto;
 use App\Application\Article\Dto\ArticleListResultDto;
+use App\Application\Article\Dto\ArticlePopularItemDto;
 use App\Domain\Article\Repository\ArticleRepositoryInterface;
 use App\Domain\Article\Entity\Article;
 use App\Domain\Article\ValueObject\ArticleStatus;
@@ -98,6 +99,31 @@ class DoctrineArticleRepository implements ArticleRepositoryInterface
         }, $doctrineArticles);
 
         return new ArticleListResultDto($items, $totalCount);
+    }
+
+    public function findPopular(int $limit = 4): array
+    {
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('r')
+            ->from(static::DOCTRINE_CLASS_NAME, 'r')
+            ->leftJoin('r.category', 'c')
+            ->where('r.popular = :popular')
+            ->andWhere('r.status = :status')
+            ->setParameter('popular', true)
+            ->setParameter('status', ArticleStatus::PUBLISHED->value)
+            ->orderBy('r.updatedAt', 'DESC')
+            ->setMaxResults($limit);
+
+        $doctrineArticles = $qb->getQuery()->getResult();
+
+        return \array_map(function (DoctrineArticle $doctrineArticle) {
+            return new ArticlePopularItemDto(
+                id: $doctrineArticle->getId()->toRfc4122(),
+                title: $doctrineArticle->getTitle() ?: 'Untitled article',
+                content: $doctrineArticle->getContent() ?? '',
+                categoryName: $doctrineArticle->getCategory()?->getName(),
+            );
+        }, $doctrineArticles);
     }
 
     private function applyCriteriaFilters($qb, ArticleListCriteriaDto $criteria): void
