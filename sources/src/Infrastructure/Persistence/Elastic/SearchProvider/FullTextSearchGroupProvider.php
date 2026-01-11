@@ -118,7 +118,7 @@ class FullTextSearchGroupProvider implements SearchProviderInterface
             'size' => $limit,
             'query' => [
                 'bool' => [
-                    'must' => [
+                    'filter' => [
                         [
                             'term' => [
                                 'space_id' => $this->workspaceContext->getCurrentWorkspace()->getId(),

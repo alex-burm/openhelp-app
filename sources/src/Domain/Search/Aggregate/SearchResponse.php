@@ -24,12 +24,12 @@ readonly class SearchResponse
 
     public function hasSuggestions(): bool
     {
-        return false === $this?->suggests->isEmpty();
+        return false === $this->suggests?->isEmpty();
     }
 
     public function hasAggregations(): bool
     {
-        return false === $this?->aggregations->isEmpty();
+        return false === $this->aggregations?->isEmpty();
     }
 }
 

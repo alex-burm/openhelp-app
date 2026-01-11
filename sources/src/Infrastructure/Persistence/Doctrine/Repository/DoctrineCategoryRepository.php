@@ -61,7 +61,6 @@ class DoctrineCategoryRepository implements CategoryRepositoryInterface
             c.name,
             COUNT(a.id) as article_count
         ')
-//            ->leftJoin('c.articles', 'a')
             ->leftJoin('App\Infrastructure\Persistence\Doctrine\Entity\DoctrineArticle', 'a',
                 'WITH', 'a.category = c.id')
             ->groupBy('c.id')

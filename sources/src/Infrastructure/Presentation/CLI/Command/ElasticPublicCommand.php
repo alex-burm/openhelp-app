@@ -121,12 +121,12 @@ class ElasticPublicCommand extends Command
         $articles = $this->getAllItems($workspace);
         $dtoClassName = $this->getIndexDtoClassName();
         foreach ($articles as $article) {
-
+            $title = $article['title'];
             $blocks = json_decode($article['content'], true)['blocks'] ?? [];
             $blocks = \array_filter($blocks, fn ($x) => \strlen($x['data']['text'] ?? '') > 0);
             $description = \array_map(fn ($x) => strip_tags($x['data']['text']), $blocks);
 
-            if (empty($description)) {
+            if (empty($description) || empty($title)) {
                 continue;
             }
 
