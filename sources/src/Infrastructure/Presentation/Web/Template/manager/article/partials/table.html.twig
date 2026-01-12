@@ -18,6 +18,11 @@
                 </a>
             </div>
         </th>
+        <th class="table__col120">
+            <div class="table__heading">
+                Popular
+            </div>
+        </th>
         <th class="table__col160">
             <div class="table__heading">
                 <a {{ _self.sortAttrs('status', criteria) }}>
@@ -74,6 +79,11 @@
                     </div>
                 </td>
                 <td>
+                    <span class="item__content">
+                        {{ item.isPopular ? 'Yes' : 'No' }}
+                    </span>
+                </td>
+                <td>
                     <span class="published__tag {{ item.status.isPublished ? '' : 'disabled' }}">
                         <i class="icon-world"></i>
                         {{ item.status.isPublished ? 'Published' : 'Draft' }}
@@ -102,6 +112,14 @@
                                     <i class="icon-open"></i>
                                     <span class="btn__text">
                                         Open article
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown__item">
+                                <a href="#" class="btn__primary" onclick="return togglePopular('{{ item.id }}', {{ item.isPopular ? 'true' : 'false' }})">
+                                    <i class="icon-knowledge-base"></i>
+                                    <span class="btn__text">
+                                        {{ item.isPopular ? 'Remove from Popular' : 'Mark as Popular' }}
                                     </span>
                                 </a>
                             </div>

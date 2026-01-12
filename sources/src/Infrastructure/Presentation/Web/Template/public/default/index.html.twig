@@ -1,0 +1,15 @@
+{% extends 'public/layout/content.html.twig' %}
+
+{% block header %}Welcome!{% endblock %}
+
+{% block content %}
+    <div class="logo">
+        <img src="{{ asset('assets/img/logo.svg') }}" alt="logo">
+    </div>
+
+    {{ component('PublicSearch', { search: app.request.query.get('q', '') }) }}
+
+    <style>
+        .hidden {display:none;visibility: hidden}
+    </style>
+{% endblock %}

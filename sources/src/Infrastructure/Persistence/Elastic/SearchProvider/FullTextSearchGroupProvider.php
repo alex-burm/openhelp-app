@@ -2,9 +2,11 @@
 
 namespace App\Infrastructure\Persistence\Elastic\SearchProvider;
 
-use App\Application\Search\Dto\FullTextPlainItem;
+use App\Application\Search\Dto\FullTextGroupItem;
 use App\Application\Search\SearchProviderInterface;
 use App\Domain\Search\Aggregate\SearchResponse;
+use App\Domain\Search\ValueObject\SearchAggregation;
+use App\Domain\Search\ValueObject\SearchAggregationCollection;
 use App\Domain\Search\ValueObject\SearchIndex;
 use App\Domain\Search\ValueObject\SearchMeta;
 use App\Domain\Search\ValueObject\SearchProviderType;
@@ -14,7 +16,7 @@ use App\Domain\Search\ValueObject\SearchSuggest;
 use App\Infrastructure\Service\WorkspaceContext;
 use Elastic\Elasticsearch\Client;
 
-class FullTextSearchProvider implements SearchProviderInterface
+class FullTextSearchGroupProvider implements SearchProviderInterface
 {
     protected SearchIndex $index;
 
@@ -33,7 +35,7 @@ class FullTextSearchProvider implements SearchProviderInterface
 
     public function getType(): SearchProviderType
     {
-        return SearchProviderType::FULLTEXT;
+        return SearchProviderType::GROUP;
     }
 
     public function getIndexName(): string
@@ -43,7 +45,7 @@ class FullTextSearchProvider implements SearchProviderInterface
 
     public function index(object $dto): void
     {
-        \assert($dto instanceof FullTextPlainItem, \sprintf('Expected FulltextItem, got %s', \get_class($dto)));
+        \assert($dto instanceof FullTextGroupItem, \sprintf('Expected FullTextGroupItem, got %s', \get_class($dto)));
 
         $this->client->index([
             'index' => $this->getIndexName(),
@@ -52,6 +54,7 @@ class FullTextSearchProvider implements SearchProviderInterface
                 'id' => $dto->id,
                 'space_id' => $this->workspaceContext->getCurrentWorkspace()->getId(),
                 'title' => $dto->title,
+                'category' => $dto->category,
                 'type'     => $dto->type->value,
                 'meta' => $dto->meta
             ]
@@ -100,6 +103,9 @@ class FullTextSearchProvider implements SearchProviderInterface
                                 ]
                             ]
                         ],
+                        'category' => [
+                            'type' => 'keyword',
+                        ],
                     ]
                 ]
             ]
@@ -143,25 +149,12 @@ class FullTextSearchProvider implements SearchProviderInterface
                     'minimum_should_match' => 1,
                 ],
             ],
-            'suggest' => [
-                'simple_phrase' => [
-                    'text' => $query,
-                    'phrase' => [
-                        'field' => 'title',
-                        'size' => 3,
-                        'gram_size' => 3,
-                        'direct_generator' => [
-                            [
-                                'field' =>'title',
-                                'suggest_mode' =>'always'
-                            ]
-                        ],
-                        'highlight' =>[
-                            'pre_tag' => '<em>',
-                            'post_tag' => '</em>'
-                        ]
+            'aggs' => [
+                'by_category' => [
+                    'terms' => [
+                        'field' => 'category',
                     ]
-                ]
+                ],
             ],
         ];
 
@@ -179,12 +172,17 @@ class FullTextSearchProvider implements SearchProviderInterface
                 type: $source['type'],
                 url: $source['meta']['url'],
                 title: $source['title'],
-                meta: $source['meta'],
+                meta: $source['meta'] + ['category' => $source['category']],
             ));
         }
-        $suggests = $resp['suggest']['simple_phrase'][0]['options'] ?? [];
-        $suggests = \array_map(static fn($option) => $option['text'], $suggests);
-        $suggests = new SearchSuggest($suggests);
+
+        $aggregations = new SearchAggregationCollection();
+        foreach ($resp['aggregations']['by_category']['buckets'] ?? [] as $bucket) {
+            $aggregations->add(new SearchAggregation(
+                name: $bucket['key'],
+                count: $bucket['doc_count']
+            ));
+        }
 
         $meta = new SearchMeta(
             total: $resp['hits']['total']['value'] ?? 0,
@@ -195,7 +193,7 @@ class FullTextSearchProvider implements SearchProviderInterface
         return new SearchResponse(
             results: $items,
             meta: $meta,
-            suggests: $suggests
+            aggregations: $aggregations
         );
     }
 }

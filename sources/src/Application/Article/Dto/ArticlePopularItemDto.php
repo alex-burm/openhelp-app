@@ -2,17 +2,13 @@
 
 namespace App\Application\Article\Dto;
 
-use App\Domain\Article\ValueObject\ArticleStatus;
-
-class ArticleListItemDto
+class ArticlePopularItemDto
 {
     public function __construct(
         public string $id,
         public string $title,
-        public ArticleStatus $status,
+        public string $content,
         public ?string $categoryName,
-        public \DateTimeImmutable $updatedAt,
-        public bool $isPopular,
     ) {
     }
 }

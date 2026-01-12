@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Search\Entity;
+namespace App\Domain\Search\ValueObject;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
-class SearchResultCollection implements IteratorAggregate
+final class SearchAggregationCollection implements IteratorAggregate
 {
     private array $items = [];
 
@@ -15,15 +15,20 @@ class SearchResultCollection implements IteratorAggregate
             $this->add($item);
         }
     }
-
-    public function add(SearchResultItem $view): void
+    public function add(SearchAggregation $aggregation): self
     {
-        $this->items[] = $view;
+        $this->items[] = $aggregation;
+        return $this;
     }
 
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->items);
+    }
+
+    public function isEmpty(): bool
+    {
+        return 0 === \count($this->items);
     }
 
     public function all(): array

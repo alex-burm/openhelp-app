@@ -14,3 +14,8 @@ indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.php]
+ij_php_align_multiline_parameters = false
+ij_php_align_multiline_parameters_in_calls = false
+ij_php_method_brace_style = end_of_line

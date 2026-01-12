@@ -3,9 +3,9 @@
 namespace App\Application\Search\Service;
 
 use App\Application\Search\SearchProviderLocator;
-use App\Domain\Search\Entity\SearchResponse;
-use App\Domain\Search\ValueObject\SearchProviderType;
+use App\Domain\Search\Aggregate\SearchResponse;
 use App\Domain\Search\ValueObject\SearchIndex;
+use App\Domain\Search\ValueObject\SearchProviderType;
 
 class AdminSuggestSearchService
 {

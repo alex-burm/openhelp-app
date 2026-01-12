@@ -3,7 +3,7 @@
 
 namespace App\Infrastructure\Presentation\CLI\Command;
 
-use App\Application\Search\Dto\FullTextItem;
+use App\Application\Search\Dto\FullTextPlainItem;
 use App\Application\Search\Dto\SuggestItem;
 use App\Application\Search\SearchProviderLocator;
 use App\Domain\Search\ValueObject\SearchEntityType;
@@ -20,11 +20,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Uid\Uuid;
 
-#[AsCommand('app:elastic')]
-class ElasticTestCommand extends Command
+#[AsCommand('app:elastic:manager')]
+class ElasticManagerCommand extends Command
 {
-    const PROVIDER_TYPE = SearchProviderType::SUGGEST;
-
     public function __construct(
         protected LoggerInterface $logger,
         protected WorkspaceRepositoryInterface $workspaceRepository,
@@ -44,7 +42,7 @@ class ElasticTestCommand extends Command
 
         $this->locator
             ->lookup($this->getProviderType())
-            ->withIndex(SearchIndex::MANAGER_GLOBAL)
+            ->withIndex($this->getIndexName())
             ->reset();
 
         do {
@@ -59,6 +57,11 @@ class ElasticTestCommand extends Command
         return Command::SUCCESS;
     }
 
+    protected function getIndexName(): SearchIndex
+    {
+        return SearchIndex::MANAGER_GLOBAL;
+    }
+
     protected function getProviderType(): SearchProviderType
     {
         return SearchProviderType::FULLTEXT;
@@ -68,7 +71,7 @@ class ElasticTestCommand extends Command
     {
         return match ($this->getProviderType()) {
             SearchProviderType::SUGGEST => SuggestItem::class,
-            SearchProviderType::FULLTEXT => FullTextItem::class,
+            SearchProviderType::FULLTEXT => FullTextPlainItem::class,
         };
     }
 
@@ -86,11 +89,20 @@ class ElasticTestCommand extends Command
         }
     }
 
+    protected function getAllItems(string $table, Workspace $workspace): array
+    {
+        return $this->entityManager
+            ->getConnection()
+            ->prepare('SELECT * FROM ' . $table . ' WHERE space_id = ' . $workspace->getId())
+            ->executeQuery()
+            ->fetchAllAssociative();
+    }
+
     protected function addUsers(Workspace $workspace): void
     {
         $provider = $this->locator
             ->lookup($this->getProviderType())
-            ->withIndex(SearchIndex::MANAGER_GLOBAL);
+            ->withIndex($this->getIndexName());
 
         $users = $this->getAllItems('user', $workspace);
         $dtoClassName = $this->getIndexDtoClassName();
@@ -111,20 +123,11 @@ class ElasticTestCommand extends Command
         }
     }
 
-    protected function getAllItems(string $table, Workspace $workspace): array
-    {
-        return $this->entityManager
-            ->getConnection()
-            ->prepare('SELECT * FROM ' . $table . ' WHERE space_id = ' . $workspace->getId())
-            ->executeQuery()
-            ->fetchAllAssociative();
-    }
-
     protected function addArticles(Workspace $workspace): void
     {
         $provider = $this->locator
             ->lookup($this->getProviderType())
-            ->withIndex(SearchIndex::MANAGER_GLOBAL);
+            ->withIndex($this->getIndexName());
 
         $articles = $this->getAllItems('article', $workspace);
         $dtoClassName = $this->getIndexDtoClassName();

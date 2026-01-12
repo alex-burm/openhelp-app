@@ -1,0 +1,33 @@
+{% set items = this.items %}
+{% if items is not empty %}
+    <div class="cards">
+        <div class="cards__top">
+            <h2 class="cards__title">
+                Popular articles
+            </h2>
+        </div>
+        <div class="cards__items">
+            {% for item in items %}
+                <a class="card card--secondary" href="{{ path('article_show', { id: item.id }) }}">
+                    <div class="card__inner">
+                        <div class="card__inner-top">
+                            <h2 class="card__text">
+                                {{ item.title }}
+                            </h2>
+                            {% if item.category %}
+                                <span class="card__sub">
+                                    {{ item.category }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% if item.description %}
+                            <p class="card__description">
+                                {{ item.description }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

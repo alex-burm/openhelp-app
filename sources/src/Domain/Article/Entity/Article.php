@@ -18,6 +18,7 @@ class Article
         protected ?string $content = null,
         protected ?Uuid $categoryId = null,
         protected ArticleStatus $status = ArticleStatus::DRAFT,
+        protected bool $popular = false,
     ) {
         $this->createdAt = new \DateTimeImmutable();
     }
@@ -75,6 +76,16 @@ class Article
     public function getStatus(): ArticleStatus
     {
         return $this->status;
+    }
+
+    public function isPopular(): bool
+    {
+        return $this->popular;
+    }
+
+    public function setPopular(bool $popular): void
+    {
+        $this->popular = $popular;
     }
 
     public function publish(): void

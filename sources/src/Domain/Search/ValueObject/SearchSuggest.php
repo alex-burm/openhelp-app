@@ -2,14 +2,19 @@
 
 namespace App\Domain\Search\ValueObject;
 
-class SearchSuggest
+readonly class SearchSuggest
 {
     public function __construct(
-        public readonly array $suggestions,
+        public array $suggestions,
     ) {}
 
     public function first(): ?string
     {
         return $this->suggestions[0] ?? null;
+    }
+
+    public function isEmpty(): bool
+    {
+        return 0 === \count($this->suggestions);
     }
 }
